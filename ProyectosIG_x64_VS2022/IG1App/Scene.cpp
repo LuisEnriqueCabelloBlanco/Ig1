@@ -16,6 +16,13 @@ Scene::init()
 
 	// Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
+	RegularPolygon* poli = new RegularPolygon(3, 200);
+	poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
+	gObjects.push_back(poli); //n lados, r radio en pixeles
+
+	RegularPolygon* poli2 = new RegularPolygon(40, 200);
+	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
+	gObjects.push_back(poli2); //n lados, r radio en pixeles
 }
 void
 Scene::free()
@@ -30,7 +37,7 @@ void
 Scene::setGL()
 {
 	// OpenGL basic setting
-	glClearColor(1.0, 1.0, 1.0, 1.0); // background color (alpha=1 -> opaque)
+	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 }
 void

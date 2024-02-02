@@ -35,3 +35,26 @@ EjesRGB::render(dmat4 const& modelViewMat) const
 		glLineWidth(1);
 	}
 }
+
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : Abs_Entity()
+{
+	mMesh = Mesh::generateRegularPolygon(num, r);
+}
+
+RegularPolygon::~RegularPolygon() {
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RegularPolygon::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
+	}
+}
