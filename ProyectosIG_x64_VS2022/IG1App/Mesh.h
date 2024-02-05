@@ -24,6 +24,7 @@ public:
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
 
 	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r,std::vector<glm::dvec4>& colors);
 
 protected:
 	GLuint mPrimitive =

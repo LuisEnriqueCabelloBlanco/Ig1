@@ -20,9 +20,12 @@ Scene::init()
 	poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
 	gObjects.push_back(poli); //n lados, r radio en pixeles
 
-	RegularPolygon* poli2 = new RegularPolygon(40, 200);
+	/*RegularPolygon* poli2 = new RegularPolygon(40, 200);
 	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
-	gObjects.push_back(poli2); //n lados, r radio en pixeles
+	gObjects.push_back(poli2); //n lados, r radio en pixeles*/
+
+	RGBTriangle* poli3 = new RGBTriangle();
+	gObjects.push_back(poli3);
 }
 void
 Scene::free()

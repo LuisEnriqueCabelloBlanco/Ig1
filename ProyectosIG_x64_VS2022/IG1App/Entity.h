@@ -28,7 +28,7 @@ public:
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
-	glm::dvec4 mColor ;  // color matrix
+	glm::dvec4 mColor ;  // color vector
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
@@ -47,6 +47,14 @@ class RegularPolygon : public Abs_Entity
 public:
 	explicit RegularPolygon(GLuint num, GLdouble r);
 	~RegularPolygon();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+class RGBTriangle : public Abs_Entity
+{
+public:
+	explicit RGBTriangle();
+	~RGBTriangle();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 #endif //_H_Entities_H_

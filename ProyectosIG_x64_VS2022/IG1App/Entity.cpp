@@ -55,6 +55,41 @@ void RegularPolygon::render(dmat4 const& modelViewMat) const
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
-		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+	}
+}
+
+RGBTriangle::RGBTriangle()
+{
+	std::vector<glm::dvec4> colors;
+	colors.reserve(3);
+	colors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	colors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	colors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mMesh = Mesh::generateRegularPolygon(3, 200,colors);
+}
+
+RGBTriangle::~RGBTriangle()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		glEnable(GL_CULL_FACE);
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glLineWidth(2);
+		glFrontFace(GL_CW);
+		glCullFace(GL_FRONT);
+		mMesh->render();
+		glCullFace(GL_BACK);
+		mMesh->render();
+		glFrontFace(GL_CCW);
+		glLineWidth(1);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glDisable(GL_CULL_FACE);
 	}
 }
