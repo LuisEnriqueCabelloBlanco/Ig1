@@ -16,16 +16,19 @@ Scene::init()
 
 	// Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
-	RegularPolygon* poli = new RegularPolygon(3, 200);
-	poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
-	gObjects.push_back(poli); //n lados, r radio en pixeles
+	//RegularPolygon* poli = new RegularPolygon(3, 200);
+	//poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
+	//gObjects.push_back(poli); //n lados, r radio en pixeles
 
 	/*RegularPolygon* poli2 = new RegularPolygon(40, 200);
 	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
 	gObjects.push_back(poli2); //n lados, r radio en pixeles*/
 
-	RGBTriangle* poli3 = new RGBTriangle();
-	gObjects.push_back(poli3);
+	/*RGBTriangle* poli3 = new RGBTriangle();
+	gObjects.push_back(poli3);*/
+
+	RGBRectangle* poli4 = new RGBRectangle(200,100);
+	gObjects.push_back(poli4);
 }
 void
 Scene::free()

@@ -78,18 +78,46 @@ RGBTriangle::~RGBTriangle()
 void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
 		glLineWidth(2);
-		glFrontFace(GL_CW);
-		glCullFace(GL_FRONT);
+		//esta instruccion ajusta que cara se pinta y con que modo
+		glPolygonMode(GL_FRONT, GL_FILL);
 		mMesh->render();
-		glCullFace(GL_BACK);
+		glPolygonMode(GL_BACK, GL_LINE);
 		mMesh->render();
 		glFrontFace(GL_CCW);
 		glLineWidth(1);
 		glColor4d(0.0, 0.0, 0.0, 1.0);
-		glDisable(GL_CULL_FACE);
+		//glDisable(GL_CULL_FACE);
+	}
+}
+
+
+RGBRectangle::RGBRectangle(GLdouble w,GLdouble h) {
+	mMesh = Mesh::generateRGBRectangle(w,h);
+}
+
+RGBRectangle::~RGBRectangle()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glLineWidth(2);
+		//esta instruccion ajusta que cara se pinta y con que modo
+		glPolygonMode(GL_FRONT, GL_FILL);
+		mMesh->render();
+		glPolygonMode(GL_BACK, GL_LINE);
+		mMesh->render();
+		glFrontFace(GL_CCW);
+		glLineWidth(1);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 }

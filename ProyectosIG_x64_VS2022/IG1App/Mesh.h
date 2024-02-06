@@ -25,6 +25,9 @@ public:
 
 	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
 	static Mesh* generateRegularPolygon(GLuint num, GLdouble r,std::vector<glm::dvec4>& colors);
+	static Mesh* generateRectangle(GLdouble w, GLdouble h);
+	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
+
 
 protected:
 	GLuint mPrimitive =
