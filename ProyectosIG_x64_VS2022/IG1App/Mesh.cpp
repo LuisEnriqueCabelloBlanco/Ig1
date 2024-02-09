@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "CheckML.h"
 #include <fstream>
+#include <glm/gtc/matrix_transform.hpp>
 using namespace std;
 using namespace glm;
 
@@ -80,7 +81,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r, std::vector<glm::dvec
 
 		mesh->vVertices.emplace_back(x, y, 0.0);
 
-		//mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 
 		angle += 360.0 / num; //se avanza angulo
 	}
@@ -116,6 +117,75 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 
 	return mesh;
+}
+
+Mesh* Mesh::generateCube(GLdouble length)
+{
+
+	Mesh* meshDeliver = new Mesh();
+	meshDeliver->mPrimitive = GL_LINE_LOOP;
+	meshDeliver->mNumVertices = 24;
+	meshDeliver->vVertices.reserve(meshDeliver->mNumVertices);
+	meshDeliver->vColors.reserve(meshDeliver->mNumVertices);
+
+	Mesh* auxMesh = generateRectangle(length, length);
+
+	//frontal
+	dmat4 auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0,0.0,length/2));
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxTransMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}
+
+	//arriba
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, length / 2, 0.0));
+	dmat4 auxRotMat = glm::rotate(auxTransMat, glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+	
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}
+	//derecha
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(length/2, 0.0, 0.0));
+	auxRotMat = glm::rotate(auxTransMat, glm::radians(90.0), glm::dvec3(0.0, 1.0, 0.0));
+
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}
+
+	//abajo
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -length / 2, 0.0));
+	auxRotMat = glm::rotate(auxTransMat, glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}
+	//derecha
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(-length / 2, 0.0, 0.0));
+	auxRotMat = glm::rotate(auxTransMat, glm::radians(-90.0), glm::dvec3(0.0, 1.0, 0.0));
+
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}
+	//derecha
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -length/2));
+	auxRotMat = glm::rotate(auxTransMat, glm::radians(180.0), glm::dvec3(0.0, 1.0, 0.0));
+
+	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
+	{
+		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
+		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	}	
+
+	return meshDeliver;
 }
 
 

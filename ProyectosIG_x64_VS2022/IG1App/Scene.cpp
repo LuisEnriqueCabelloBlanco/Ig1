@@ -27,8 +27,11 @@ Scene::init()
 	/*RGBTriangle* poli3 = new RGBTriangle();
 	gObjects.push_back(poli3);*/
 
-	RGBRectangle* poli4 = new RGBRectangle(200,100);
-	gObjects.push_back(poli4);
+	/*RGBRectangle* poli4 = new RGBRectangle(200, 100);
+	gObjects.push_back(poli4);*/
+
+	Cube* poli5 = new Cube(200);
+	gObjects.push_back(poli5);
 }
 void
 Scene::free()
