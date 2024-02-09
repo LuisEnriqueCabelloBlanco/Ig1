@@ -29,6 +29,7 @@ public:
 	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 	static Mesh* generateSquare(GLdouble l);
 	static Mesh* generateCube(GLdouble length);
+	static Mesh* generateRGBCubeTriangles(GLdouble length);
 
 
 protected:

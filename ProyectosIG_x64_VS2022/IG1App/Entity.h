@@ -71,4 +71,11 @@ public:
 	~Cube();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
+
+class RGBCube : public Abs_Entity {
+public:
+	explicit RGBCube(GLdouble length);
+	~RGBCube();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 #endif //_H_Entities_H_

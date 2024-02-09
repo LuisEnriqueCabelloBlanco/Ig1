@@ -119,6 +119,7 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 	return mesh;
 }
 
+//metodo auxiliar para crear las caras del cubo con dos triangulos (6 vertices)
 Mesh* Mesh::generateSquare(GLdouble l)
 {
 	Mesh* mesh = new Mesh();
@@ -144,7 +145,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	meshDeliver->mPrimitive = GL_TRIANGLES;
 	meshDeliver->mNumVertices = 36;
 	meshDeliver->vVertices.reserve(meshDeliver->mNumVertices);
-	meshDeliver->vColors.reserve(meshDeliver->mNumVertices);
+	//meshDeliver->vColors.reserve(meshDeliver->mNumVertices);
 
 	Mesh* auxMesh =generateSquare(length);
 
@@ -153,7 +154,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxTransMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 
 	//derecha
@@ -163,7 +164,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 	//izquierda
 	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(-length / 2, 0.0, 0.0));
@@ -172,7 +173,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 	//atras
 	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -length/2));
@@ -181,7 +182,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}	
 	//arriba
 	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, length / 2, 0.0));
@@ -190,7 +191,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 
 	//abajo
@@ -200,11 +201,42 @@ Mesh* Mesh::generateCube(GLdouble length)
 	for (size_t i = 0; i < auxMesh->mNumVertices; i++)
 	{
 		meshDeliver->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh->vVertices[i].x, auxMesh->vVertices[i].y, auxMesh->vVertices[i].z, 1));
-		meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 
 
 	return meshDeliver;
+}
+
+Mesh* Mesh::generateRGBCubeTriangles(GLdouble length)
+{
+	Mesh* mesh = generateCube(length);
+	mesh->vColors.reserve(mesh->mNumVertices);
+	//front r
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(1.0,0.0,0.0,1.0));
+	}
+	//right g
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(0.0, 1.0, 0.0, 1.0));
+	}
+	//left g
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(0.0, 1.0, 0.0, 1.0));
+	}
+	//back r
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(1.0, 0.0, 0.0, 1.0));
+	}
+	//up b
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(0.0, 0.0, 1.0, 1.0));
+	}
+	//down b
+	for (int i = 0; i < 6; i++) {
+		mesh->vColors.emplace_back(dvec4(0.0, 0.0, 1.0, 1.0));
+	}
+	return mesh;
 }
 
 

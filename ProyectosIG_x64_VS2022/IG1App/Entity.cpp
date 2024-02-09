@@ -148,3 +148,30 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 }
+
+RGBCube::RGBCube(GLdouble length)
+{
+	mMesh = Mesh::generateRGBCubeTriangles(length);
+}
+
+RGBCube::~RGBCube()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RGBCube::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glLineWidth(2);
+		//esta instruccion ajusta que cara se pinta y con que modo
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_POINT);
+		mMesh->render();
+		glFrontFace(GL_CCW);
+		glLineWidth(1);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+	}
+}
