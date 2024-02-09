@@ -97,8 +97,8 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 	mesh->mNumVertices = 4;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	mesh->vVertices.emplace_back(-(w / 2), -(h / 2), 0.0);
 	mesh->vVertices.emplace_back((w / 2), -(h / 2), 0.0);
+	mesh->vVertices.emplace_back(-(w / 2), -(h / 2), 0.0);
 	mesh->vVertices.emplace_back((w / 2), (h / 2), 0.0);
 	mesh->vVertices.emplace_back(-(w / 2), (h / 2), 0.0);
 

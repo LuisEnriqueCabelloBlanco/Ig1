@@ -66,7 +66,7 @@ RGBTriangle::RGBTriangle()
 	colors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	colors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	colors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mMesh = Mesh::generateRegularPolygon(3, 200,colors);
+	mMesh = Mesh::generateRegularPolygon(3, 100,colors);
 }
 
 RGBTriangle::~RGBTriangle()

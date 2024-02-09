@@ -30,8 +30,10 @@ protected:
 	void free();
 	void setGL();
 	void resetGL();
-
+	void makeScene1();
+	void makeScene2();
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 };
 
 #endif //_H_Scene_H_
+;

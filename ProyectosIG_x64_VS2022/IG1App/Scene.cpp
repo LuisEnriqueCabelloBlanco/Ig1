@@ -15,26 +15,28 @@ Scene::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
-	gObjects.push_back(new EjesRGB(400.0));
+	
+	makeScene1();
+	//gObjects.push_back(new EjesRGB(400.0));
 	//RegularPolygon* poli = new RegularPolygon(3, 200);
 	//poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
 	//gObjects.push_back(poli); //n lados, r radio en pixeles
 
-	/*RegularPolygon* poli2 = new RegularPolygon(40, 200);
-	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
-	gObjects.push_back(poli2); //n lados, r radio en pixeles*/
+	//RegularPolygon* poli2 = new RegularPolygon(40, 200);
+	//poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
+	//gObjects.push_back(poli2); //n lados, r radio en pixeles
 
-	/*RGBTriangle* poli3 = new RGBTriangle();
-	gObjects.push_back(poli3);*/
+	//RGBTriangle* poli3 = new RGBTriangle();
+	//gObjects.push_back(poli3);
 
-	/*RGBRectangle* poli4 = new RGBRectangle(200, 100);
-	gObjects.push_back(poli4);*/
+	//RGBRectangle* poli4 = new RGBRectangle(400, 200);
+	//gObjects.push_back(poli4);
 
 	//Cube* poli5 = new Cube(200);
 	//gObjects.push_back(poli5);
 
-	RGBCube* poli6 = new RGBCube(200);
-	gObjects.push_back(poli6);
+	/*RGBCube* poli6 = new RGBCube(200);
+	gObjects.push_back(poli6);*/
 }
 void
 Scene::free()
@@ -57,6 +59,30 @@ Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
+}
+
+void Scene::makeScene1()
+{
+	gObjects.clear();
+	gObjects.push_back(new EjesRGB(400.0));
+
+	RegularPolygon* poli2 = new RegularPolygon(40, 200);
+	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
+	gObjects.push_back(poli2); //n lados, r radio en pixeles
+
+	RGBTriangle* poli3 = new RGBTriangle();
+	gObjects.push_back(poli3);
+
+	RGBRectangle* poli4 = new RGBRectangle(400, 200);
+	gObjects.push_back(poli4);
+}
+
+void Scene::makeScene2()
+{
+	gObjects.clear();
+	gObjects.push_back(new EjesRGB(400.0));
+
+	gObjects.push_back(new RGBCube(200));
 }
 
 void
