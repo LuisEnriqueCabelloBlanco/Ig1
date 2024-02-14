@@ -15,8 +15,18 @@ Scene::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
-	
-	makeScene1();
+
+	switch(mId)
+	{
+	case 0:
+	    makeScene0();
+		break;
+	case 1:
+		makeScene1();
+		break;
+		default:
+			break;
+	}
 	//gObjects.push_back(new EjesRGB(400.0));
 	//RegularPolygon* poli = new RegularPolygon(3, 200);
 	//poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
@@ -61,7 +71,7 @@ Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 }
 
-void Scene::makeScene1()
+void Scene::makeScene0()
 {
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
@@ -77,7 +87,7 @@ void Scene::makeScene1()
 	gObjects.push_back(poli4);
 }
 
-void Scene::makeScene2()
+void Scene::makeScene1()
 {
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
@@ -93,4 +103,11 @@ Scene::render(Camera const& cam) const
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
 	}
+}
+
+void Scene::setScene(int id)
+{
+	mId = id;
+	free();
+	init();
 }
