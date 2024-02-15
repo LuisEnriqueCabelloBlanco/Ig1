@@ -76,11 +76,14 @@ void Scene::makeScene0()
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
-	RegularPolygon* poli2 = new RegularPolygon(40, 200);
+	int r = 200;
+
+	RegularPolygon* poli2 = new RegularPolygon(40, r);
 	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
 	gObjects.push_back(poli2); //n lados, r radio en pixeles
 
 	RGBTriangle* poli3 = new RGBTriangle();
+	poli3->setModelMat(glm::translate(poli3->modelMat(), glm::dvec3(r, 0, 0)));
 	gObjects.push_back(poli3);
 
 	RGBRectangle* poli4 = new RGBRectangle(400, 200);
@@ -102,6 +105,13 @@ Scene::render(Camera const& cam) const
 
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
+	}
+}
+
+void Scene::update()
+{
+	for (auto obj : gObjects) {
+		obj->update();
 	}
 }
 
