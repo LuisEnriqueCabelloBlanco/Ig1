@@ -83,5 +83,7 @@ public:
 	virtual void update();
 private:
 	double rotatedAngles = 0;
+	enum states { rotX, rotZ, rotY};
+	states currentState = rotX;
 };
 #endif //_H_Entities_H_

@@ -204,7 +204,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 		//meshDeliver->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 	}
 
-
+	delete auxMesh;
 	return meshDeliver;
 }
 

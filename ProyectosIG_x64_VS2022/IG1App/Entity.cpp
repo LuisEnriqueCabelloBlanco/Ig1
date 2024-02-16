@@ -190,11 +190,38 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 
 void RGBCube::update()
 {
-	dvec3 direcionRot = dvec3(1.0, 0.0, 0.0);
+	dvec3 direcionRot;
+	
+	switch (currentState) {
+	case rotX:
+		direcionRot = dvec3(1.0, 0.0, 0.0);
+		break;
+	case rotY:
+		direcionRot = dvec3(0.0, 1.0, 0.0);
+		break;
+	case rotZ:
+		direcionRot = dvec3(0.0, 0.0, 1.0);
+		break;
+	default:
+		break;
+	}
+
 
 	if (rotatedAngles >= 180) {
-
 		rotatedAngles = 0;
+		switch (currentState) {
+		case rotX:
+			currentState = rotZ;
+			break;
+		case rotY:
+			currentState = rotX;
+			break;
+		case rotZ:
+			currentState = rotY;
+			break;
+		default:
+			break;
+		}
 	}
 
 	glm::dmat4 rotMat = glm::rotate(dmat4(1.0), glm::radians(1.0), direcionRot);
