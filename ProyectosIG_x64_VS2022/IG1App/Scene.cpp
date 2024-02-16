@@ -94,8 +94,11 @@ void Scene::makeScene1()
 {
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
-
-	gObjects.push_back(new RGBCube(200));
+	double cubeSize = 200;
+	RGBCube* cubaso = new RGBCube(cubeSize);
+	cubeSize = cubeSize / 2;
+	cubaso->setModelMat(glm::translate(cubaso->modelMat(), glm::dvec3(cubeSize, cubeSize, -cubeSize)));
+	gObjects.push_back(cubaso);
 }
 
 void

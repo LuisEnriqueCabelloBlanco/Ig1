@@ -81,5 +81,7 @@ public:
 	~RGBCube();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update();
+private:
+	double rotatedAngles = 0;
 };
 #endif //_H_Entities_H_

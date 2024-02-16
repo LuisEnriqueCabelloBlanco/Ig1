@@ -163,6 +163,7 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 RGBCube::RGBCube(GLdouble length)
 {
 	mMesh = Mesh::generateRGBCubeTriangles(length);
+	
 }
 
 RGBCube::~RGBCube()
@@ -189,5 +190,14 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 
 void RGBCube::update()
 {
-	mModelMat = glm::rotate(mModelMat, glm::radians(1.0), glm::dvec3(1.0, 0.0, 0.0));
+	dvec3 direcionRot = dvec3(1.0, 0.0, 0.0);
+
+	if (rotatedAngles >= 180) {
+
+		rotatedAngles = 0;
+	}
+
+	glm::dmat4 rotMat = glm::rotate(dmat4(1.0), glm::radians(1.0), direcionRot);
+	rotatedAngles++;
+	mModelMat = rotMat* mModelMat;
 }
