@@ -98,6 +98,11 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 
+void RGBTriangle::update()
+{
+	mModelMat = glm::rotate(mModelMat, glm::radians(10.0), glm::dvec3(0.0, 0.0, -1.0));
+}
+
 
 RGBRectangle::RGBRectangle(GLdouble w,GLdouble h) {
 	mMesh = Mesh::generateRGBRectangle(w,h);

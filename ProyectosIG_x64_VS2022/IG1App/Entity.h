@@ -58,6 +58,7 @@ public:
 	explicit RGBTriangle();
 	~RGBTriangle();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
 };
 
 class RGBRectangle :public Abs_Entity {
