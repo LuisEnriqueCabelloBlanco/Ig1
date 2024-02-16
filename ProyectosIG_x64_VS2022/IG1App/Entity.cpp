@@ -100,7 +100,9 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	mModelMat = glm::rotate(mModelMat, glm::radians(10.0), glm::dvec3(0.0, 0.0, -1.0));
+	mModelMat = glm::rotate(mModelMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
+	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
+	mModelMat = circleRot * mModelMat;
 }
 
 
@@ -183,4 +185,9 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(1);
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
+}
+
+void RGBCube::update()
+{
+	mModelMat = glm::rotate(mModelMat, glm::radians(1.0), glm::dvec3(1.0, 0.0, 0.0));
 }

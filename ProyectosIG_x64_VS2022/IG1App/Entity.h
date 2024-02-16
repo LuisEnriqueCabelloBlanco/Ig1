@@ -80,5 +80,6 @@ public:
 	explicit RGBCube(GLdouble length);
 	~RGBCube();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
 };
 #endif //_H_Entities_H_
