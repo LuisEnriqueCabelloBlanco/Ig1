@@ -82,7 +82,8 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update();
 private:
-	double rotatedAngles = 0;
+	double rotSpeed = 0.05;
+	glm::f64 rotatedAngles = 0;
 	enum states { rotX, rotZ, rotY};
 	states currentState = rotX;
 };

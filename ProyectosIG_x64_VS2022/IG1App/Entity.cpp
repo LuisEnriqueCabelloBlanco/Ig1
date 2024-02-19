@@ -207,7 +207,7 @@ void RGBCube::update()
 	}
 
 
-	if (rotatedAngles >= 180) {
+	if (rotatedAngles > 180) {
 		rotatedAngles = 0;
 		switch (currentState) {
 		case rotX:
@@ -224,7 +224,7 @@ void RGBCube::update()
 		}
 	}
 
-	glm::dmat4 rotMat = glm::rotate(dmat4(1.0), glm::radians(1.0), direcionRot);
-	rotatedAngles++;
+	glm::dmat4 rotMat = glm::rotate(dmat4(1.0), glm::radians(rotSpeed), direcionRot);
+	rotatedAngles += rotSpeed;
 	mModelMat = rotMat* mModelMat;
 }
