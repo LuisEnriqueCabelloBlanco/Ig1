@@ -87,4 +87,11 @@ private:
 	enum states { rotX, rotZ, rotY};
 	states currentState = rotX;
 };
+
+class Ground : public Abs_Entity {
+public:
+	explicit Ground();
+	~Ground();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 #endif //_H_Entities_H_

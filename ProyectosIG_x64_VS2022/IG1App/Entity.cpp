@@ -228,3 +228,30 @@ void RGBCube::update()
 	rotatedAngles += rotSpeed;
 	mModelMat = rotMat* mModelMat;
 }
+
+Ground::Ground()
+{
+	mMesh = Mesh::generateRGBRectangle(500, 500);
+	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+}
+
+Ground::~Ground()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void Ground::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glLineWidth(2);
+		//esta instruccion ajusta que cara se pinta y con que modo
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
+		mMesh->render();
+		glLineWidth(1);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+	}
+}

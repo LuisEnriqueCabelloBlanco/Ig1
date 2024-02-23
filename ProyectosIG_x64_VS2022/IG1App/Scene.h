@@ -35,6 +35,7 @@ protected:
 	void resetGL();
 	void makeScene0();
 	void makeScene1();
+	void makeScene2();
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	int mId = 0;
 };

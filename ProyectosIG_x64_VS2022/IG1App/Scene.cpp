@@ -24,6 +24,9 @@ Scene::init()
 	case 1:
 		makeScene1();
 		break;
+	case 2:
+		 makeScene2();
+		break;
 		default:
 			break;
 	}
@@ -99,6 +102,12 @@ void Scene::makeScene1()
 	cubeSize = cubeSize / 2;
 	cubaso->setModelMat(glm::translate(cubaso->modelMat(), glm::dvec3(cubeSize, cubeSize, -cubeSize)));
 	gObjects.push_back(cubaso);
+}
+
+void Scene::makeScene2() {
+	gObjects.clear();
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(new Ground());
 }
 
 void

@@ -239,6 +239,14 @@ Mesh* Mesh::generateRGBCubeTriangles(GLdouble length)
 	return mesh;
 }
 
+Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
+{
+	Mesh* mesh = generateRectangle(w, h);
+
+
+	return nullptr;
+}
+
 
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
