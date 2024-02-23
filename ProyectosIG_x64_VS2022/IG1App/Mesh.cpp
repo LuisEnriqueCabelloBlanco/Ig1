@@ -29,11 +29,17 @@ Mesh::render() const
 			  4, GL_DOUBLE, 0, vColors.data()); // components number (rgba=4), type of
 			                                    // each component, stride, pointer
 		}
+		if (vTexture.size() > 0) {             // transfer colors
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexture.data());
+			// each component, stride, pointer
+		}
 
 		draw();
 
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 }
 
@@ -243,10 +249,20 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	Mesh* mesh = generateRectangle(w, h);
 
+	mesh->vColors.reserve(mesh->mNumVertices);
+	for (size_t i = 0; i < mesh->mNumVertices; i++)
+	{
+		mesh->vColors.emplace_back(dvec4(1.0, 1.0, 1.0, 1.0));
+	}
 
-	return nullptr;
+	mesh->vTexture.reserve(mesh->mNumVertices);
+	mesh ->vTexture.emplace_back(dvec2(1.0, 0.0));
+	mesh ->vTexture.emplace_back(dvec2(0.0, 0.0));
+	mesh ->vTexture.emplace_back(dvec2(1.0, 1.0));
+	mesh ->vTexture.emplace_back(dvec2(0.0, 1.0));
+
+	return mesh;
 }
-
 
 Mesh*
 Mesh::createRGBAxes(GLdouble l)

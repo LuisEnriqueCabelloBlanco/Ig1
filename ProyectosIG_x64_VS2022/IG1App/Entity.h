@@ -3,7 +3,7 @@
 
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
-
+#include "Texture.h"
 #include "Mesh.h"
 
 class Abs_Entity // abstract class
@@ -27,10 +27,14 @@ public:
 	glm::dvec4 const& getMColor() { return mColor; }
 	void setMColor(glm::dvec4 const& color) { mColor = color; }
 
+	Texture* const& getMTexture() { return mTexture; }
+	void setMTexture(Texture* texture) { mTexture = texture; }
+
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor ;  // color vector
+	Texture* mTexture; //texure pointer
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;

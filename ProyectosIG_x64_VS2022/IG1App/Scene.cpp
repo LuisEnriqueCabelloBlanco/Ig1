@@ -2,6 +2,7 @@
 #include "CheckML.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Texture.h"
 
 using namespace glm;
 
@@ -107,7 +108,13 @@ void Scene::makeScene1()
 void Scene::makeScene2() {
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
-	gObjects.push_back(new Ground());
+
+	auto ground = new Ground();
+	Texture* textura = new Texture();
+	textura->load("../textures/baldosaC.bmp");
+	ground->setMTexture(textura);
+	gObjects.push_back(ground);
+
 }
 
 void
