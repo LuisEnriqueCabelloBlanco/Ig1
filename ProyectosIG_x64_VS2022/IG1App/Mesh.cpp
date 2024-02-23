@@ -263,6 +263,22 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 	return mesh;
 }
 
+Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	Mesh* mesh = generateRectangleTexCor(w, h);
+
+	/*
+	* Al estar en GL_Repeat lo que hacemos es multiplicar la posición de las cordenadas de
+	* la textura y así conseguimos que se repita las veces que queremos
+	*/
+	for (int i = 0; i < mesh->mNumVertices; i++) {
+		mesh->vTexture[i].x *= rw;
+		mesh->vTexture[i].y *= rh;
+	}
+
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {

@@ -232,7 +232,7 @@ void RGBCube::update()
 Ground::Ground()
 {
 	//somos bobos y no habiamos cambiado la malla
-	mMesh = Mesh::generateRectangleTexCor(500, 500);
+	mMesh = Mesh::generateRectangleTexCor(500, 500,4,4);
 	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
 
 }
@@ -249,6 +249,7 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
 		mTexture->bind(GL_REPLACE);
+		//mTexture->setWrap(GL_REPEAT);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		mMesh->render();
