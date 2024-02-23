@@ -32,7 +32,6 @@ Mesh::render() const
 		if (vTexture.size() > 0) {             // transfer colors
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glTexCoordPointer(2, GL_DOUBLE, 0, vTexture.data());
-			// each component, stride, pointer
 		}
 
 		draw();

@@ -231,7 +231,8 @@ void RGBCube::update()
 
 Ground::Ground()
 {
-	mMesh = Mesh::generateRectangle(500, 500);
+	//somos bobos y no habiamos cambiado la malla
+	mMesh = Mesh::generateRectangleTexCor(500, 500);
 	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
 
 }
@@ -245,17 +246,14 @@ Ground::~Ground()
 void Ground::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-
-		glEnable(GL_TEXTURE_2D);
-		mTexture->bind(GL_MODULATE);
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
+		mTexture->bind(GL_REPLACE);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
 		mTexture->unbind();
-		glDisable(GL_TEXTURE_2D);
 	}
 }
