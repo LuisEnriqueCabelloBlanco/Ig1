@@ -98,4 +98,11 @@ public:
 	~Ground();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
+
+class BoxOutline : public Abs_Entity {
+public:
+	explicit BoxOutline(GLdouble length);
+	~BoxOutline();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 #endif //_H_Entities_H_

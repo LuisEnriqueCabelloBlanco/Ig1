@@ -117,6 +117,10 @@ void Scene::makeScene2() {
 	ground->setMTexture(textura);
 	gObjects.push_back(ground);
 
+	auto box = new BoxOutline(200);
+	gObjects.push_back(box);
+
+
 }
 
 void

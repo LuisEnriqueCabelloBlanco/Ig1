@@ -127,6 +127,7 @@ void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		glPolygonMode(GL_BACK, GL_LINE);
 		mMesh->render();
+		glPolygonMode(GL_FRONT, GL_LINE);
 		glFrontFace(GL_CCW);
 		glLineWidth(1);
 		glColor4d(0.0, 0.0, 0.0, 1.0);
@@ -249,12 +250,36 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
 		mTexture->bind(GL_REPLACE);
-		//mTexture->setWrap(GL_REPEAT);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		mTexture->unbind();
+	}
+}
+
+BoxOutline::BoxOutline(GLdouble length)
+{
+	mMesh = Mesh::generateBoxOutline(length);
+}
+
+BoxOutline::~BoxOutline()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void BoxOutline::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
-		mTexture->unbind();
 	}
 }

@@ -279,6 +279,46 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	return mesh;
 }
 
+Mesh* Mesh::generateBoxOutline(GLdouble length)
+{
+	Mesh* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	vector<dvec3> aux = {
+		dvec3(length / 2, length / 2, -length / 2),
+		dvec3(length / 2, -length / 2, -length / 2),
+		dvec3(-length / 2, -length / 2, -length / 2),
+		dvec3(-length / 2, length / 2, -length / 2),
+
+		dvec3(length / 2, length / 2, length / 2),
+		dvec3(length / 2, -length / 2, length / 2),
+		dvec3(-length / 2, -length / 2, length / 2),
+		dvec3(-length / 2, length / 2, length / 2),
+	};
+
+	
+	mesh->vVertices.emplace_back(aux[2]);
+	mesh->vVertices.emplace_back(aux[3]);
+	mesh->vVertices.emplace_back(aux[1]);
+	mesh->vVertices.emplace_back(aux[0]);
+	mesh->vVertices.emplace_back(aux[5]);
+	mesh->vVertices.emplace_back(aux[4]);
+	mesh->vVertices.emplace_back(aux[6]);
+	mesh->vVertices.emplace_back(aux[7]);
+	mesh->vVertices.emplace_back(aux[2]);
+	mesh->vVertices.emplace_back(aux[3]);
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+	for (int i = 0; i < mesh->mNumVertices; i++) {
+		mesh->vColors.emplace_back(dvec4(1.0, 1.0, 1.0, 1.0));
+	}
+
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {
