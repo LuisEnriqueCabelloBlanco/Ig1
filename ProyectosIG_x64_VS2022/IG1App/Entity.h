@@ -10,7 +10,7 @@ class Abs_Entity // abstract class
 {
 public:
 	Abs_Entity()
-	  : mModelMat(1.0), mColor(1), mTexture(nullptr) {}; // 4x4 identity matrix
+	  : mModelMat(1.0), mColor(1), mTexture(nullptr),mBackTexture(nullptr) {}; // 4x4 identity matrix
 	virtual ~Abs_Entity() = default;
 
 	Abs_Entity(const Abs_Entity& e) = delete;            // no copy constructor
@@ -107,6 +107,13 @@ class BoxOutline : public Abs_Entity {
 public:
 	explicit BoxOutline(GLdouble length);
 	~BoxOutline();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+class Star3D : public Abs_Entity {
+public:
+	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
+	~Star3D();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 #endif //_H_Entities_H_

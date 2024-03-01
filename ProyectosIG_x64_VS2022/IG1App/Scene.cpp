@@ -126,6 +126,9 @@ void Scene::makeScene2() {
 	box->setMBackTexture(texturaBack);
 	gObjects.push_back(box);
 
+	auto star = new Star3D(200, 6, 200);
+	gObjects.push_back(star);
+
 
 }
 

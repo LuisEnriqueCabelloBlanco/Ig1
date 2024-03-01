@@ -336,6 +336,33 @@ Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
 	return mesh;
 }
 
+Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+	mesh->mNumVertices = np * 2 + 1;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+
+	int radius;
+	double step = 360.0 / (np * 2.0);
+	double x;
+	double y;
+	double angle;
+	//caculo vertices poligono estrellado
+	for (int i = 0; i < np * 2; i++) {
+		if (i % 2 == 0) radius = re/2;
+		else radius = re;
+		angle = i * step;
+
+		x = 0 + radius * glm::cos(glm::radians(angle)); //formulitas
+		y = 0 + radius * glm::sin(glm::radians(angle));
+
+		mesh->vVertices.emplace_back(x, y, h);
+	}
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {
