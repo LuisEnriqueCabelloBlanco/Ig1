@@ -319,6 +319,23 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	return mesh;
 }
 
+Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
+{
+	Mesh* mesh = generateBoxOutline(length);
+	mesh->vTexture.reserve(mesh->mNumVertices);
+	mesh->vTexture.emplace_back(dvec2(0.0,0.0));
+	mesh->vTexture.emplace_back(dvec2(1.0, 0.0));
+	mesh->vTexture.emplace_back(dvec2(0.0,1.0));
+	mesh->vTexture.emplace_back(dvec2(1.0,1.0));	
+	mesh->vTexture.emplace_back(dvec2(0.0,0.0));
+	mesh->vTexture.emplace_back(dvec2(1.0, 0.0));
+	mesh->vTexture.emplace_back(dvec2(0.0,1.0));
+	mesh->vTexture.emplace_back(dvec2(1.0,1.0));
+	mesh->vTexture.emplace_back(dvec2(0.0, 0.0));
+	mesh->vTexture.emplace_back(dvec2(1.0, 0.0));
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {

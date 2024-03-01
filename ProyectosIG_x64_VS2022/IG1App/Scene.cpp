@@ -118,6 +118,12 @@ void Scene::makeScene2() {
 	gObjects.push_back(ground);
 
 	auto box = new BoxOutline(200);
+	Texture* textura2 = new Texture();
+	Texture* texturaBack = new Texture();
+	textura2->load("../textures/container.bmp");
+	texturaBack->load("../textures/papelE.bmp");
+	box->setMTexture(textura2);
+	box->setMBackTexture(texturaBack);
 	gObjects.push_back(box);
 
 

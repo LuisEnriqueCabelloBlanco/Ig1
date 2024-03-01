@@ -262,7 +262,7 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 
 BoxOutline::BoxOutline(GLdouble length)
 {
-	mMesh = Mesh::generateBoxOutline(length);
+	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }
 
 BoxOutline::~BoxOutline()
@@ -276,10 +276,23 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
+		glEnable(GL_CULL_FACE);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_BACK, GL_FILL);
+		mTexture->bind(GL_MODULATE);
+		glCullFace(GL_BACK);
 		mMesh->render();
+		mTexture->unbind();
+
+		mBackTexture->bind(GL_MODULATE);
+		glCullFace(GL_FRONT);
+		mMesh->render();
+		mBackTexture->unbind();
+
+
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
+		glDisable(GL_CULL_FACE);
 	}
 }

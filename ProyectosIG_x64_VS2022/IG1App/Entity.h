@@ -29,12 +29,16 @@ public:
 
 	Texture* const& getMTexture() { return mTexture; }
 	void setMTexture(Texture* texture) { mTexture = texture; }
+	
+	Texture* const& getMBackTexture() { return mBackTexture; }
+	void setMBackTexture(Texture* texture) { mBackTexture = texture; }
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor ;  // color vector
-	Texture* mTexture; //texure pointer
+	Texture* mTexture; //texure / fonrt texture pointer
+	Texture* mBackTexture; //back culling Texture pointer
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
