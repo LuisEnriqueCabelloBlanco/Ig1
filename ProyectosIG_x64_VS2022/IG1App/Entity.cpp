@@ -329,11 +329,22 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+		mMesh->render();
+
+		dmat4 aux = aMat * glm::rotate(dmat4(1), glm::radians(180.0), dvec3(1.0, 0.0, 0.0));
+		upload(aux);
 		mMesh->render();
 
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
 		//mTexture->unbind();
 	}
+}
+
+void Star3D::update()
+{
+	mModelMat = glm::rotate(mModelMat, glm::radians(1.0), dvec3(0.0, 0.0, 1.0));
+	dmat4 aux = glm::rotate(dmat4(1), glm::radians(1.0), dvec3(0.0, 1.0, 0.0));
+	mModelMat = aux * mModelMat;
 }

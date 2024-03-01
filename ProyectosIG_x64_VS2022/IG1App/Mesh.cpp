@@ -340,7 +340,7 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 {
 	Mesh* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_FAN;
-	mesh->mNumVertices = np * 2 + 1;
+	mesh->mNumVertices = np * 2 + 2;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
 
@@ -360,6 +360,9 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 
 		mesh->vVertices.emplace_back(x, y, h);
 	}
+	x = 0 + re/2 * glm::cos(glm::radians(0.0)); //formulitas
+	y = 0 + re/2 * glm::sin(glm::radians(0.0));
+	mesh->vVertices.emplace_back(x, y, h);
 	return mesh;
 }
 

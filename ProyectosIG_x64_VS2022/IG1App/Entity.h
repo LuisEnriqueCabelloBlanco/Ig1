@@ -115,5 +115,6 @@ public:
 	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
 	~Star3D();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
 };
 #endif //_H_Entities_H_
