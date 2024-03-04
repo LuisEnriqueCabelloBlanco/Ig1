@@ -366,6 +366,40 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 	return mesh;
 }
 
+Mesh* Mesh::generateBox(GLdouble length)
+{
+	Mesh* mesh = new Mesh();
+	mesh->mNumVertices = 18;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vColors.reserve(mesh->mNumVertices);
+	mesh->vTexture.reserve(mesh->mNumVertices);
+
+	Mesh* auxMesh1 = generateBoxOutlineTexCor(length);
+
+	for (int i = 0; i < auxMesh1->mNumVertices; i++)
+	{
+
+		mesh->vVertices.emplace_back(auxMesh1->vVertices[i]);
+		mesh->vColors.emplace_back(auxMesh1->vColors[i]);
+		mesh->vTexture.emplace_back(auxMesh1->vTexture[i]);
+	}
+
+	Mesh* auxMesh2 = generateRectangleTexCor(length, length);
+	dmat4 auxTransMat, auxRotMat;
+	auxTransMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, length / 2, 0.0));
+	auxRotMat = glm::rotate(auxTransMat, glm::radians(-90.0), glm::dvec3(1.0, 0.0, 0.0));
+
+	for (int i = 0; i < auxMesh2->mNumVertices; i++)
+	{
+
+		mesh->vVertices.emplace_back(auxRotMat * glm::vec4(auxMesh2->vVertices[i].x, auxMesh2->vVertices[i].y, auxMesh2->vVertices[i].z, 1));
+		mesh->vColors.emplace_back(auxMesh2->vColors[i]);
+		mesh->vTexture.emplace_back(auxMesh2->vTexture[i]);
+	}
+
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {

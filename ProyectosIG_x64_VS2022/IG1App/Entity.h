@@ -117,4 +117,11 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update();
 };
+
+class Box : public Abs_Entity {
+public:
+	explicit Box(GLdouble length);
+	~Box();
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_

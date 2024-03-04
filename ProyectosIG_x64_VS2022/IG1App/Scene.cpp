@@ -28,6 +28,9 @@ Scene::init()
 	case 2:
 		 makeScene2();
 		break;
+	case 3:
+		 makeScene3();
+		break;
 		default:
 			break;
 	}
@@ -130,6 +133,18 @@ void Scene::makeScene2() {
 	gObjects.push_back(star);
 
 
+}
+
+void Scene::makeScene3()
+{
+	gObjects.clear();
+	gObjects.push_back(new EjesRGB(400.0));
+
+	auto box = new Box(200);
+	Texture* textura = new Texture();
+	textura->load("../textures/container.bmp");
+	box->setMTexture(textura);
+	gObjects.push_back(box);
 }
 
 void

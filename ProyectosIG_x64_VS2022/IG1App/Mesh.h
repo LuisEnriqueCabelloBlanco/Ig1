@@ -35,6 +35,7 @@ public:
 	static Mesh* generateBoxOutline(GLdouble length);
 	static Mesh* generateBoxOutlineTexCor(GLdouble length);
 	static Mesh* generateStar3D(GLdouble re, GLuint np, GLdouble h);
+	static Mesh* generateBox(GLdouble length);
 
 protected:
 	GLuint mPrimitive =
