@@ -369,6 +369,7 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 Mesh* Mesh::generateBox(GLdouble length)
 {
 	Mesh* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 	mesh->mNumVertices = 18;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 	mesh->vColors.reserve(mesh->mNumVertices);
@@ -397,7 +398,7 @@ Mesh* Mesh::generateBox(GLdouble length)
 		mesh->vTexture.emplace_back(auxMesh2->vTexture[i]);
 	}
 
-	return mesh;
+	return mesh; 
 }
 
 Mesh*
