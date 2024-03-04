@@ -408,7 +408,7 @@ Mesh* Mesh::generateBox(GLdouble length)
 		mesh->vTexture.emplace_back(auxMesh2->vTexture[i]);
 	}
 
-	return mesh; 
+	return mesh; //la caja verse se ve como se quiere, como se va a hacer el update? pues ni puta idea no se si es posible habiendolo hecho asi, no se tengo sueño
 }
 
 Mesh*
