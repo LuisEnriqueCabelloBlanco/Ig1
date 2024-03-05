@@ -123,9 +123,14 @@ public:
 	explicit Box(GLdouble length);
 	~Box();
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
+	virtual void update();
 	Mesh* upperCase;
 	glm::dmat4 mModelMatUpperCase;
 	Mesh* underCase;
 	glm::dmat4 mModelMatUnderCase;
+	GLdouble mLength;
+	GLdouble rotatedAngle;
+	int rotationSing;
+	GLdouble rotationSpeed;
 };
 #endif //_H_Entities_H_

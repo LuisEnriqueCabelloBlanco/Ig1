@@ -351,6 +351,10 @@ void Star3D::update()
 
 Box::Box(GLdouble length)
 {
+	rotationSing = -1;
+	rotationSpeed = 1.0;
+	rotatedAngle = 0;
+	mLength = length;
 	mMesh = Mesh::generateBoxOutlineTexCor(length);
 	upperCase = Mesh::generateRectangleTexCor(length, length);
 	mModelMatUpperCase = glm::translate(dmat4(1.0),dvec3(0.0, length / 2, 0.0));
@@ -405,5 +409,22 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
 		glDisable(GL_CULL_FACE);
+	}
+}
+
+void Box::update()
+{
+	dmat4 rotation = glm::rotate(dmat4(1), glm::radians(rotationSpeed*rotationSing), glm::dvec3(0.0, 1.0, 0.0));
+	dmat4 traslation1 = glm::translate(dmat4(1), dvec3(-mLength/2, 0.0, 0.0));
+	dmat4 traslation2 = glm::translate(dmat4(1), dvec3(mLength/2, 0.0, 0.0));
+	mModelMatUpperCase = mModelMatUpperCase * traslation2 * rotation * traslation1;
+
+	rotatedAngle += rotationSpeed;
+	if (rotatedAngle > 180) {
+		if (rotationSing == -1)
+			rotationSing = 1;
+		else 
+			rotationSing = -1;
+		rotatedAngle = 0;
 	}
 }
