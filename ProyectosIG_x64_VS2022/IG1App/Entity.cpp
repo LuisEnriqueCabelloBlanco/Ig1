@@ -230,10 +230,10 @@ void RGBCube::update()
 	mModelMat = rotMat* mModelMat;
 }
 
-Ground::Ground()
+Ground::Ground(GLdouble w, GLdouble h)
 {
 	//somos bobos y no habiamos cambiado la malla
-	mMesh = Mesh::generateRectangleTexCor(500, 500,4,4);
+	mMesh = Mesh::generateRectangleTexCor(w, h,4,4);
 	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
 
 }
@@ -325,11 +325,11 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
-		//mTexture->bind(GL_REPLACE);
+		mTexture->bind(GL_MODULATE);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_FILL);
 		mMesh->render();
 
 		dmat4 aux = aMat * glm::rotate(dmat4(1), glm::radians(180.0), dvec3(1.0, 0.0, 0.0));
@@ -338,7 +338,7 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
-		//mTexture->unbind();
+		mTexture->unbind();
 	}
 }
 
@@ -351,7 +351,13 @@ void Star3D::update()
 
 Box::Box(GLdouble length)
 {
-	mMesh = Mesh::generateBox(length);
+	mMesh = Mesh::generateBoxOutlineTexCor(length);
+	upperCase = Mesh::generateRectangleTexCor(length, length);
+	mModelMatUpperCase = glm::translate(dmat4(1.0),dvec3(0.0, length / 2, 0.0));
+	mModelMatUpperCase = glm::rotate(dmat4(mModelMatUpperCase), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+	underCase = Mesh::generateRectangleTexCor(length, length);
+	mModelMatUnderCase = glm::translate(dmat4(1.0),dvec3(0.0, -length / 2, 0.0));
+	mModelMatUnderCase = glm::rotate(mModelMatUnderCase, glm::radians(-90.0), glm::dvec3(1.0, 0.0, 0.0));
 }
 
 Box::~Box()
@@ -375,13 +381,25 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);
 		glCullFace(GL_BACK);
+
 		mMesh->render();
+		upload(aMat*mModelMatUpperCase);
+		upperCase->render();
+		upload(aMat*mModelMatUnderCase);
+		underCase->render();
+
 		mTexture->unbind();
 
-		mTexture->bind(GL_MODULATE);
+		mBackTexture->bind(GL_MODULATE);
 		glCullFace(GL_FRONT);
+		upload(aMat);
 		mMesh->render();
-		mTexture->unbind();
+		upload(aMat * mModelMatUpperCase);
+		upperCase->render();
+		upload(aMat * mModelMatUnderCase);
+		underCase->render();
+
+		mBackTexture->unbind();
 
 
 		glColor4d(0.0, 0.0, 0.0, 1.0);

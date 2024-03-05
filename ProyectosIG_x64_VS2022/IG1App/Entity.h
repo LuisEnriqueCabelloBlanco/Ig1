@@ -98,7 +98,7 @@ private:
 
 class Ground : public Abs_Entity {
 public:
-	explicit Ground();
+	explicit Ground(GLdouble w, GLdouble h);
 	~Ground();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
@@ -123,5 +123,9 @@ public:
 	explicit Box(GLdouble length);
 	~Box();
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
+	Mesh* upperCase;
+	glm::dmat4 mModelMatUpperCase;
+	Mesh* underCase;
+	glm::dmat4 mModelMatUnderCase;
 };
 #endif //_H_Entities_H_

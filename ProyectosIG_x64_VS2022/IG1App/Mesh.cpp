@@ -339,10 +339,31 @@ Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
 Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 {
 	Mesh* mesh = new Mesh();
+
+	vector<dvec2> texCoords = {
+		dvec2(1,0.75),
+		dvec2(1,1),
+		dvec2(0.75,1),
+		dvec2(0.5,1),
+		dvec2(0.25,1),
+		dvec2(0,1),
+		dvec2(0,0.75),
+		dvec2(0,0.5),
+		dvec2(0,0.25),
+		dvec2(0,0),
+		dvec2(0.25,0),
+		dvec2(0.5,0),
+		dvec2(0.75,0),
+		dvec2(1,0),
+		dvec2(1,0.25),
+		dvec2(1,0.5)
+	};
 	mesh->mPrimitive = GL_TRIANGLE_FAN;
 	mesh->mNumVertices = np * 2 + 2;
 	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vTexture.reserve(mesh->mNumVertices);
 	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+	mesh->vTexture.emplace_back(0.5, 0.5);
 
 	int radius;
 	double step = 360.0 / (np * 2.0);
@@ -359,6 +380,7 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 		y = 0 + radius * glm::sin(glm::radians(angle));
 
 		mesh->vVertices.emplace_back(x, y, h);
+		mesh->vTexture.emplace_back(texCoords[i % texCoords.size()]);
 	}
 	x = 0 + re/2 * glm::cos(glm::radians(0.0)); //formulitas
 	y = 0 + re/2 * glm::sin(glm::radians(0.0));

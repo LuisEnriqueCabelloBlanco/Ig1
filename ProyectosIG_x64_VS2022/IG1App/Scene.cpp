@@ -114,7 +114,7 @@ void Scene::makeScene2() {
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
-	auto ground = new Ground();
+	auto ground = new Ground(500,500);
 	Texture* textura = new Texture();
 	textura->load("../textures/baldosaC.bmp");
 	ground->setMTexture(textura);
@@ -129,8 +129,11 @@ void Scene::makeScene2() {
 	box->setMBackTexture(texturaBack);
 	gObjects.push_back(box);
 
-	auto star = new Star3D(200, 6, 200);
+	auto star = new Star3D(200, 8, 200);
 	gObjects.push_back(star);
+	Texture* texture = new Texture();
+	texture->load("../textures/baldosaP.bmp");
+	star->setMTexture(texture);
 
 
 }
@@ -144,6 +147,9 @@ void Scene::makeScene3()
 	Texture* textura = new Texture();
 	textura->load("../textures/container.bmp");
 	box->setMTexture(textura);
+	Texture* textura2 = new Texture();
+	textura2->load("../textures/papelE.bmp");
+	box->setMBackTexture(textura2);
 	gObjects.push_back(box);
 }
 
