@@ -133,4 +133,11 @@ public:
 	int rotationSing;
 	GLdouble rotationSpeed;
 };
+
+class GlassParapet : public Abs_Entity {
+public:
+	explicit GlassParapet();
+	~GlassParapet();
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_

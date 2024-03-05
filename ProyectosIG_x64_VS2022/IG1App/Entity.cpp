@@ -367,10 +367,18 @@ Box::Box(GLdouble length)
 Box::~Box()
 {
 	delete mMesh;
+	delete underCase;
+	delete upperCase;
 	mMesh = nullptr;
+	upperCase = nullptr;
+	underCase = nullptr;
 	if (mTexture != nullptr) {
 		delete mTexture;
 		mTexture = nullptr;
+	}
+	if (mBackTexture != nullptr) {
+		delete mBackTexture;
+		mBackTexture = nullptr;
 	}
 }
 
@@ -426,5 +434,39 @@ void Box::update()
 		else 
 			rotationSing = -1;
 		rotatedAngle = 0;
+	}
+}
+
+GlassParapet::GlassParapet()
+{
+	mMesh = Mesh::generateBoxOutlineTexCor(700);
+}
+
+GlassParapet::~GlassParapet()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void GlassParapet::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		mTexture->bind(GL_MODULATE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		glDisable(GL_BLEND);
+		mTexture->unbind();
 	}
 }

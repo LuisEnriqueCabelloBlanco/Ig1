@@ -151,6 +151,13 @@ void Scene::makeScene3()
 	textura2->load("../textures/papelE.bmp");
 	box->setMBackTexture(textura2);
 	gObjects.push_back(box);
+
+
+	auto parapet = new GlassParapet();
+	Texture* textura3 = new Texture();
+	textura3->load("../textures/windowV.bmp",200U);
+	parapet->setMTexture(textura3);
+	gObjects.push_back(parapet);
 }
 
 void
