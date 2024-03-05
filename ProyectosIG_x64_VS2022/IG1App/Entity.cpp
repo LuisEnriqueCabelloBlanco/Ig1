@@ -253,7 +253,7 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
-		mTexture->bind(GL_REPLACE);
+		mTexture->bind(GL_MODULATE);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		glPolygonMode(GL_FRONT, GL_FILL);
@@ -463,6 +463,40 @@ void GlassParapet::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		glDisable(GL_BLEND);
+		mTexture->unbind();
+	}
+}
+
+Grass::Grass()
+{
+	mMesh = Mesh::generateRectangleTexCor(50, 50);
+}
+
+Grass::~Grass()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void Grass::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		mTexture->bind(GL_REPLACE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+		upload(glm::rotate(aMat, glm::radians(60.0), dvec3(0.0, 1.0, 0.0)));
+		mMesh->render();
+		upload(glm::rotate(aMat, glm::radians(120.0), dvec3(0.0, 1.0, 0.0)));
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);

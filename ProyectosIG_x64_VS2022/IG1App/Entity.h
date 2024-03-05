@@ -140,4 +140,10 @@ public:
 	~GlassParapet();
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
+class Grass : public Abs_Entity {
+public:
+	explicit Grass();
+	~Grass();
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_

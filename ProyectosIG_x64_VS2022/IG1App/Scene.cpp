@@ -120,14 +120,11 @@ void Scene::makeScene2() {
 	ground->setMTexture(textura);
 	gObjects.push_back(ground);
 
-	auto box = new BoxOutline(200);
+	auto grass = new Grass();
 	Texture* textura2 = new Texture();
-	Texture* texturaBack = new Texture();
-	textura2->load("../textures/container.bmp");
-	texturaBack->load("../textures/papelE.bmp");
-	box->setMTexture(textura2);
-	box->setMBackTexture(texturaBack);
-	gObjects.push_back(box);
+	textura2->load("../textures/grass.bmp", u8vec3(0, 0, 0), 0);
+	grass->setMTexture(textura2);
+	gObjects.push_back(grass);
 
 	auto star = new Star3D(200, 8, 200);
 	gObjects.push_back(star);
