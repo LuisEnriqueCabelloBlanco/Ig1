@@ -164,7 +164,7 @@ IG1App::key(unsigned char key, int x, int y)
 			pause = !pause;
 			break;
 	    case 'F':
-            //foton
+			PixMap32RGBA().save_bmp24BGR("save.bmp");
 			break;
 		default:
 			need_redisplay = false;
