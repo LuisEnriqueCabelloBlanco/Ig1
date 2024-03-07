@@ -127,15 +127,15 @@ void Scene::makeScene2() {
 	grass->setModelMat(glm::translate(grass->modelMat(), glm::dvec3(200, 25, 200)));
 	gObjects.push_back(grass);
 
-	auto star = new Star3D(200, 8, 200);
+	/*auto star = new Star3D(200, 8, 200);
 	gObjects.push_back(star);
 	Texture* texture = new Texture();
 	texture->load("../textures/baldosaP.bmp");
-	star->setMTexture(texture);
+	star->setMTexture(texture);*/
 
-	auto photo = new Photo(200, 200, GL_FRONT);
+	auto photo = new Photo(GLUT_SCREEN_WIDTH/2, GLUT_SCREEN_HEIGHT/2, GL_FRONT);
 	Texture* textura4 = new Texture();
-	textura4->loadColorBuffer(200, 200, GL_FRONT);
+	textura4->loadColorBuffer(GLUT_SCREEN_WIDTH/2, GLUT_SCREEN_HEIGHT/2, GL_FRONT);
 	photo->setMTexture(textura4);
 	gObjects.push_back(photo);
 }
