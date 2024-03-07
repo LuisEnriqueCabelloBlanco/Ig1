@@ -136,7 +136,7 @@ public:
 
 class GlassParapet : public Abs_Entity {
 public:
-	explicit GlassParapet();
+	explicit GlassParapet(int size);
 	~GlassParapet();
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };

@@ -152,12 +152,19 @@ IG1App::key(unsigned char key, int x, int y)
 			mScene->setScene(3);
 			mCamera->set3D();
 			break;
+		case '4':
+			mScene->setScene(4);
+			mCamera->set3D();
+			break;
 		case 'u':
 			if(pause)
 				mScene->update();
 			break;
 		case 'U':
 			pause = !pause;
+			break;
+	    case 'F':
+            //foton
 			break;
 		default:
 			need_redisplay = false;

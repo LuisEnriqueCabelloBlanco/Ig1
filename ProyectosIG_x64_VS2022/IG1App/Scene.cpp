@@ -31,6 +31,9 @@ Scene::init()
 	case 3:
 		 makeScene3();
 		break;
+	case 4:
+		makeScene4();
+		break;
 		default:
 			break;
 	}
@@ -127,11 +130,11 @@ void Scene::makeScene2() {
 	grass->setModelMat(glm::translate(grass->modelMat(), glm::dvec3(200, 25, 200)));
 	gObjects.push_back(grass);
 
-	/*auto star = new Star3D(200, 8, 200);
+	auto star = new Star3D(200, 8, 200);
 	gObjects.push_back(star);
 	Texture* texture = new Texture();
 	texture->load("../textures/baldosaP.bmp");
-	star->setMTexture(texture);*/
+	star->setMTexture(texture);
 	
 	auto photo = new Photo(glutGet(GLUT_WINDOW_WIDTH)/5, glutGet(GLUT_WINDOW_HEIGHT)/5, GL_FRONT);
 	Texture* textura4 = new Texture();
@@ -155,7 +158,7 @@ void Scene::makeScene3()
 	gObjects.push_back(box);
 
 
-	auto parapet = new GlassParapet();
+	auto parapet = new GlassParapet(500);
 	Texture* textura3 = new Texture();
 	textura3->load("../textures/windowV.bmp",200U);
 	parapet->setMTexture(textura3);
@@ -163,6 +166,39 @@ void Scene::makeScene3()
 
 }
 
+void Scene::makeScene4()
+{
+	gObjects.clear();
+
+
+	auto ground = new Ground(500, 500);
+	Texture* textura = new Texture();
+	textura->load("../textures/baldosaC.bmp");
+	ground->setMTexture(textura);
+	gObjects.push_back(ground);
+
+	auto box = new Box(100);
+	Texture* textura1 = new Texture();
+	textura1->load("../textures/container.bmp");
+	box->setMTexture(textura1);
+	Texture* textura2 = new Texture();
+	textura2->load("../textures/papelE.bmp");
+	box->setMBackTexture(textura2);
+	box->setModelMat(glm::translate(box->modelMat(), glm::dvec3(-199, 50, 199)));
+	gObjects.push_back(box);
+
+	auto star = new Star3D(50, 8, 25);
+	Texture* texture = new Texture();
+	texture->load("../textures/baldosaP.bmp");
+	star->setMTexture(texture);
+	gObjects.push_back(star);
+
+	auto parapet = new GlassParapet(500);
+	Texture* textura3 = new Texture();
+	textura3->load("../textures/windowV.bmp", 200U);
+	parapet->setMTexture(textura3);
+	gObjects.push_back(parapet);
+}
 void
 Scene::render(Camera const& cam) const
 {

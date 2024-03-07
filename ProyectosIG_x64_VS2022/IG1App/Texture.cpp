@@ -87,15 +87,6 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
 
 void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 {
-	/*if (mId == 0) init();
-
-	mWidth = width;
-	mHeight = height;
-
-	GLint level = 0;   //Base image level
-	GLint border = 0;  //No border
-
-	*/
 	if (mId == 0) init();
 
 	glReadBuffer(buffer);

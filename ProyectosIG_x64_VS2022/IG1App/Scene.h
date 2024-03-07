@@ -37,6 +37,7 @@ protected:
 	void makeScene1();
 	void makeScene2();
 	void makeScene3();
+	void makeScene4();
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	int mId = 0;
 };
