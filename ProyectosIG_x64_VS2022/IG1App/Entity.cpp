@@ -350,7 +350,7 @@ void Star3D::update()
 {
 	mModelMat = glm::rotate(mModelMat, glm::radians(1.0), dvec3(0.0, 0.0, 1.0));
 	dmat4 aux = glm::rotate(dmat4(1), glm::radians(1.0), dvec3(0.0, 1.0, 0.0));
-	mModelMat = aux * mModelMat;
+	mModelMat =  mModelMat * aux;
 }
 
 Box::Box(GLdouble length)
@@ -477,7 +477,7 @@ void GlassParapet::render(glm::dmat4 const& modelViewMat) const
 
 Grass::Grass()
 {
-	mMesh = Mesh::generateRectangleTexCor(50, 50);
+	mMesh = Mesh::generateRectangleTexCor(100, 100);
 }
 
 Grass::~Grass()
@@ -493,6 +493,8 @@ Grass::~Grass()
 void Grass::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0);
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); //mandar mesh a gpu
 		mTexture->bind(GL_REPLACE);
@@ -509,6 +511,7 @@ void Grass::render(glm::dmat4 const& modelViewMat) const
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
 		glDisable(GL_BLEND);
+		glDisable(GL_ALPHA_TEST);
 		mTexture->unbind();
 	}
 }

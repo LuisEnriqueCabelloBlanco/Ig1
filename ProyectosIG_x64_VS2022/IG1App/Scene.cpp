@@ -184,14 +184,28 @@ void Scene::makeScene4()
 	Texture* textura2 = new Texture();
 	textura2->load("../textures/papelE.bmp");
 	box->setMBackTexture(textura2);
-	box->setModelMat(glm::translate(box->modelMat(), glm::dvec3(-199, 50, 199)));
+	box->setModelMat(glm::translate(box->modelMat(), glm::dvec3(-199, 51, 199)));
 	gObjects.push_back(box);
 
 	auto star = new Star3D(50, 8, 25);
 	Texture* texture = new Texture();
 	texture->load("../textures/baldosaP.bmp");
 	star->setMTexture(texture);
+	star->setModelMat(glm::translate(star->modelMat(), glm::dvec3(-199, 150, 199)));
 	gObjects.push_back(star);
+
+	auto grass = new Grass();
+	Texture* textura4 = new Texture();
+	textura4->load("../textures/grass.bmp", u8vec3(0, 0, 0), 0);
+	grass->setMTexture(textura4);
+	grass->setModelMat(glm::translate(grass->modelMat(), glm::dvec3(200, 50, -200)));
+	gObjects.push_back(grass);
+
+	auto photo = new Photo(glutGet(GLUT_WINDOW_WIDTH) / 5, glutGet(GLUT_WINDOW_HEIGHT) / 5, GL_FRONT);
+	Texture* textura5 = new Texture();
+	textura5->loadColorBuffer(GLUT_SCREEN_WIDTH / 2, GLUT_SCREEN_HEIGHT / 2, GL_FRONT);
+	photo->setMTexture(textura5);
+	gObjects.push_back(photo);
 
 	auto parapet = new GlassParapet(500);
 	Texture* textura3 = new Texture();
