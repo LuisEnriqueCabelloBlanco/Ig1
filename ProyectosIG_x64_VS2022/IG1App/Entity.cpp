@@ -318,6 +318,10 @@ Star3D::~Star3D()
 {
 	delete mMesh;
 	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
 }
 
 void Star3D::render(glm::dmat4 const& modelViewMat) const
