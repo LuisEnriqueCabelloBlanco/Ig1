@@ -504,3 +504,40 @@ void Grass::render(glm::dmat4 const& modelViewMat) const
 		mTexture->unbind();
 	}
 }
+
+Photo::Photo(GLsizei width, GLsizei height, GLuint buffer) : _width(width), _height(height), _buffer(buffer)
+{
+	mMesh = Mesh::generateRectangleTexCor(_width, _height, 1, 1);
+	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+}
+
+Photo::~Photo()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void Photo::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		mTexture->bind(GL_MODULATE);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		mTexture->unbind();
+	}
+}
+
+void Photo::update()
+{
+	mTexture->loadColorBuffer(_width, _height, _buffer);
+}	

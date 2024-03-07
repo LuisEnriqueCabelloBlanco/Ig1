@@ -146,4 +146,16 @@ public:
 	~Grass();
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
+
+class Photo : public Abs_Entity
+{
+protected:
+	GLsizei _width, _height;
+	GLuint _buffer;
+public:
+	explicit Photo(GLsizei width, GLsizei height, GLuint buffer);
+	~Photo();
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+	virtual void update();
+};
 #endif //_H_Entities_H_

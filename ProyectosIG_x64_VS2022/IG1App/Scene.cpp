@@ -132,7 +132,12 @@ void Scene::makeScene2() {
 	texture->load("../textures/baldosaP.bmp");
 	star->setMTexture(texture);
 
-
+	auto photo = new Photo(200, 200, GL_FRONT);
+	Texture* textura4 = new Texture();
+	textura4->loadColorBuffer(200, 200, GL_FRONT);
+	photo->setMTexture(textura4);
+	photo->setModelMat(glm::translate(photo->modelMat(), glm::dvec3(0, 0, -10)));
+	gObjects.push_back(photo);
 }
 
 void Scene::makeScene3()
@@ -155,6 +160,7 @@ void Scene::makeScene3()
 	textura3->load("../textures/windowV.bmp",200U);
 	parapet->setMTexture(textura3);
 	gObjects.push_back(parapet);
+
 }
 
 void

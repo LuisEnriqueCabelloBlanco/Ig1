@@ -84,3 +84,32 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
   glBindTexture(GL_TEXTURE_2D, 0); 
 }
 //-------------------------------------------------------------------------
+
+void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
+{
+	/*if (mId == 0) init();
+
+	mWidth = width;
+	mHeight = height;
+
+	GLint level = 0;   //Base image level
+	GLint border = 0;  //No border
+
+	*/
+	if (mId == 0) init();
+
+	glReadBuffer(buffer);
+
+	mWidth = width;
+	mHeight = height;
+
+	GLint level = 0;   //Base image level
+	GLint border = 0;  //No border
+
+	glBindTexture(GL_TEXTURE_2D, mId);
+	glCopyTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 0, GLUT_SCREEN_HEIGHT, mWidth, mHeight, border);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+//-------------------------------------------------------------------------x
+
