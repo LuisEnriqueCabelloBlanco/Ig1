@@ -108,7 +108,7 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 
 	glBindTexture(GL_TEXTURE_2D, mId);
 	glCopyTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), border);
-
+	//Las coordenadas son como en el VIEWPORT ((0, 0) está abajo a la izq (TE LO DIJE LUIS), y a partir de ahí con width y height se hace el area que se quiere)	
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 //-------------------------------------------------------------------------x
