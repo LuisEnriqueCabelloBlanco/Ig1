@@ -107,7 +107,7 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 	GLint border = 0;  //No border
 
 	glBindTexture(GL_TEXTURE_2D, mId);
-	glCopyTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 0, GLUT_SCREEN_HEIGHT, mWidth, mHeight, border);
+	glCopyTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), border);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

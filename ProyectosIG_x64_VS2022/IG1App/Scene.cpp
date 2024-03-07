@@ -132,8 +132,8 @@ void Scene::makeScene2() {
 	Texture* texture = new Texture();
 	texture->load("../textures/baldosaP.bmp");
 	star->setMTexture(texture);*/
-
-	auto photo = new Photo(GLUT_SCREEN_WIDTH/2, GLUT_SCREEN_HEIGHT/2, GL_FRONT);
+	
+	auto photo = new Photo(glutGet(GLUT_WINDOW_WIDTH)/5, glutGet(GLUT_WINDOW_HEIGHT)/5, GL_FRONT);
 	Texture* textura4 = new Texture();
 	textura4->loadColorBuffer(GLUT_SCREEN_WIDTH/2, GLUT_SCREEN_HEIGHT/2, GL_FRONT);
 	photo->setMTexture(textura4);
