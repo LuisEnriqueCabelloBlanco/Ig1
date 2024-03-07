@@ -124,6 +124,7 @@ void Scene::makeScene2() {
 	Texture* textura2 = new Texture();
 	textura2->load("../textures/grass.bmp", u8vec3(0, 0, 0), 0);
 	grass->setMTexture(textura2);
+	grass->setModelMat(glm::translate(grass->modelMat(), glm::dvec3(200, 25, 200)));
 	gObjects.push_back(grass);
 
 	auto star = new Star3D(200, 8, 200);
@@ -136,7 +137,6 @@ void Scene::makeScene2() {
 	Texture* textura4 = new Texture();
 	textura4->loadColorBuffer(200, 200, GL_FRONT);
 	photo->setMTexture(textura4);
-	photo->setModelMat(glm::translate(photo->modelMat(), glm::dvec3(0, 0, -10)));
 	gObjects.push_back(photo);
 }
 

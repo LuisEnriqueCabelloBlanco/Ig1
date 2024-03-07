@@ -480,6 +480,10 @@ Grass::~Grass()
 {
 	delete mMesh;
 	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
 }
 
 void Grass::render(glm::dmat4 const& modelViewMat) const
@@ -508,7 +512,8 @@ void Grass::render(glm::dmat4 const& modelViewMat) const
 Photo::Photo(GLsizei width, GLsizei height, GLuint buffer) : _width(width), _height(height), _buffer(buffer)
 {
 	mMesh = Mesh::generateRectangleTexCor(_width, _height, 1, 1);
-	mModelMat = glm::rotate(dmat4(1.0), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
+	mModelMat = glm::translate(dmat4(1.0), glm::dvec3(0, 10, 0));
+	mModelMat = glm::rotate(modelMat(), glm::radians(90.0), glm::dvec3(1.0, 0.0, 0.0));
 }
 
 Photo::~Photo()
