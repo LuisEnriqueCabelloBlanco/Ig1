@@ -31,6 +31,8 @@ public:
 
   void loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer = GL_FRONT);
 
+  void saveData(const std::string& BMP_Name);
+
 protected:
 
   void init();

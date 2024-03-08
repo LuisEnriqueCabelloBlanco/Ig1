@@ -164,7 +164,7 @@ IG1App::key(unsigned char key, int x, int y)
 			pause = !pause;
 			break;
 	    case 'F':
-			PixMap32RGBA().save_bmp24BGR("save.bmp");
+			savePhoto();
 			break;
 		default:
 			need_redisplay = false;
@@ -217,4 +217,13 @@ void IG1App::update()
 		mScene->update();
 		glutPostRedisplay();
 	}
+}
+
+void IG1App::savePhoto()
+{
+	Texture* tex = new Texture();
+
+	tex->loadColorBuffer(800, 600);
+
+	tex->saveData("save.bmp");
 }

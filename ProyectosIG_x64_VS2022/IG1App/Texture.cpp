@@ -102,5 +102,19 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 	//Las coordenadas son como en el VIEWPORT ((0, 0) esta abajo a la izq (TE LO DIJE LUIS), y a partir de ahi con width y height se hace el area que se quiere)	
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void Texture::saveData(const std::string& BMP_Name)
+{
+	PixMap32RGBA pixMap;
+
+	pixMap.reserve(mWidth, mHeight);
+
+	glBindTexture(GL_TEXTURE_2D, mId);
+
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap.data());
+
+	pixMap.save_bmp24BGR(BMP_Name);
+
+}
 //-------------------------------------------------------------------------x
 
