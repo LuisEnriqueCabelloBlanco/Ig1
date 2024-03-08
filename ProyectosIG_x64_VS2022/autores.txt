@@ -1,4 +1,4 @@
 Luis Enrique Cabello Blanco
 David Canelada Velasco
 
-Se ha hecho el ejercicio opcional del cubo que rota
+Se han hecho todos los ejercicios opcionales
