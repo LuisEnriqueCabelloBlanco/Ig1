@@ -166,6 +166,9 @@ IG1App::key(unsigned char key, int x, int y)
 	    case 'F':
 			savePhoto();
 			break;
+		case 'p':
+			mCamera->changePrj();
+			break;
 		default:
 			need_redisplay = false;
 			break;

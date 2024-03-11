@@ -25,6 +25,12 @@ public:
 	void yaw(GLdouble a);   // rotates a degrees on the Y axis
 	void roll(GLdouble a);  // rotates a degrees on the Z axis
 
+	void moveLR(GLdouble cs); //move left or right
+	void moveFB(GLdouble cs); //move forward or backwards
+	void moveUD(GLdouble cs); //move up or down
+
+	void changePrj();
+
 	// projection matrix
 	glm::dmat4 const& projMat() const { return mProjMat; };
 
@@ -58,6 +64,10 @@ protected:
 	bool bOrto = true;                      // orthogonal or perspective projection
 
 	Viewport* mViewPort; // the viewport
+
+	glm::dvec3 mRight, mUpward, mFront;
+
+	void setAxes();
 
 	void setVM();
 	void setPM();

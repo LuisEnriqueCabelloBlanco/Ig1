@@ -2,8 +2,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-// #include <glm/gtc/matrix_access.hpp>
-
+#include <glm/gtc/matrix_access.hpp>
+#include <iostream>
 using namespace glm;
 
 Camera::Camera(Viewport* vp)
@@ -25,10 +25,18 @@ Camera::uploadVM() const
 	glLoadMatrixd(value_ptr(mViewMat)); // transfers view matrix to the GPU
 }
 
+void Camera::setAxes()
+{
+	mRight = glm::row(mViewMat,0);
+	mUpward = glm::row(mViewMat,1);
+	mFront = glm::row(mViewMat,2);
+}
+
 void
 Camera::setVM()
 {
 	mViewMat = lookAt(mEye, mLook, mUp); // glm::lookAt defines the view matrix
+	setAxes();
 }
 
 void
@@ -54,6 +62,7 @@ Camera::pitch(GLdouble a)
 {
 	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
 	// glm::rotate returns mViewMat * rotationMatrix
+	setAxes();
 }
 
 void
@@ -61,6 +70,7 @@ Camera::yaw(GLdouble a)
 {
 	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
 	// glm::rotate returns mViewMat * rotationMatrix
+	setAxes();
 }
 
 void
@@ -68,6 +78,34 @@ Camera::roll(GLdouble a)
 {
 	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
 	// glm::rotate returns mViewMat * rotationMatrix
+	setAxes();
+}
+
+void Camera::moveLR(GLdouble cs)
+{
+	mEye += mRight * cs;
+	mLook += mRight * cs;
+	setVM();
+}
+
+void Camera::moveFB(GLdouble cs)
+{
+	mEye += mFront * cs;
+	mLook += mFront * cs;
+	setVM();
+}
+
+void Camera::moveUD(GLdouble cs)
+{
+	mEye += mUpward;
+	mLook += mUpward;
+	setVM();
+}
+
+void Camera::changePrj()
+{
+	bOrto = !bOrto;
+	setPM();
 }
 
 void
@@ -83,9 +121,14 @@ Camera::setSize(GLdouble xw, GLdouble yh)
 void
 Camera::setScale(GLdouble s)
 {
+
 	mScaleFact -= s;
 	if (mScaleFact < 0)
 		mScaleFact = 0.01;
+
+	if (!bOrto) {
+		mEye += mFront * s;
+	}
 	setPM();
 }
 
@@ -100,6 +143,14 @@ Camera::setPM()
 		                 mNearVal,
 		                 mFarVal);
 		// glm::ortho defines the orthogonal projection matrix
+	}
+	else {
+		mProjMat = frustum(xLeft * mScaleFact,
+			xRight * mScaleFact,
+			yBot * mScaleFact,
+			yTop * mScaleFact,
+			yTop,
+			mFarVal);
 	}
 }
 
