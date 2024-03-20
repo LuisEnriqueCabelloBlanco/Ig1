@@ -81,6 +81,22 @@ Camera::roll(GLdouble a)
 	setAxes();
 }
 
+void Camera::pitchReal(GLdouble cs)
+{
+	mProjMat = rotate(mProjMat, glm::radians(cs), glm::dvec3(1, 0, 0));
+	//setAxes();
+}
+
+void Camera::yawReal(GLdouble cs)
+{
+	mProjMat = rotate(mProjMat, glm::radians(cs), glm::dvec3(0, 1, 0));
+}
+
+void Camera::rollReal(GLdouble cs)
+{
+	mProjMat = rotate(mProjMat, glm::radians(cs), glm::dvec3(0, 0, 1));
+}
+
 void Camera::moveLR(GLdouble cs)
 {
 	mEye += mRight * cs;
@@ -97,8 +113,8 @@ void Camera::moveFB(GLdouble cs)
 
 void Camera::moveUD(GLdouble cs)
 {
-	mEye += mUpward;
-	mLook += mUpward;
+	mEye += mUpward * cs;
+	mLook += mUpward * cs;
 	setVM();
 }
 
@@ -106,6 +122,15 @@ void Camera::changePrj()
 {
 	bOrto = !bOrto;
 	setPM();
+}
+
+void Camera::update()
+{
+	/*mViewMat = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));;
+	rollReal(10.0);*/
+	mViewMat = glm::rotate(mViewMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
+	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
+	mViewMat = circleRot * mViewMat;
 }
 
 void

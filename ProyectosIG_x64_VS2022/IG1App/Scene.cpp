@@ -85,6 +85,7 @@ Scene::resetGL()
 
 void Scene::makeScene0()
 {
+
 	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
