@@ -157,8 +157,10 @@ IG1App::key(unsigned char key, int x, int y)
 			mCamera->set3D();
 			break;
 		case 'u':
-			if(pause)
+			if (pause) {
+				mCamera->update();
 				mScene->update();
+			}
 			break;
 		case 'U':
 			pause = !pause;
@@ -229,8 +231,8 @@ IG1App::specialKey(int key, int x, int y)
 void IG1App::update()
 {
 	if (!pause) {
-		mScene->update();
 		mCamera->update();
+		mScene->update();
 		glutPostRedisplay();
 	}
 }

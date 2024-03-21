@@ -45,7 +45,9 @@ Camera::set2D()
 	mEye = dvec3(0, 0, 500);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
+	mViewMat = glm::translate(mViewMat, dvec3(0,200,0));
 	setVM();
+	//mLook = dvec3(200, 0, 0);
 }
 
 void
@@ -54,7 +56,9 @@ Camera::set3D()
 	mEye = dvec3(500, 500, 500);
 	mLook = dvec3(0, 10, 0);
 	mUp = dvec3(0, 1, 0);
+	mViewMat = glm::translate(mViewMat, dvec3(0, 200, 0));
 	setVM();
+	//mLook = dvec3(200, 0, 0);
 }
 
 void
@@ -126,8 +130,6 @@ void Camera::changePrj()
 
 void Camera::update()
 {
-	/*mViewMat = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));;
-	rollReal(10.0);*/
 	mViewMat = glm::rotate(mViewMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
 	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
 	mViewMat = circleRot * mViewMat;
