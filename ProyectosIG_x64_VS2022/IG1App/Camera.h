@@ -53,6 +53,8 @@ public:
 		uploadPM();
 	};
 
+	void setCenital();
+
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
 	glm::dvec3 mLook = {0.0, 0.0, 0.0};  // target's position
@@ -73,10 +75,14 @@ protected:
 
 	glm::dvec3 mRight, mUpward, mFront;
 
+	GLdouble mRadio = 600, mAng = 0;
+
 	void setAxes();
 
 	void setVM();
 	void setPM();
+
+	void orbit(GLdouble, GLdouble);
 };
 
 #endif //_H_Camera_H_

@@ -18,6 +18,14 @@ Camera::Camera(Viewport* vp)
 	setPM();
 }
 
+void Camera::setCenital()
+{
+	mEye = mLook + dvec3(0, mRadio, 0);
+
+	mUp = dvec3(0, 0, -1);
+	setVM();
+}
+
 void
 Camera::uploadVM() const
 {
@@ -42,22 +50,24 @@ Camera::setVM()
 void
 Camera::set2D()
 {
-	mEye = dvec3(0, 0, 500);
+	mEye = dvec3(0, 0, mRadio);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
-	mViewMat = glm::translate(mViewMat, dvec3(0,200,0));
 	setVM();
+	//descomentar para el ejercicio 47
+	//mViewMat = glm::translate(mViewMat, dvec3(0,-200,0));
 	//mLook = dvec3(200, 0, 0);
 }
 
 void
 Camera::set3D()
 {
-	mEye = dvec3(500, 500, 500);
+	mEye = dvec3(mRadio, mRadio, mRadio);
 	mLook = dvec3(0, 10, 0);
 	mUp = dvec3(0, 1, 0);
-	mViewMat = glm::translate(mViewMat, dvec3(0, 200, 0));
 	setVM();
+	//Descomentar para el ejercicio 47
+	//mViewMat = glm::translate(mViewMat, dvec3(0, 200, 0));
 	//mLook = dvec3(200, 0, 0);
 }
 
@@ -130,9 +140,11 @@ void Camera::changePrj()
 
 void Camera::update()
 {
-	mViewMat = glm::rotate(mViewMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
-	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
-	mViewMat = circleRot * mViewMat;
+	//apartado 47
+	/*mViewMat = glm::rotate(mViewMat, glm::radians(-5.0), glm::dvec3(0.0, 0.0, 1.0));
+	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(2.5), glm::dvec3(0.0, 0.0, 1.0));
+	mViewMat = circleRot * mViewMat;*/
+	//orbit(5, 200);
 }
 
 void
@@ -179,6 +191,18 @@ Camera::setPM()
 			yTop,
 			mFarVal);
 	}
+}
+
+void Camera::orbit(GLdouble incAng, GLdouble inc)
+{
+	mAng += incAng;
+	
+	//auto a  = mLook* dvec3(1, 0, 0);
+	mEye.x = mLook.x + cos(radians(mAng)) * mRadio;
+	mEye.z = mLook.z - sin(radians(mAng)) * mRadio;
+	//no se si realmente se deberia incrementar la altura constantemente ya que eso no describe un orbita
+	mEye.y = inc;
+	setVM();
 }
 
 void

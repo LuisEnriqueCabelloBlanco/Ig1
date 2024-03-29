@@ -66,6 +66,10 @@ protected:
 	int mWinW = 800;    // window's width
 	int mWinH = 600;    // window's height
 	bool pause = false;
+	bool m2Vistas = false;
+
+	glm::dvec2 mMouseCoord;
+	int mMouseButt;
 
 };
 

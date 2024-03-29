@@ -1,7 +1,9 @@
 #include "IG1App.h"
 #include "CheckML.h"
 #include <iostream>
-
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_access.hpp>
 using namespace std;
 
 // static single instance (singleton pattern)
@@ -96,8 +98,19 @@ IG1App::display() const
 { // double buffering
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
-
-	mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+	if (m2Vistas) {
+		mCamera->setSize(mWinW / 2, mWinH);
+		Camera auxCam = *mCamera;
+		mViewPort->setPos(0, 0);
+		mViewPort->setSize(mWinW/2,mWinH);
+		mScene->render(*mCamera);
+		mViewPort->setPos(mWinW / 2, 0);
+		auxCam.setCenital();
+		mScene->render(auxCam);
+	}
+	else {
+		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+	}
 
 	glutSwapBuffers(); // swaps the front and back buffer
 }
@@ -139,6 +152,8 @@ IG1App::key(unsigned char key, int x, int y)
 		case '0':
 			mScene->setScene(0);
 			mCamera->set2D();
+			/*auto vM = mCamera->viewMat();
+			 vM = glm::translate(vM,glm::dvec3(0,200,0));*/
 			break;
 		case '1':
 			mScene->setScene(1);
@@ -155,6 +170,7 @@ IG1App::key(unsigned char key, int x, int y)
 		case '4':
 			mScene->setScene(4);
 			mCamera->set3D();
+			//mCamera->setCenital();
 			break;
 		case 'u':
 			if (pause) {
@@ -170,6 +186,14 @@ IG1App::key(unsigned char key, int x, int y)
 			break;
 		case 'p':
 			mCamera->changePrj();
+			break;
+		case 'k':
+			m2Vistas = !m2Vistas;
+			if (!m2Vistas) {
+				mViewPort->setSize(mWinW, mWinH);
+				mCamera->setSize(mWinW, mWinH);
+				mViewPort->setPos(0, 0);
+			}
 			break;
 		default:
 			need_redisplay = false;

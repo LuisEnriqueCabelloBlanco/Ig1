@@ -96,11 +96,12 @@ void Scene::makeScene0()
 	gObjects.push_back(poli2); //n lados, r radio en pixeles
 
 	RGBTriangle* poli3 = new RGBTriangle();
-	poli3->setModelMat(glm::translate(poli3->modelMat(), glm::dvec3(r, 0, 0)));
+	poli3->setModelMat(glm::translate(poli3->modelMat(), glm::dvec3(0, r, 0)));
 	gObjects.push_back(poli3);
 
 	RGBRectangle* poli4 = new RGBRectangle(400, 200);
 	gObjects.push_back(poli4);
+	
 }
 
 void Scene::makeScene1()
