@@ -78,6 +78,10 @@ IG1App::iniWinOpenGL()
 	glutDisplayFunc(s_display);
 	glutIdleFunc(s_update);
 
+	glutMouseFunc(s_mouse);
+	glutMotionFunc(s_motion);
+	glutMouseWheelFunc(s_mouseWheel);
+
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
@@ -268,4 +272,35 @@ void IG1App::savePhoto()
 	tex->loadColorBuffer(800, 600);
 
 	tex->saveData("save.bmp");
+}
+
+void IG1App::mouse(int button, int state, int x, int y)
+{
+	mMouseButt = button;
+
+	//no tengo muy claro cual tenemos que usar, asi que dejo ambas para preguntar mas tarde
+	//mMouseCoord = { x, glutGet(GLUT_WINDOW_HEIGHT) - y }; //coordenadas de viewport
+	mMouseCoord = { x, y }; //coordenadas de ventana
+}
+
+void IG1App::motion(int x, int y)
+{
+	glm::dvec2 aux = {mMouseCoord.x - x, mMouseCoord.y - y };
+	mMouseCoord = { x, y };
+
+
+	if(mMouseButt == GLUT_RIGHT_BUTTON)
+	{
+	    mCamera->moveLR(aux.x);
+		mCamera->moveUD(-aux.y);
+	}
+	else if (mMouseButt == GLUT_LEFT_BUTTON)
+	{
+		mCamera->yaw(aux.x);
+		mCamera->pitch(aux.y);
+	}
+}
+
+void IG1App::mouseWheel(int n, int d, int x, int y)
+{
 }
