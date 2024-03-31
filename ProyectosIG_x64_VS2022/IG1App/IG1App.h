@@ -51,6 +51,8 @@ protected:
 	void motion(int x, int y);
 	void mouseWheel(int n, int d, int x, int y);
 
+	void twoScenes() const;
+
 	// static callbacks
 	static void s_display() { s_ig1app.display(); };
 	static void s_resize(int newWidth, int newHeight) { s_ig1app.resize(newWidth, newHeight); };
@@ -64,10 +66,13 @@ protected:
 
 	// Viewport position and size
 	Viewport* mViewPort = nullptr;
+	Viewport* mViewPort2 = nullptr;
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
+	Camera* mCamera2 = nullptr;
 	// Graphics objects of the scene
 	Scene* mScene = nullptr;
+	Scene* mScene2 = nullptr;
 
 	bool mStop = false; // main event processing loop
 	int mWinId = 0;     // window's identifier

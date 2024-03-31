@@ -44,8 +44,17 @@ IG1App::init()
 	mCamera = new Camera(mViewPort);
 	mScene = new Scene;
 
-	mCamera->set2D();
-	mScene->init();
+    mViewPort2 =
+	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+	mCamera2 = new Camera(mViewPort2);
+	mScene2 = new Scene;
+
+	
+	mCamera->set3D();
+	mCamera2->set2D();
+
+	mScene->setScene(4);
+	mScene2->setScene(0);
 }
 
 void
@@ -102,7 +111,9 @@ IG1App::display() const
 { // double buffering
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
-	if (m2Vistas) {
+
+	/*if (m2Vistas) {
+		Viewport auxVP = *mViewPort;
 		mCamera->setSize(mWinW / 2, mWinH);
 		Camera auxCam = *mCamera;
 		mViewPort->setPos(0, 0);
@@ -111,10 +122,13 @@ IG1App::display() const
 		mViewPort->setPos(mWinW / 2, 0);
 		auxCam.setCenital();
 		mScene->render(auxCam);
+		*mViewPort = auxVP;
 	}
 	else {
 		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
-	}
+	}*/
+
+	twoScenes();
 
 	glutSwapBuffers(); // swaps the front and back buffer
 }
@@ -296,8 +310,18 @@ void IG1App::motion(int x, int y)
 	}
 	else if (mMouseButt == GLUT_LEFT_BUTTON)
 	{
-		mCamera->yaw(-aux.x);
-		mCamera->pitch(-aux.y);
+		int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
+		if (mdf == GLUT_ACTIVE_CTRL)
+		{
+			mCamera->yawReal(-aux.x);
+			mCamera->pitchReal(-aux.y);
+		}
+		else
+		{
+		    mCamera->yaw(-aux.x);
+	    	mCamera->pitch(-aux.y);
+		}
+
 	}
 }
 
@@ -310,4 +334,17 @@ void IG1App::mouseWheel(int n, int d, int x, int y)
 		mCamera->moveFB(d * 5);
 		
 
+}
+
+void IG1App::twoScenes() const
+{
+	mCamera->setSize(mWinW / 2, mWinH);
+	mViewPort->setPos(0, 0);
+	mViewPort->setSize(mWinW / 2, mWinH);
+	mScene->render(*mCamera);
+
+	mCamera2->setSize(mWinW / 2, mWinH);
+	mViewPort2->setPos(mWinW / 2, 0);
+	mViewPort2->setSize(mWinW / 2, mWinH);
+	mScene2->render(*mCamera2);
 }
