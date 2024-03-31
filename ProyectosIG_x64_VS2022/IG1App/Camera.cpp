@@ -111,25 +111,31 @@ void Camera::rollReal(GLdouble cs)
 	mProjMat = rotate(mProjMat, glm::radians(cs), glm::dvec3(0, 0, 1));
 }
 
-void Camera::moveLR(GLdouble cs)
+void Camera::moveLR(GLdouble cs) //ummm ackshually lo que esta comentado es la logica que hay que seguir no? pero se nos reinicia la posicion de la camara en los eventos del raton
 {
-	mEye += mRight * cs;
-	mLook += mRight * cs;
-	setVM();
+	mViewMat = glm::translate(mViewMat, mRight * cs);
+	setAxes();
+	//mEye += mRight * cs;
+	//mLook += mRight * cs;
+	//setVM();
 }
 
 void Camera::moveFB(GLdouble cs)
 {
-	mEye += mFront * cs;
-	mLook += mFront * cs;
-	setVM();
+	//mEye += mFront * cs;
+	//mLook += mFront * cs;
+	//setVM();
+	mViewMat = glm::translate(mViewMat, mFront * cs);
+	setAxes();
 }
 
-void Camera::moveUD(GLdouble cs)
+void Camera::moveUD(GLdouble cs) //mirar comentario de moveLR
 {
-	mEye += mUpward * cs;
-	mLook += mUpward * cs;
-	setVM();
+	//mEye += mUpward * cs;
+	//mLook += mUpward * cs;
+	//setVM();
+	mViewMat = glm::translate(mViewMat, mUpward * cs);
+	setAxes();
 }
 
 void Camera::changePrj()

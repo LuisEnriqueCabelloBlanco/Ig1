@@ -291,16 +291,23 @@ void IG1App::motion(int x, int y)
 
 	if(mMouseButt == GLUT_RIGHT_BUTTON)
 	{
-	    mCamera->moveLR(aux.x);
-		mCamera->moveUD(-aux.y);
+	    mCamera->moveLR(-aux.x);
+		mCamera->moveUD(aux.y);
 	}
 	else if (mMouseButt == GLUT_LEFT_BUTTON)
 	{
-		mCamera->yaw(aux.x);
-		mCamera->pitch(aux.y);
+		mCamera->yaw(-aux.x);
+		mCamera->pitch(-aux.y);
 	}
 }
 
 void IG1App::mouseWheel(int n, int d, int x, int y)
 {
+	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
+	if (mdf == GLUT_ACTIVE_CTRL)
+		mCamera->setScale(d * 0.01); // zoom in  (increases the scale)
+	else
+		mCamera->moveFB(d * 5);
+		
+
 }
