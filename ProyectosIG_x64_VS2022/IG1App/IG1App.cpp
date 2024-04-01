@@ -240,7 +240,12 @@ IG1App::key(unsigned char key, int x, int y)
 			savePhoto();
 			break;
 		case 'p':
-			mCamera->changePrj();
+			if (mMouseCoord.x < mWinW / 2) {
+				mCamera->changePrj();
+			}
+			else {
+				mCamera2->changePrj();
+			}
 			break;
 		case 'k':
 			m2Vistas = !m2Vistas;
@@ -391,10 +396,10 @@ void IG1App::mouseWheel(int n, int d, int x, int y)
 #endif // TOW_WINDOWS
 	if (mdf == GLUT_ACTIVE_CTRL) {
 
-		auxCamera->setScale(d * 0.01); // zoom in  (increases the scale)
+		auxCamera->setScale(d * 0.1); // zoom in  (increases the scale)
 	}
 	else {
-		auxCamera->moveFB(d * 5);
+		auxCamera->moveFB(d * 100);
 	}
 		
 
