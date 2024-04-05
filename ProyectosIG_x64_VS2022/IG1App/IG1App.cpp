@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_access.hpp>
 using namespace std;
 
-#define TOW_WINDOWS
+//#define TOW_WINDOWS
 
 // static single instance (singleton pattern)
 
@@ -45,7 +45,7 @@ IG1App::init()
 #ifdef TOW_WINDOWS
 	mViewPort =
 		new Viewport(mWinW/2, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
-#elif
+#else
 	mViewPort =
 	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 #endif // TOW_WINDOWS
@@ -120,6 +120,14 @@ IG1App::free()
 	mCamera = nullptr;
 	delete mViewPort;
 	mViewPort = nullptr;
+#ifdef TOW_WINDOWS
+	delete mScene2;
+	mScene2 = nullptr;
+	delete mCamera2;
+	mCamera2 = nullptr;
+	delete mViewPort2;
+	mViewPort2 = nullptr;
+#endif
 }
 
 void
@@ -167,13 +175,12 @@ IG1App::resize(int newWidth, int newHeight)
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
 	mCamera2->setSize(mViewPort2->width(), mViewPort2->height());
-#elif
+#else
 	// Resize Viewport to the new window size
 	mViewPort->setSize(newWidth, newHeight);
 
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
-#elif
 #endif // TOW_WINDOWS
 }
 
@@ -223,6 +230,7 @@ IG1App::key(unsigned char key, int x, int y)
 			break;
 		case 'u':
 			if (pause) {
+#ifdef TOW_WINDOWS
 				if (mMouseCoord.x < mWinW / 2) {
 					mCamera->update();
 					mScene->update();
@@ -231,6 +239,10 @@ IG1App::key(unsigned char key, int x, int y)
 					mCamera2->update();
 					mScene2->update();
 				}
+#else
+				mCamera->update();
+				mScene->update();
+#endif // TOW_WINDOWS
 			}
 			break;
 		case 'U':
@@ -240,20 +252,29 @@ IG1App::key(unsigned char key, int x, int y)
 			savePhoto();
 			break;
 		case 'p':
+#ifdef TOW_WINDOWS
+
+
 			if (mMouseCoord.x < mWinW / 2) {
 				mCamera->changePrj();
 			}
 			else {
 				mCamera2->changePrj();
 			}
+#else
+			mCamera->changePrj();
+#endif // TOW_WINDOWS
 			break;
 		case 'k':
+#ifndef TOW_WINDOWS
+
 			m2Vistas = !m2Vistas;
 			if (!m2Vistas) {
 				mViewPort->setSize(mWinW, mWinH);
 				mCamera->setSize(mWinW, mWinH);
 				mViewPort->setPos(0, 0);
 			}
+#endif // !TOW_WINDOWS
 			break;
 		default:
 			need_redisplay = false;
@@ -315,6 +336,9 @@ IG1App::specialKey(int key, int x, int y)
 void IG1App::update()
 {
 	if (!pause) {
+#ifdef TOW_WINDOWS
+
+
 		if (mMouseCoord.x < mWinW / 2) {
 			mCamera->update();
 			mScene->update();
@@ -323,6 +347,10 @@ void IG1App::update()
 			mCamera2->update();
 			mScene2->update();
 		}
+#else
+		mCamera->update();
+		mScene->update();
+#endif // TOW_WINDOWS
 	
 		glutPostRedisplay();
 	}
