@@ -74,6 +74,7 @@ Scene::setGL()
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR_MATERIAL);
 }
 void
 Scene::resetGL()
@@ -81,6 +82,7 @@ Scene::resetGL()
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Scene::makeScene0()
@@ -218,6 +220,8 @@ void Scene::makeScene4()
 void
 Scene::render(Camera const& cam) const
 {
+	sceneDirLight(cam);
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
@@ -237,4 +241,19 @@ void Scene::setScene(int id)
 	mId = id;
 	free();
 	init();
+}
+
+void Scene::sceneDirLight(Camera const& cam) const {
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glm::fvec4 posDir = { 1, 1, 1, 0 };
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(value_ptr(cam.viewMat()));
+	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+	glm::fvec4 ambient = { 0, 0, 0, 1 };
+	glm::fvec4 diffuse = { 1, 1, 1, 1 };
+	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 }
