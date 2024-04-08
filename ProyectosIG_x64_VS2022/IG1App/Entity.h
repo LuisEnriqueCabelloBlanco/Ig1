@@ -162,24 +162,22 @@ public:
 class QuadricEntity : public Abs_Entity {
 public:
 	QuadricEntity();
-	~QuadricEntity() { gluDeleteQuadric(qEnt); };
+	~QuadricEntity() { gluDeleteQuadric(qEnt_); }
 protected:
-	GLUquadricObj* qEnt;
+	GLUquadricObj* qEnt_;
 };
-QuadricEntity::QuadricEntity() {
-	qEnt = gluNewQuadric();
-}
 
 class Sphere : public QuadricEntity {
 public:
 	Sphere(GLdouble r); // r es el radio de la esfera
-	void render(glm::dmat4 const& modelViewMat) const;
+	void render(glm::dmat4 const& modelViewMat) const override;
 protected:
 	GLdouble r;
 };
 
 class Cylinder : public QuadricEntity
 {
+public:
 	Cylinder(GLdouble baseRadius, GLdouble topRadius, GLdouble height, int slices, int stacks);
 	void render(glm::dmat4 const& modelViewMat) const override;
 protected:
@@ -191,6 +189,7 @@ protected:
 };
 class Disk : public QuadricEntity
 {
+public:
 	Disk(GLdouble innerRadius, GLdouble outerRadius, int slices, int rings);
 	void render(glm::dmat4 const& modelViewMat) const override;
 protected:
@@ -201,6 +200,7 @@ protected:
 };
 class PartialDisk : public QuadricEntity
 {
+public:
 	PartialDisk(GLdouble innerRadius, GLdouble outerRadius, int slices, int rings, GLdouble startAngle, GLdouble sweepAngle);
 	void render(glm::dmat4 const& modelViewMat) const override;
 protected:

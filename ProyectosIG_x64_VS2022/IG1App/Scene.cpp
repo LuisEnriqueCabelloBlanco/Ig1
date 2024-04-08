@@ -34,7 +34,10 @@ Scene::init()
 	case 4:
 		makeScene4();
 		break;
-		default:
+	case 5:
+		makeScene5();
+		break;
+	default:
 			break;
 	}
 	//gObjects.push_back(new EjesRGB(400.0));
@@ -217,6 +220,20 @@ void Scene::makeScene4()
 	parapet->setMTexture(textura3);
 	gObjects.push_back(parapet);
 }
+
+void Scene::makeScene5()
+{
+	gObjects.clear();
+	Sphere* esfera = new Sphere(100.0);
+	gObjects.push_back(esfera);
+	Cylinder* cono = new Cylinder(50.0, 0, 100.0, 10, 10);
+	glm::dmat4 mAux = cono->modelMat();
+	mAux = translate(mAux, dvec3(0, 85, 0));
+	mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+	cono->setModelMat(mAux);
+	gObjects.push_back(cono);
+}
+
 void
 Scene::render(Camera const& cam) const
 {

@@ -38,6 +38,7 @@ protected:
 	void makeScene2();
 	void makeScene3();
 	void makeScene4();
+	void makeScene5();
 	void sceneDirLight(Camera const& cam) const;
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene

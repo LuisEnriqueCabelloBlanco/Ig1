@@ -554,6 +554,10 @@ void Photo::update()
 	mTexture->loadColorBuffer(_width, _height, _buffer);
 }
 
+QuadricEntity::QuadricEntity() {
+	qEnt_ = gluNewQuadric();
+}
+
 Sphere::Sphere(GLdouble rr) { r = rr; }
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
@@ -564,7 +568,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	// glColor3f (...);
 	// Aquí se puede fijar el modo de dibujar la esfera :
 	// gluQuadricDrawStyle (q , ...);
-	gluSphere(qEnt, r, 50, 50);
+	gluSphere(qEnt_, r, 50, 50);
 	// Aquí se debe recuperar el color :
 	// glColor3f (1.0 , 1.0 , 1.0);
 }
@@ -582,7 +586,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	gluCylinder(qEnt, baseRadius_, topRadius_, height_, slices_, stacks_);
+	gluCylinder(qEnt_, baseRadius_, topRadius_, height_, slices_, stacks_);
 }
 
 Disk::Disk(GLdouble innerRadius, GLdouble outerRadius, int slices, int rings)
@@ -597,7 +601,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	gluDisk(qEnt, innerRadius_, outerRadius_, slices_, rings_);
+	gluDisk(qEnt_, innerRadius_, outerRadius_, slices_, rings_);
 }
 
 PartialDisk::PartialDisk(GLdouble innerRadius, GLdouble outerRadius, int slices, int rings, GLdouble startAngle,
@@ -613,6 +617,6 @@ PartialDisk::PartialDisk(GLdouble innerRadius, GLdouble outerRadius, int slices,
 
 void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 {
-	gluPartialDisk(qEnt, innerRadius_, outerRadius_, slices_, rings_,
+	gluPartialDisk(qEnt_, innerRadius_, outerRadius_, slices_, rings_,
 		startAngle_, sweepAngle_);
 }
