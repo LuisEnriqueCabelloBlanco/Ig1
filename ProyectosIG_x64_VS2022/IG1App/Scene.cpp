@@ -256,10 +256,13 @@ void Scene::makeScene5()
 	mSmileMat = glm::translate(mSmileMat, dvec3(0, 0, 60));
 	smile->setModelMat(mSmileMat);
 
-	gObjects.push_back(sombrero);
-	gObjects.push_back(conoI);
-	gObjects.push_back(conoD);
-	gObjects.push_back(smile);
+	CompoundEntity* paco = new CompoundEntity();
+	paco->addEntity(sombrero);
+	paco->addEntity(conoI);
+	paco->addEntity(conoD);
+	paco->addEntity(smile);
+
+	gObjects.push_back(paco);
 }
 
 void

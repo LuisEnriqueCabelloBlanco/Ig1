@@ -647,3 +647,28 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
 }
+
+CompoundEntity::CompoundEntity()
+{
+}
+
+CompoundEntity::~CompoundEntity()
+{
+	for (auto o : gObjects) {
+		delete o;
+	}
+	gObjects.clear();
+}
+
+void CompoundEntity::addEntity(Abs_Entity* ae)
+{
+	gObjects.push_back(ae);
+}
+
+void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
+{
+	dmat4 aMat = modelViewMat * mModelMat;
+	for (auto o : gObjects) {
+		o->render(aMat);
+	}
+}
