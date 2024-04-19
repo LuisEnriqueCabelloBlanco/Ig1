@@ -82,6 +82,7 @@ Scene::setGL()
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
 }
 void
 Scene::resetGL()
@@ -90,6 +91,7 @@ Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_NORMALIZE);
 }
 
 void Scene::makeScene0()
