@@ -672,3 +672,39 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 		o->render(aMat);
 	}
 }
+
+WingAdvancedTIE::WingAdvancedTIE()
+{
+	mMesh = Mesh::generateWingAdvancedTie();
+	mTexture = new Texture();
+	mTexture->load("../textures/noche.bmp",150U);
+}
+
+WingAdvancedTIE::~WingAdvancedTIE()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		mTexture->bind(GL_MODULATE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		glDisable(GL_BLEND);
+		mTexture->unbind();
+	}
+}

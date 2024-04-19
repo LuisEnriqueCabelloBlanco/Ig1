@@ -433,6 +433,38 @@ Mesh* Mesh::generateBox(GLdouble length)
 	return mesh; //la caja verse se ve como se quiere, como se va a hacer el update? pues ni puta idea no se si es posible habiendolo hecho asi, no se tengo sueño
 }
 
+Mesh* Mesh::generateWingAdvancedTie()
+{
+	Mesh* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	mesh->mNumVertices = 8;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vVertices.emplace_back(dvec3(0, 100, 20));
+	mesh->vVertices.emplace_back(dvec3(0, 100, -20));
+	mesh->vVertices.emplace_back(dvec3(50, 50, 20));
+	mesh->vVertices.emplace_back(dvec3(50, 50, -20));
+	mesh->vVertices.emplace_back(dvec3(50, -50, 20));
+	mesh->vVertices.emplace_back(dvec3(50, -50, -20));
+	mesh->vVertices.emplace_back(dvec3(0, -100, 20));
+	mesh->vVertices.emplace_back(dvec3(0, -100, -20));
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+	for (int i = 0; i < mesh->mNumVertices; i++) {
+		mesh->vColors.emplace_back(dvec4(1.0, 1.0, 1.0, 1.0));
+	}
+
+	mesh->vTexture.reserve(mesh->mNumVertices);
+	mesh->vTexture.emplace_back(dvec2(0,0));
+	mesh->vTexture.emplace_back(dvec2(1,0));
+	mesh->vTexture.emplace_back(dvec2(0,0.3));
+	mesh->vTexture.emplace_back(dvec2(1,0.3));
+	mesh->vTexture.emplace_back(dvec2(0,0.6));
+	mesh->vTexture.emplace_back(dvec2(1,0.6));
+	mesh->vTexture.emplace_back(dvec2(0,1));
+	mesh->vTexture.emplace_back(dvec2(1,1));
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {

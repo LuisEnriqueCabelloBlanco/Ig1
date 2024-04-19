@@ -224,45 +224,49 @@ void Scene::makeScene4()
 void Scene::makeScene5()
 {
 	gObjects.clear();
-	Sphere* esfera = new Sphere(100.0);
-	esfera->setMColor(dvec4(1.0,0.5,0.0,1.0));
-	gObjects.push_back(esfera);
-	Cylinder* conoI = new Cylinder(20.0, 0, 30.0, 10, 10);
-	Cylinder* conoD = new Cylinder(20.0, 0, 30.0, 10, 10);
-	conoD->setMColor(dvec4(0, 0, 1, 1));
-	glm::dmat4 mAux = conoI->modelMat();
-	mAux = translate(mAux, dvec3(-40, 40, 80));
-	glm::dmat4 mAuxD = conoD->modelMat();
-	mAuxD = translate(mAuxD, dvec3(40, 40, 80));
+	//Sphere* esfera = new Sphere(100.0);
+	//esfera->setMColor(dvec4(1.0,0.5,0.0,1.0));
+	//gObjects.push_back(esfera);
+	//Cylinder* conoI = new Cylinder(20.0, 0, 30.0, 10, 10);
+	//Cylinder* conoD = new Cylinder(20.0, 0, 30.0, 10, 10);
+	//conoD->setMColor(dvec4(0, 0, 1, 1));
+	//glm::dmat4 mAux = conoI->modelMat();
+	//mAux = translate(mAux, dvec3(-40, 40, 80));
+	//glm::dmat4 mAuxD = conoD->modelMat();
+	//mAuxD = translate(mAuxD, dvec3(40, 40, 80));
 
-	//mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
-	conoI->setModelMat(mAux);
-	conoD->setModelMat(mAuxD);
-
-
-	Disk* sombrero = new Disk(70, 110, 32, 5);
-
-	sombrero->setMColor(dvec4(1.0, 0.0, 0.0, 1.0));
-	glm::dmat4 mHatMat = sombrero->modelMat();
-
-	mHatMat = glm::translate(mHatMat, dvec3(0, 70, 0));
-	mHatMat = glm::rotate(mHatMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-	sombrero->setModelMat(mHatMat);
+	////mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+	//conoI->setModelMat(mAux);
+	//conoD->setModelMat(mAuxD);
 
 
-	PartialDisk* smile = new PartialDisk(80, 100, 20, 3,90,180);
-	smile->setMColor(dvec4(0.0, 1.0, 0.0, 1.0));
-	glm::dmat4 mSmileMat = smile->modelMat();
-	mSmileMat = glm::translate(mSmileMat, dvec3(0, 0, 60));
-	smile->setModelMat(mSmileMat);
+	//Disk* sombrero = new Disk(70, 110, 32, 5);
 
-	CompoundEntity* paco = new CompoundEntity();
-	paco->addEntity(sombrero);
-	paco->addEntity(conoI);
-	paco->addEntity(conoD);
-	paco->addEntity(smile);
+	//sombrero->setMColor(dvec4(1.0, 0.0, 0.0, 1.0));
+	//glm::dmat4 mHatMat = sombrero->modelMat();
 
-	gObjects.push_back(paco);
+	//mHatMat = glm::translate(mHatMat, dvec3(0, 70, 0));
+	//mHatMat = glm::rotate(mHatMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	//sombrero->setModelMat(mHatMat);
+
+
+	//PartialDisk* smile = new PartialDisk(80, 100, 20, 3,90,180);
+	//smile->setMColor(dvec4(0.0, 1.0, 0.0, 1.0));
+	//glm::dmat4 mSmileMat = smile->modelMat();
+	//mSmileMat = glm::translate(mSmileMat, dvec3(0, 0, 60));
+	//smile->setModelMat(mSmileMat);
+
+	//CompoundEntity* paco = new CompoundEntity();
+	//paco->addEntity(sombrero);
+	//paco->addEntity(conoI);
+	//paco->addEntity(conoD);
+	//paco->addEntity(smile);
+
+	//gObjects.push_back(paco);
+
+	WingAdvancedTIE* wing = new WingAdvancedTIE();
+
+	gObjects.push_back(wing);
 }
 
 void
