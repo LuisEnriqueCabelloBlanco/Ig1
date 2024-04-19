@@ -435,18 +435,19 @@ Mesh* Mesh::generateBox(GLdouble length)
 
 Mesh* Mesh::generateWingAdvancedTie()
 {
+	//de hecho en las pelis las alas tienen esta forma, no son completamente rectangulares
 	Mesh* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 	mesh->mNumVertices = 8;
 	mesh->vVertices.reserve(mesh->mNumVertices);
-	mesh->vVertices.emplace_back(dvec3(0, 100, 20));
-	mesh->vVertices.emplace_back(dvec3(0, 100, -20));
-	mesh->vVertices.emplace_back(dvec3(50, 50, 20));
-	mesh->vVertices.emplace_back(dvec3(50, 50, -20));
-	mesh->vVertices.emplace_back(dvec3(50, -50, 20));
-	mesh->vVertices.emplace_back(dvec3(50, -50, -20));
-	mesh->vVertices.emplace_back(dvec3(0, -100, 20));
-	mesh->vVertices.emplace_back(dvec3(0, -100, -20));
+	mesh->vVertices.emplace_back(dvec3(0, 100,40));
+	mesh->vVertices.emplace_back(dvec3(0, 100, -40));
+	mesh->vVertices.emplace_back(dvec3(50, 50, 80));
+	mesh->vVertices.emplace_back(dvec3(50, 50, -80));
+	mesh->vVertices.emplace_back(dvec3(50, -50, 80));
+	mesh->vVertices.emplace_back(dvec3(50, -50, -80));
+	mesh->vVertices.emplace_back(dvec3(0, -100, 40));
+	mesh->vVertices.emplace_back(dvec3(0, -100, -40));
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mesh->mNumVertices; i++) {

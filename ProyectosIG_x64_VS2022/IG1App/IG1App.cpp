@@ -231,6 +231,12 @@ IG1App::key(unsigned char key, int x, int y)
 		case '5':
 			mScene->setScene(5);
 			mCamera->set3D();
+			break;
+
+		case '6':
+			mScene->setScene(6);
+			mCamera->set3D();
+			break;
 		case 'u':
 			if (pause) {
 #ifdef TOW_WINDOWS

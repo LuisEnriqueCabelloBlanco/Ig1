@@ -16,6 +16,7 @@ Scene::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
+	gObjects.clear();
 
 	switch(mId)
 	{
@@ -36,6 +37,9 @@ Scene::init()
 		break;
 	case 5:
 		makeScene5();
+		break;
+	case 6:
+		makeScene6();
 		break;
 	default:
 			break;
@@ -90,8 +94,6 @@ Scene::resetGL()
 
 void Scene::makeScene0()
 {
-
-	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
 	int r = 200;
@@ -111,7 +113,6 @@ void Scene::makeScene0()
 
 void Scene::makeScene1()
 {
-	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 	double cubeSize = 200;
 	RGBCube* cubaso = new RGBCube(cubeSize);
@@ -121,7 +122,6 @@ void Scene::makeScene1()
 }
 
 void Scene::makeScene2() {
-	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
 	auto ground = new Ground(500,500);
@@ -152,7 +152,6 @@ void Scene::makeScene2() {
 
 void Scene::makeScene3()
 {
-	gObjects.clear();
 	gObjects.push_back(new EjesRGB(400.0));
 
 	auto box = new Box(200);
@@ -175,9 +174,6 @@ void Scene::makeScene3()
 
 void Scene::makeScene4()
 {
-	gObjects.clear();
-
-
 	auto ground = new Ground(500, 500);
 	Texture* textura = new Texture();
 	textura->load("../textures/baldosaC.bmp");
@@ -223,50 +219,96 @@ void Scene::makeScene4()
 
 void Scene::makeScene5()
 {
-	gObjects.clear();
-	//Sphere* esfera = new Sphere(100.0);
-	//esfera->setMColor(dvec4(1.0,0.5,0.0,1.0));
-	//gObjects.push_back(esfera);
-	//Cylinder* conoI = new Cylinder(20.0, 0, 30.0, 10, 10);
-	//Cylinder* conoD = new Cylinder(20.0, 0, 30.0, 10, 10);
-	//conoD->setMColor(dvec4(0, 0, 1, 1));
-	//glm::dmat4 mAux = conoI->modelMat();
-	//mAux = translate(mAux, dvec3(-40, 40, 80));
-	//glm::dmat4 mAuxD = conoD->modelMat();
-	//mAuxD = translate(mAuxD, dvec3(40, 40, 80));
+	Sphere* esfera = new Sphere(100.0);
+	esfera->setMColor(dvec4(1.0,0.5,0.0,1.0));
+	gObjects.push_back(esfera);
+	Cylinder* conoI = new Cylinder(20.0, 0, 30.0, 10, 10);
+	Cylinder* conoD = new Cylinder(20.0, 0, 30.0, 10, 10);
+	conoD->setMColor(dvec4(0, 0, 1, 1));
+	glm::dmat4 mAux = conoI->modelMat();
+	mAux = translate(mAux, dvec3(-40, 40, 80));
+	glm::dmat4 mAuxD = conoD->modelMat();
+	mAuxD = translate(mAuxD, dvec3(40, 40, 80));
 
-	////mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
-	//conoI->setModelMat(mAux);
-	//conoD->setModelMat(mAuxD);
-
-
-	//Disk* sombrero = new Disk(70, 110, 32, 5);
-
-	//sombrero->setMColor(dvec4(1.0, 0.0, 0.0, 1.0));
-	//glm::dmat4 mHatMat = sombrero->modelMat();
-
-	//mHatMat = glm::translate(mHatMat, dvec3(0, 70, 0));
-	//mHatMat = glm::rotate(mHatMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-	//sombrero->setModelMat(mHatMat);
+	//mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+	conoI->setModelMat(mAux);
+	conoD->setModelMat(mAuxD);
 
 
-	//PartialDisk* smile = new PartialDisk(80, 100, 20, 3,90,180);
-	//smile->setMColor(dvec4(0.0, 1.0, 0.0, 1.0));
-	//glm::dmat4 mSmileMat = smile->modelMat();
-	//mSmileMat = glm::translate(mSmileMat, dvec3(0, 0, 60));
-	//smile->setModelMat(mSmileMat);
+	Disk* sombrero = new Disk(70, 110, 32, 5);
 
-	//CompoundEntity* paco = new CompoundEntity();
-	//paco->addEntity(sombrero);
-	//paco->addEntity(conoI);
-	//paco->addEntity(conoD);
-	//paco->addEntity(smile);
+	sombrero->setMColor(dvec4(1.0, 0.0, 0.0, 1.0));
+	glm::dmat4 mHatMat = sombrero->modelMat();
 
-	//gObjects.push_back(paco);
+	mHatMat = glm::translate(mHatMat, dvec3(0, 70, 0));
+	mHatMat = glm::rotate(mHatMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	sombrero->setModelMat(mHatMat);
 
-	WingAdvancedTIE* wing = new WingAdvancedTIE();
 
-	gObjects.push_back(wing);
+	PartialDisk* smile = new PartialDisk(80, 100, 20, 3,90,180);
+	smile->setMColor(dvec4(0.0, 1.0, 0.0, 1.0));
+	glm::dmat4 mSmileMat = smile->modelMat();
+	mSmileMat = glm::translate(mSmileMat, dvec3(0, 0, 60));
+	smile->setModelMat(mSmileMat);
+
+	CompoundEntity* paco = new CompoundEntity();
+	paco->addEntity(sombrero);
+	paco->addEntity(conoI);
+	paco->addEntity(conoD);
+	paco->addEntity(smile);
+
+	gObjects.push_back(paco);
+}
+
+void Scene::makeScene6()
+{
+	//lore accurate Advanced TIE X-1, es decir, la nave de Darth Vader (por eso no es 1:1 con la referencia, intentamos que se pareciera mas al de la peli por las risas)
+
+	glm::dmat4 wingModelMat = glm::translate(dmat4(1), dvec3(50.0, 0.0, 0.0));
+
+	WingAdvancedTIE* wing1 = new WingAdvancedTIE();
+	wing1->setModelMat(wingModelMat);
+
+	WingAdvancedTIE* windows = new WingAdvancedTIE();
+	wingModelMat = glm::rotate(dmat4(1), glm::radians(180.0), dvec3(0.0, 1.0, 0.0))*wingModelMat;
+	windows->setModelMat(wingModelMat);
+
+	CompoundEntity* luisAdolescenteIncomprendida = new CompoundEntity();
+
+
+	CompoundEntity* eduroam = new CompoundEntity();
+
+	Sphere* kerf = new Sphere(60.0);
+	kerf->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	eduroam->addEntity(kerf);
+
+	double cHeight = 200.0;
+	Cylinder* itsACylinder = new Cylinder(10.0, 10.0, cHeight, 10, 3);
+	itsACylinder->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	dmat4 cMat = glm::translate(dmat4(1), dvec3(0.0, 0.0,-cHeight/2));
+	cMat = glm::rotate(dmat4(1), glm::radians(90.0), dvec3(0.0, 1.0, 0.0)) * cMat;
+	itsACylinder->setModelMat(cMat);
+	eduroam->addEntity(itsACylinder);
+
+	CompoundEntity* cockpito = new CompoundEntity();
+	double fortnite = 70.0;
+	Cylinder* wenamechaindesamer = new Cylinder(60.0, 15.0, fortnite, 8, 3);
+	wenamechaindesamer->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	cockpito->addEntity(wenamechaindesamer);
+
+	Disk* discoElysium = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
+	discoElysium->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	dmat4 kimKitsuragi = glm::translate(dmat4(1), dvec3(0.0, 0.0, fortnite));
+	discoElysium->setModelMat(kimKitsuragi);
+	cockpito->addEntity(discoElysium);
+	
+	eduroam->addEntity(cockpito);
+
+	luisAdolescenteIncomprendida->addEntity(eduroam);
+
+	luisAdolescenteIncomprendida->addEntity(wing1);
+	luisAdolescenteIncomprendida->addEntity(windows);
+	gObjects.push_back(luisAdolescenteIncomprendida);
 }
 
 void
