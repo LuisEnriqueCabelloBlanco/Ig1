@@ -506,14 +506,14 @@ Mesh::createRGBAxes(GLdouble l)
 }
 
 void IndexMesh::render() const {
-		if (vIndices != nullptr) {
-			glEnableClientState(GL_INDEX_ARRAY);
+		if (vIndices != nullptr) { //para enviar datos a gpu
+			glEnableClientState(GL_INDEX_ARRAY); 
 			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 		}
-		glDisableClientState(GL_INDEX_ARRAY);
+		glDisableClientState(GL_INDEX_ARRAY); //acordarse siempre de desactivar lo que se ha activado ("opengl es un maquina de estados mimimimi" ya lo se luis pesao)
 }
 
 void IndexMesh::draw() const {
 	glDrawElements(mPrimitive, nNumIndices,
-		GL_UNSIGNED_INT, vIndices);
+		GL_UNSIGNED_INT, vIndices); //modo de primitivas, num de elems a dibujar, tipo de los indices, indices
 }
