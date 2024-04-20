@@ -708,3 +708,33 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 		mTexture->unbind();
 	}
 }
+
+IndexedBox::IndexedBox(GLuint l)
+{
+	mMesh = IndexMesh::generateIndexedBox(l);
+}
+
+IndexedBox::~IndexedBox()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void IndexedBox::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glLineWidth(2);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+		glLineWidth(1);
+		glDisable(GL_BLEND);
+	}
+}

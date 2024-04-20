@@ -505,15 +505,96 @@ Mesh::createRGBAxes(GLdouble l)
 	return mesh;
 }
 
+void IndexMesh::buildNormalVectors()
+{
+
+}
+
 void IndexMesh::render() const {
-		if (vIndices != nullptr) { //para enviar datos a gpu
-			glEnableClientState(GL_INDEX_ARRAY); 
-			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
+
+
+	if (vVertices.size() > 0) { // transfer data
+		// transfer the coordinates of the vertices
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(
+			3, GL_DOUBLE, 0, vVertices.data()); // number of coordinates per vertex, type of
+		// each coordinate, stride, pointer
+		if (vColors.size() > 0) {             // transfer colors
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(
+				4, GL_DOUBLE, 0, vColors.data()); // components number (rgba=4), type of
+			// each component, stride, pointer
 		}
+		if (vTexture.size() > 0) {             // transfer colors
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexture.data());
+		}
+		if (vNormals.size() > 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
+		}
+
+		if (vIndices.size() > 0) { //para enviar datos a gpu
+			glEnableClientState(GL_INDEX_ARRAY); 
+			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices.data());
+		}
+		draw();
+
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_INDEX_ARRAY); //acordarse siempre de desactivar lo que se ha activado ("opengl es un maquina de estados mimimimi" ya lo se luis pesao)
+	}
 }
 
 void IndexMesh::draw() const {
 	glDrawElements(mPrimitive, nNumIndices,
-		GL_UNSIGNED_INT, vIndices); //modo de primitivas, num de elems a dibujar, tipo de los indices, indices
+		GL_UNSIGNED_INT, vIndices.data()); //modo de primitivas, num de elems a dibujar, tipo de los indices, indices
+}
+
+IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
+{
+	IndexMesh* mesh = new IndexMesh();
+	mesh->mPrimitive = GL_TRIANGLES;
+	mesh->nNumIndices = 36;
+	mesh->mNumVertices = 8;
+	mesh->vVertices = {
+		dvec3(l,l,l)*0.5,
+		dvec3(l,-l,l) * 0.5,
+		dvec3(-l,-l,l) * 0.5,
+		dvec3(-l,l,l) * 0.5,
+		dvec3(-l,l,-l) * 0.5,
+		dvec3(-l,-l,-l) * 0.5,
+		dvec3(l,-l,-l) * 0.5,
+		dvec3(l,l,-l) * 0.5
+	};
+
+	for (int i = 0; i < mesh->mNumVertices; i++) {
+		mesh->vColors.push_back(dvec4(0.0, 1.0, 0.0, 1.0));
+	}
+
+	mesh->vIndices = 
+	{
+		0,1,7,
+		1,6,7,
+
+		3,2,1,
+		3,1,0,
+
+		4,5,2,
+		4,2,3,
+
+		7,6,5,
+		7,5,4,
+
+		4,3,0,
+		4,0,7,
+
+		5,2,1,
+		5,1,6
+	};
+
+
+	return mesh;
 }

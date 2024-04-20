@@ -41,6 +41,9 @@ Scene::init()
 	case 6:
 		makeScene6();
 		break;
+	case 7:
+		makeScene7();
+		break;
 	default:
 			break;
 	}
@@ -312,6 +315,17 @@ void Scene::makeScene6()
 	luisAdolescenteIncomprendida->addEntity(windows);
 	gObjects.push_back(luisAdolescenteIncomprendida);
 }
+
+void Scene::makeScene7()
+{
+	gObjects.push_back(new EjesRGB(400));
+	IndexedBox* cubo = new IndexedBox(200);
+
+	gObjects.push_back(cubo);
+}
+
+
+
 
 void
 Scene::render(Camera const& cam) const

@@ -70,7 +70,7 @@ IG1App::init()
 
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
 
-	mScene->setScene(4);
+	mScene->setScene(7);
 }
 
 void
@@ -235,6 +235,10 @@ IG1App::key(unsigned char key, int x, int y)
 
 		case '6':
 			mScene->setScene(6);
+			mCamera->set3D();
+			break;
+		case '7':
+			mScene->setScene(7);
 			mCamera->set3D();
 			break;
 		case 'u':

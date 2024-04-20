@@ -230,4 +230,11 @@ protected:
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
 
+class IndexedBox : public Abs_Entity {
+public:
+	IndexedBox(GLuint l);
+	~IndexedBox();
+protected:
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_
