@@ -29,6 +29,9 @@ public:
 	void update();
 
 	void setScene(int it);
+
+	void rotate();
+	void orbit();
 protected:
 	void free();
 	void setGL();
@@ -43,6 +46,12 @@ protected:
 	void makeScene7();
 	void sceneDirLight(Camera const& cam) const;
 
+
+	Abs_Entity* buildCaza();
+
+	Abs_Entity* caza;
+	Abs_Entity* centro;
+	double facingAngle = 0;
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	int mId = 0;
 };

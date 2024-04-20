@@ -70,7 +70,7 @@ IG1App::init()
 
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
 
-	mScene->setScene(7);
+	mScene->setScene(6);
 }
 
 void
@@ -236,6 +236,7 @@ IG1App::key(unsigned char key, int x, int y)
 		case '6':
 			mScene->setScene(6);
 			mCamera->set3D();
+			mCamera->moveFB(400);
 			break;
 		case '7':
 			mScene->setScene(7);
@@ -288,6 +289,13 @@ IG1App::key(unsigned char key, int x, int y)
 				mViewPort->setPos(0, 0);
 			}
 #endif // !TOW_WINDOWS
+			break;
+
+		case'f':
+			mScene->rotate();
+			break;
+		case'g':
+			mScene->orbit();
 			break;
 		default:
 			need_redisplay = false;

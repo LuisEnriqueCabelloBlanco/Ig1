@@ -224,6 +224,7 @@ void Scene::makeScene4()
 
 void Scene::makeScene5()
 {
+	gObjects.push_back(new EjesRGB(400.));
 	Sphere* esfera = new Sphere(100.0);
 	esfera->setMColor(dvec4(1.0,0.5,0.0,1.0));
 	gObjects.push_back(esfera);
@@ -269,59 +270,29 @@ void Scene::makeScene6()
 {
 	//lore accurate Advanced TIE X-1, es decir, la nave de Darth Vader (por eso no es 1:1 con la referencia, intentamos que se pareciera mas al de la peli por las risas)
 
-	glm::dmat4 wingModelMat = glm::translate(dmat4(1), dvec3(50.0, 0.0, 0.0));
+	auto caza = buildCaza();
 
-	WingAdvancedTIE* wing1 = new WingAdvancedTIE();
-	wing1->setModelMat(wingModelMat);
-
-	WingAdvancedTIE* windows = new WingAdvancedTIE();
-	wingModelMat = glm::rotate(dmat4(1), glm::radians(180.0), dvec3(0.0, 1.0, 0.0))*wingModelMat;
-	windows->setModelMat(wingModelMat);
-
-	CompoundEntity* luisAdolescenteIncomprendida = new CompoundEntity();
-
-
-	CompoundEntity* eduroam = new CompoundEntity();
-
-	Sphere* kerf = new Sphere(60.0);
-	kerf->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	eduroam->addEntity(kerf);
-
-	double cHeight = 200.0;
-	Cylinder* itsACylinder = new Cylinder(10.0, 10.0, cHeight, 10, 3);
-	itsACylinder->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	dmat4 cMat = glm::translate(dmat4(1), dvec3(0.0, 0.0,-cHeight/2));
-	cMat = glm::rotate(dmat4(1), glm::radians(90.0), dvec3(0.0, 1.0, 0.0)) * cMat;
-	itsACylinder->setModelMat(cMat);
-	eduroam->addEntity(itsACylinder);
-
-	CompoundEntity* cockpito = new CompoundEntity();
-	double fortnite = 70.0;
-	Cylinder* wenamechaindesamer = new Cylinder(60.0, 15.0, fortnite, 8, 3);
-	wenamechaindesamer->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	cockpito->addEntity(wenamechaindesamer);
-
-	Disk* discoElysium = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
-	discoElysium->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	dmat4 kimKitsuragi = glm::translate(dmat4(1), dvec3(0.0, 0.0, fortnite));
-	discoElysium->setModelMat(kimKitsuragi);
-	cockpito->addEntity(discoElysium);
+	caza->setModelMat(
+		glm::translate(dmat4(1), dvec3(0.0, 300.0, 0.0)) * 
+		glm::scale(dmat4(1), dvec3(0.3)));
 	
-	eduroam->addEntity(cockpito);
+	Sphere* tatoine = new Sphere(250);
+	tatoine->setMColor(dvec4(1.0, 0.9137, 0.0,1.0));
+	gObjects.push_back(tatoine);
 
-	luisAdolescenteIncomprendida->addEntity(eduroam);
-
-	luisAdolescenteIncomprendida->addEntity(wing1);
-	luisAdolescenteIncomprendida->addEntity(windows);
-	gObjects.push_back(luisAdolescenteIncomprendida);
+	CompoundEntity* center = new CompoundEntity();
+	center->addEntity(caza);
+	gObjects.push_back(center);
+	centro = center;
+	gObjects.push_back(new EjesRGB(400.0));
 }
 
 void Scene::makeScene7()
 {
-	gObjects.push_back(new EjesRGB(400));
 	IndexedBox* cubo = new IndexedBox(200);
 
 	gObjects.push_back(cubo);
+	gObjects.push_back(new EjesRGB(400));
 }
 
 
@@ -353,6 +324,26 @@ void Scene::setScene(int id)
 	init();
 }
 
+void Scene::rotate()
+{
+	if (mId == 6) {
+		dmat4 mat = glm::rotate(dmat4(1), glm::radians(2.0), dvec3(0.0, 1., 0.0));
+		dmat4 centroMat = centro->modelMat();
+		centro->setModelMat(centroMat * mat);
+		facingAngle += 2.0;
+	}
+}
+
+void Scene::orbit()
+{
+	if (mId == 6) {
+		dmat4 mat = centro->modelMat();
+		dvec3 rotateDir = dvec3(1.0, 0.0, 0.0);
+		mat = glm::rotate(mat, glm::radians(2.0), rotateDir);
+		centro->setModelMat(mat);
+	}
+}
+
 void Scene::sceneDirLight(Camera const& cam) const {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -366,4 +357,56 @@ void Scene::sceneDirLight(Camera const& cam) const {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+}
+
+Abs_Entity* Scene::buildCaza()
+{
+	glm::dmat4 wingModelMat = glm::translate(dmat4(1), dvec3(50.0, 0.0, 0.0));
+
+	WingAdvancedTIE* wing1 = new WingAdvancedTIE();
+	wing1->setModelMat(wingModelMat);
+
+	WingAdvancedTIE* windows = new WingAdvancedTIE();
+	wingModelMat = glm::rotate(dmat4(1), glm::radians(180.0), dvec3(0.0, 1.0, 0.0)) * wingModelMat;
+	windows->setModelMat(wingModelMat);
+
+	CompoundEntity* luisAdolescenteIncomprendida = new CompoundEntity();
+
+
+	CompoundEntity* eduroam = new CompoundEntity();
+
+	Sphere* kerf = new Sphere(60.0);
+	kerf->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	eduroam->addEntity(kerf);
+
+	double cHeight = 200.0;
+	Cylinder* itsACylinder = new Cylinder(10.0, 10.0, cHeight, 10, 3);
+	itsACylinder->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	dmat4 cMat = glm::translate(dmat4(1), dvec3(0.0, 0.0, -cHeight / 2));
+	cMat = glm::rotate(dmat4(1), glm::radians(90.0), dvec3(0.0, 1.0, 0.0)) * cMat;
+	itsACylinder->setModelMat(cMat);
+	eduroam->addEntity(itsACylinder);
+
+	CompoundEntity* cockpito = new CompoundEntity();
+	double fortnite = 70.0;
+	Cylinder* wenamechaindesamer = new Cylinder(60.0, 15.0, fortnite, 8, 3);
+	wenamechaindesamer->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	cockpito->addEntity(wenamechaindesamer);
+
+	Disk* discoElysium = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
+	discoElysium->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	dmat4 kimKitsuragi = glm::translate(dmat4(1), dvec3(0.0, 0.0, fortnite));
+	discoElysium->setModelMat(kimKitsuragi);
+	cockpito->addEntity(discoElysium);
+
+	eduroam->addEntity(cockpito);
+
+	luisAdolescenteIncomprendida->addEntity(eduroam);
+
+	luisAdolescenteIncomprendida->addEntity(wing1);
+	luisAdolescenteIncomprendida->addEntity(windows);
+
+	caza = luisAdolescenteIncomprendida;
+
+	return luisAdolescenteIncomprendida;
 }
