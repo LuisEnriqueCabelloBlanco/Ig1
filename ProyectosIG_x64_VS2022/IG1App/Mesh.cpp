@@ -507,6 +507,27 @@ Mesh::createRGBAxes(GLdouble l)
 
 void IndexMesh::buildNormalVectors()
 {
+	for(int i = 0; i < mNumVertices; i++)
+	{
+		vNormals.push_back(dvec3(0, 0, 0)); 
+	}
+
+	for(int i = 0; i < nNumIndices; i = i + 3)
+	{
+		dvec3 v1 = vVertices[vIndices[i]];
+		dvec3 v2 = vVertices[vIndices[i + 1]];
+		dvec3 v3 = vVertices[vIndices[i + 2]];
+
+		dvec3 faceNormal = normalize(cross((v2 - v1), (v3 - v1)));
+
+		vNormals[vIndices[i]] = vNormals[vIndices[i]] + faceNormal;
+		vNormals[vIndices[i + 1]] = vNormals[vIndices[i + 1]] + faceNormal;
+		vNormals[vIndices[i + 2]] = vNormals[vIndices[i + 2]] + faceNormal;
+	}
+	for (int i = 0; i < mNumVertices; i++)
+	{
+		vNormals[i] = normalize(vNormals[i]);
+	}
 
 }
 
@@ -559,15 +580,17 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->mPrimitive = GL_TRIANGLES;
 	mesh->nNumIndices = 36;
 	mesh->mNumVertices = 8;
+	mesh->vNormals.reserve(mesh->mNumVertices);
+
 	mesh->vVertices = {
-		dvec3(l,l,l)*0.5,
-		dvec3(l,-l,l) * 0.5,
-		dvec3(-l,-l,l) * 0.5,
-		dvec3(-l,l,l) * 0.5,
-		dvec3(-l,l,-l) * 0.5,
-		dvec3(-l,-l,-l) * 0.5,
-		dvec3(l,-l,-l) * 0.5,
-		dvec3(l,l,-l) * 0.5
+		dvec3(l,l,l)*0.5, //0
+		dvec3(l,-l,l) * 0.5, //1 
+		dvec3(-l,-l,l) * 0.5, //2
+		dvec3(-l,l,l) * 0.5, //3
+		dvec3(-l,l,-l) * 0.5, //4
+		dvec3(-l,-l,-l) * 0.5, //5 
+		dvec3(l,-l,-l) * 0.5, //6
+		dvec3(l,l,-l) * 0.5 //7
 	};
 
 	for (int i = 0; i < mesh->mNumVertices; i++) {
@@ -591,10 +614,12 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 		4,3,0,
 		4,0,7,
 
-		5,2,1,
-		5,1,6
+		5,1,2,
+		5,6,1
+
 	};
 
+	mesh->buildNormalVectors();
 
 	return mesh;
 }
