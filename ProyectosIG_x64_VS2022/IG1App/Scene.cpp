@@ -99,21 +99,24 @@ Scene::resetGL()
 
 void Scene::makeScene0()
 {
+	CompoundEntity* fatherICannotClickTheBook = new CompoundEntity();
 	gObjects.push_back(new EjesRGB(400.0));
 
 	int r = 200;
 
 	RegularPolygon* poli2 = new RegularPolygon(40, r);
 	poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
-	gObjects.push_back(poli2); //n lados, r radio en pixeles
+	gObjects.push_back(poli2);
 
 	RGBTriangle* poli3 = new RGBTriangle();
 	poli3->setModelMat(glm::translate(poli3->modelMat(), glm::dvec3(0, r, 0)));
-	gObjects.push_back(poli3);
+	fatherICannotClickTheBook->addEntity(poli3);
 
 	RGBRectangle* poli4 = new RGBRectangle(400, 200);
 	gObjects.push_back(poli4);
 	
+	gObjects.push_back(fatherICannotClickTheBook);
+	centro = fatherICannotClickTheBook;
 }
 
 void Scene::makeScene1()
@@ -313,7 +316,13 @@ Scene::render(Camera const& cam) const
 void Scene::update()
 {
 	for (auto obj : gObjects) {
-		obj->update();
+		if (mId == 0) {
+			centro->setModelMat(glm::rotate(centro->modelMat(), glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0)));
+			glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
+			centro->setModelMat(circleRot * centro->modelMat());
+		}
+		else
+			obj->update();
 	}
 }
 
@@ -366,47 +375,47 @@ Abs_Entity* Scene::buildCaza()
 	WingAdvancedTIE* wing1 = new WingAdvancedTIE();
 	wing1->setModelMat(wingModelMat);
 
-	WingAdvancedTIE* windows = new WingAdvancedTIE();
+	WingAdvancedTIE* wing2 = new WingAdvancedTIE();
 	wingModelMat = glm::rotate(dmat4(1), glm::radians(180.0), dvec3(0.0, 1.0, 0.0)) * wingModelMat;
-	windows->setModelMat(wingModelMat);
+	wing2->setModelMat(wingModelMat);
 
-	CompoundEntity* luisAdolescenteIncomprendida = new CompoundEntity();
+	CompoundEntity* caza = new CompoundEntity();
 
 
-	CompoundEntity* eduroam = new CompoundEntity();
+	CompoundEntity* cabina = new CompoundEntity();
 
-	Sphere* kerf = new Sphere(60.0);
-	kerf->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	eduroam->addEntity(kerf);
+	Sphere* nucleo = new Sphere(60.0);
+	nucleo->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	cabina->addEntity(nucleo);
 
 	double cHeight = 200.0;
-	Cylinder* itsACylinder = new Cylinder(10.0, 10.0, cHeight, 10, 3);
-	itsACylinder->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	Cylinder* cylinder = new Cylinder(10.0, 10.0, cHeight, 10, 3);
+	cylinder->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
 	dmat4 cMat = glm::translate(dmat4(1), dvec3(0.0, 0.0, -cHeight / 2));
 	cMat = glm::rotate(dmat4(1), glm::radians(90.0), dvec3(0.0, 1.0, 0.0)) * cMat;
-	itsACylinder->setModelMat(cMat);
-	eduroam->addEntity(itsACylinder);
+	cylinder->setModelMat(cMat);
+	cabina->addEntity(cylinder);
 
-	CompoundEntity* cockpito = new CompoundEntity();
-	double fortnite = 70.0;
-	Cylinder* wenamechaindesamer = new Cylinder(60.0, 15.0, fortnite, 8, 3);
-	wenamechaindesamer->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	cockpito->addEntity(wenamechaindesamer);
+	CompoundEntity* ventana = new CompoundEntity();
+	double longVentana = 70.0;
+	Cylinder* cylinder2 = new Cylinder(60.0, 15.0, longVentana, 8, 3);
+	cylinder2->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	ventana->addEntity(cylinder2);
 
-	Disk* discoElysium = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
-	discoElysium->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
-	dmat4 kimKitsuragi = glm::translate(dmat4(1), dvec3(0.0, 0.0, fortnite));
-	discoElysium->setModelMat(kimKitsuragi);
-	cockpito->addEntity(discoElysium);
+	Disk* disco = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
+	disco->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
+	dmat4 auxMat = glm::translate(dmat4(1), dvec3(0.0, 0.0, longVentana));
+	disco->setModelMat(auxMat);
+	ventana->addEntity(disco);
 
-	eduroam->addEntity(cockpito);
+	cabina->addEntity(ventana);
 
-	luisAdolescenteIncomprendida->addEntity(eduroam);
+	caza->addEntity(cabina);
 
-	luisAdolescenteIncomprendida->addEntity(wing1);
-	luisAdolescenteIncomprendida->addEntity(windows);
+	caza->addEntity(wing1);
+	caza->addEntity(wing2);
 
-	caza = luisAdolescenteIncomprendida;
+	caza = caza;
 
-	return luisAdolescenteIncomprendida;
+	return caza;
 }
