@@ -565,7 +565,7 @@ void IndexMesh::render() const {
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
-		glDisableClientState(GL_INDEX_ARRAY); //acordarse siempre de desactivar lo que se ha activado ("opengl es un maquina de estados mimimimi" ya lo se luis pesao)
+		glDisableClientState(GL_INDEX_ARRAY); //acordarse siempre de desactivar lo que se ha activado ("opengl es un maquina de estados mimimimi" ya lo se luis pesao que solo dices eso)
 	}
 }
 

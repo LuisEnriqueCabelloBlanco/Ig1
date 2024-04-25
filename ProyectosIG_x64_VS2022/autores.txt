@@ -2,3 +2,7 @@ Luis Enrique Cabello Blanco
 David Canelada Velasco
 
 Se han hecho todos los ejercicios opcionales
+
+Tambien se añade en la entrega un diagrama para el cubo (de hecho es como la cuarta o quinta vez que lo hago), que a pesar de haberlo rehecho varias veces desde cero seguia viendose raro 
+
+El .exe para hacer la entrega sigue sin funcionarnos por cierto

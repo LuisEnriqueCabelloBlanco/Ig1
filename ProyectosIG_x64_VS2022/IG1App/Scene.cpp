@@ -402,7 +402,7 @@ Abs_Entity* Scene::buildCaza()
 	cylinder2->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
 	ventana->addEntity(cylinder2);
 
-	Disk* disco = new Disk(0.0, 15.0, 8, 3); //juegalo elena por fa es un juego muy bueno aunque aun no me lo haya acabado lo juro
+	Disk* disco = new Disk(0.0, 15.0, 8, 3);
 	disco->setMColor(dvec4(0.0, 0.25, 0.4, 1.0));
 	dmat4 auxMat = glm::translate(dmat4(1), dvec3(0.0, 0.0, longVentana));
 	disco->setModelMat(auxMat);
