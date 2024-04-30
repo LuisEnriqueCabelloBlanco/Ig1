@@ -292,9 +292,12 @@ void Scene::makeScene6()
 
 void Scene::makeScene7()
 {
-	IndexedBox* cubo = new IndexedBox(200);
+	/*IndexedBox* cubo = new IndexedBox(200);
 
 	gObjects.push_back(cubo);
+	gObjects.push_back(new EjesRGB(400));*/
+	IndexSphere* sphere = new IndexSphere(100, 10, 10);
+	gObjects.push_back(sphere);
 	gObjects.push_back(new EjesRGB(400));
 }
 

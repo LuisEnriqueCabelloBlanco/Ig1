@@ -237,4 +237,12 @@ public:
 protected:
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
+
+class IndexSphere :public Abs_Entity {
+public:
+	IndexSphere(GLdouble radio, int p, int m);
+	~IndexSphere();
+protected:
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_

@@ -64,4 +64,15 @@ public:
 	static IndexMesh* generateIndexedBox(GLdouble l);
 };
 
+class MbR : public IndexMesh {
+protected:
+	int n;
+	std::vector<glm::dvec3> perfil;
+	int m;
+public:
+	MbR(int rev, std::vector<glm::dvec3>& perf, int verticesPerfil);
+	~MbR() {};
+
+	static MbR* generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil);
+};
 #endif //_H_Scene_H_

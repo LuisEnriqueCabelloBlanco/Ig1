@@ -560,6 +560,7 @@ QuadricEntity::QuadricEntity() {
 
 Sphere::Sphere(GLdouble rr) { r = rr; }
 
+
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
@@ -727,5 +728,44 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
 		glDisable(GL_BLEND);
+	}
+}
+
+IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
+	std::vector<glm::dvec3> aux;
+	aux.reserve(p);
+	for (int i = 0; i < p; i++) {
+		GLdouble theta = (180 / p) * i;
+		GLdouble x = sin(radians(theta))*radio;
+		GLdouble y = -cos(radians(theta))*radio;
+		aux.emplace_back(glm::dvec3(x,y,0));
+	}
+	mMesh = MbR::generateIndexMbR(p, m, aux);
+}
+
+IndexSphere::~IndexSphere()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void IndexSphere::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		//glDisable(GL_BLEND);
 	}
 }

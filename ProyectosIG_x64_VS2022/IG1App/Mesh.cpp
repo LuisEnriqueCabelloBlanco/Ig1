@@ -471,6 +471,56 @@ Mesh* Mesh::generateWingAdvancedTie()
 	return mesh;
 }
 
+MbR::MbR(int rev, std::vector<dvec3>& perf, int verticesPerfil):IndexMesh()
+{
+	n = rev;
+	perfil = perf;
+	m = verticesPerfil;
+}
+
+MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
+{
+	MbR* mesh = new MbR(mm, perfil,mn);
+	mesh->mPrimitive = GL_TRIANGLES;
+	mesh->mNumVertices = mm * mn;
+	std::vector<glm::dvec3> aux (mesh->mNumVertices);
+	for (int i = 0; i < mn; i++) {
+		GLdouble theta = i * 360 / mn;
+		GLdouble c = cos(glm::radians(theta));
+		GLdouble s = sin(glm::radians(theta));
+		for (int j = 0; j < mm; j++) {
+			GLdouble z = -s * perfil[j].x + c * perfil[j].z;
+			GLdouble x = c * perfil[j].x + s * perfil[j].z;
+			//glm::dvec3 vector = glm::rotate<glm::dvec3>(perfil[j],glm::radians(theta),glm::dvec3(0.0,1.0,0.));
+			aux[i * j] = dvec3(x, perfil[j].y, z);
+		}
+	}
+	mesh->vVertices = aux;
+	mesh->mNumVertices = aux.size();
+	int indiceMayor = 0;
+	for (int i = 0; i < mn; i++) {
+		// El contador j recorre los vértices del perfil ,
+		// de abajo arriba . Las caras cuadrangulares resultan
+		// al unir la muestra i- ésima con la (i +1)% nn - ésima
+
+		for (int j = 0; j < mm - 1; j++) {
+			// El contador indice sirve para llevar cuenta
+			// de los índices generados hasta ahora . Se recorre
+			// la cara desde la esquina inferior izquierda
+			int indice = i + mm + j;
+			mesh->vIndices.push_back(indice);
+			indiceMayor++;
+			mesh->vIndices.push_back((indice + mm)%(mn*mm));
+			indiceMayor++;
+			mesh->vIndices.push_back((indice + mm+1)%(mn*mm));
+			indiceMayor++;
+		}
+	}
+	mesh->nNumIndices = indiceMayor;
+	mesh->buildNormalVectors();
+	return mesh;
+}
+
 Mesh*
 Mesh::createRGBAxes(GLdouble l)
 {
@@ -623,3 +673,4 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 	return mesh;
 }
+
