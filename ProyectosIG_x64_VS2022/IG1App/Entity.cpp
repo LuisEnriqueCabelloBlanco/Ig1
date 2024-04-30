@@ -734,6 +734,7 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
 	std::vector<glm::dvec3> aux;
 	aux.reserve(p);
+	//posible fallo en la forma de generar el borde
 	for (int i = 0; i < p; i++) {
 		GLdouble theta = (180 / p) * i;
 		GLdouble x = sin(radians(theta))*radio;
