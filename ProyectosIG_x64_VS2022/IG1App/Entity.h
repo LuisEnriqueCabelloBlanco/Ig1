@@ -245,4 +245,11 @@ public:
 protected:
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
+class IndexToroid : public Abs_Entity {
+public:
+	IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points);
+	~IndexToroid();
+protected:
+	virtual void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_

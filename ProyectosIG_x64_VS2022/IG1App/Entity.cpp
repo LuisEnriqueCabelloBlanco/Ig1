@@ -734,12 +734,14 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
 	std::vector<glm::dvec3> aux;
 	aux.reserve(p);
-	for (int i = 0; i < p; i++) {
-		GLdouble theta = (180 / p) * i;
-		GLdouble x = sin(radians(theta))*radio;
-		GLdouble y = -cos(radians(theta))*radio;
+	for (int i = 0; i < p-1; i++) {
+		GLdouble theta =-90 + (180 / (p-1)) * i;
+		GLdouble x = cos(radians(theta))*radio;
+		GLdouble y = sin(radians(theta))*radio;
 		aux.emplace_back(glm::dvec3(x,y,0));
 	}
+	//garantizamos que la esfera este cerrada
+	aux.emplace_back(glm::dvec3(0, radio, 0));
 	mMesh = MbR::generateIndexMbR(p, m, aux);
 }
 
@@ -763,6 +765,45 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+		glLineWidth(1);
+		//glDisable(GL_BLEND);
+	}
+}
+IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
+	std::vector<glm::dvec3> aux;
+	aux.reserve(points);
+	for (int i = 0; i < points-1 ; i++) {
+		GLdouble theta = (360 / (points-1)) * i;
+		GLdouble x = toroidRadio + cos(radians(theta)) * circleRadio;
+		GLdouble y = sin(radians(theta)) * circleRadio;
+		aux.emplace_back(glm::dvec3(x, y, 0));
+	}
+	//garantizamos que la esfera este cerrada
+	aux.emplace_back(glm::dvec3(toroidRadio+circleRadio, 0, 0));
+	mMesh = MbR::generateIndexMbR(points, muestras, aux);
+}
+IndexToroid::~IndexToroid()
+{
+	delete mMesh;
+	mMesh = nullptr;
+	if (mTexture != nullptr) {
+		delete mTexture;
+		mTexture = nullptr;
+	}
+}
+
+void IndexToroid::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); //mandar mesh a gpu
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+		glLineWidth(2);
+		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);

@@ -483,16 +483,17 @@ MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
 	MbR* mesh = new MbR(mm, perfil,mn);
 	mesh->mPrimitive = GL_TRIANGLES;
 	mesh->mNumVertices = mm * mn;
-	std::vector<glm::dvec3> aux (mesh->mNumVertices);
+	std::vector<glm::dvec3> aux;
+	aux.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mn; i++) {
-		GLdouble theta = i * 360 / mn;
+		GLdouble theta = i * (360 / mn);
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++) {
 			GLdouble z = -s * perfil[j].x + c * perfil[j].z;
 			GLdouble x = c * perfil[j].x + s * perfil[j].z;
 			//glm::dvec3 vector = glm::rotate<glm::dvec3>(perfil[j],glm::radians(theta),glm::dvec3(0.0,1.0,0.));
-			aux[i * j] = dvec3(x, perfil[j].y, z);
+			aux.emplace_back(dvec3(x, perfil[j].y, z));
 		}
 	}
 	mesh->vVertices = aux;
@@ -507,12 +508,21 @@ MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
 			// El contador indice sirve para llevar cuenta
 			// de los índices generados hasta ahora . Se recorre
 			// la cara desde la esquina inferior izquierda
-			int indice = i + mm + j;
+			int indice = i * mm + j;
 			mesh->vIndices.push_back(indice);
 			indiceMayor++;
 			mesh->vIndices.push_back((indice + mm)%(mn*mm));
 			indiceMayor++;
 			mesh->vIndices.push_back((indice + mm+1)%(mn*mm));
+			indiceMayor++;
+
+
+
+			mesh->vIndices.push_back(indice);
+			indiceMayor++;
+			mesh->vIndices.push_back((indice + mm + 1) % (mn * mm));
+			indiceMayor++;
+			mesh->vIndices.push_back(indice +1);
 			indiceMayor++;
 		}
 	}
