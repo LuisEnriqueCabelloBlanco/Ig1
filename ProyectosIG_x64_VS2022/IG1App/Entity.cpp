@@ -565,10 +565,10 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	glColor3f(mColor.r, mColor.g, mColor.b);
-	// Aquí se puede fijar el modo de dibujar la esfera :
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
 	gluSphere(qEnt_, r, 50, 50);
-	// Aquí se debe recuperar el color :
+	// Aquï¿½ se debe recuperar el color :
 	glColor3f (0.0 , 0.0 , 0.0);
 }
 
@@ -586,10 +586,10 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	glColor3f(mColor.r, mColor.g, mColor.b);
-	// Aquí se puede fijar el modo de dibujar la esfera :
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
 	gluCylinder(qEnt_, baseRadius_, topRadius_, height_, slices_, stacks_);
-	// Aquí se debe recuperar el color :
+	// Aquï¿½ se debe recuperar el color :
 	glColor3f(0.0, 0.0, 0.0);
 }
 
@@ -605,12 +605,12 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	// Aquí se puede fijar el color de la esfera así :
+	// Aquï¿½ se puede fijar el color de la esfera asï¿½ :
 	glColor3f(mColor.r, mColor.g, mColor.b);
-	// Aquí se puede fijar el modo de dibujar la esfera :
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
 	gluDisk(qEnt_, innerRadius_, outerRadius_, slices_, rings_);
-	// Aquí se debe recuperar el color :
+	// Aquï¿½ se debe recuperar el color :
 	glColor3f(0.0, 0.0, 0.0);
 }
 
@@ -630,11 +630,11 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	glColor3f(mColor.r, mColor.g, mColor.b);
-	// Aquí se puede fijar el modo de dibujar la esfera :
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
 	gluPartialDisk(qEnt_, innerRadius_, outerRadius_, slices_, rings_,
 		startAngle_, sweepAngle_);
-	// Aquí se debe recuperar el color :
+	// Aquï¿½ se debe recuperar el color :
 	glColor3f(0.0, 0.0, 0.0);
 }
 
