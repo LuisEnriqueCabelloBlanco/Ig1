@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Texture.h"
 #include "Mesh.h"
+#include "Material.h"
 
 class Abs_Entity // abstract class
 {
@@ -44,6 +45,14 @@ protected:
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
 };
 
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() : Abs_Entity() { };
+	virtual ~EntityWithMaterial() { delete material; };
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
+};
 class EjesRGB : public Abs_Entity
 {
 public:
@@ -167,12 +176,13 @@ protected:
 	GLUquadricObj* qEnt_;
 };
 
-class Sphere : public QuadricEntity {
+class Sphere : public EntityWithMaterial {
 public:
 	Sphere(GLdouble r); // r es el radio de la esfera
 	void render(glm::dmat4 const& modelViewMat) const override;
 protected:
 	GLdouble r;
+	GLUquadricObj* qEnt_;
 };
 
 class Cylinder : public QuadricEntity
@@ -252,4 +262,5 @@ public:
 protected:
 	virtual void render(glm::dmat4 const& modelViewMat) const override;
 };
+
 #endif //_H_Entities_H_

@@ -280,6 +280,9 @@ void Scene::makeScene6()
 		glm::scale(dmat4(1), dvec3(0.3)));
 	
 	Sphere* tatoine = new Sphere(250);
+	Material* gold = new Material();
+	gold->setGold();
+	tatoine->setMaterial(gold);
 	tatoine->setMColor(dvec4(1.0, 0.9137, 0.0,1.0));
 	gObjects.push_back(tatoine);
 
@@ -296,7 +299,7 @@ void Scene::makeScene7()
 
 	gObjects.push_back(cubo);
 	gObjects.push_back(new EjesRGB(400));*/
-	IndexToroid* sphere = new IndexToroid(100,200, 4, 12);
+	IndexToroid* sphere = new IndexToroid(100,200, 120, 12);
 	gObjects.push_back(sphere);
 	gObjects.push_back(new EjesRGB(400));
 }

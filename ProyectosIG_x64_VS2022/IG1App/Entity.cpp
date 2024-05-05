@@ -558,12 +558,14 @@ QuadricEntity::QuadricEntity() {
 	qEnt_ = gluNewQuadric();
 }
 
-Sphere::Sphere(GLdouble rr) { r = rr; }
+Sphere::Sphere(GLdouble rr) { r = rr; qEnt_ = gluNewQuadric();}
 
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
+	if (material != nullptr)
+		material->upload();
 	glColor3f(mColor.r, mColor.g, mColor.b);
 	// Aqu� se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
@@ -803,7 +805,7 @@ void IndexToroid::render(glm::dmat4 const& modelViewMat) const
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
