@@ -564,6 +564,7 @@ Sphere::Sphere(GLdouble rr) { r = rr; qEnt_ = gluNewQuadric();}
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
+	glEnable(GL_COLOR_MATERIAL);
 	if (material != nullptr)
 		material->upload();
 	glColor3f(mColor.r, mColor.g, mColor.b);
@@ -572,6 +573,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	gluSphere(qEnt_, r, 50, 50);
 	// Aqu� se debe recuperar el color :
 	glColor3f (0.0 , 0.0 , 0.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 Cylinder::Cylinder(GLdouble baseRadius, GLdouble topRadius, GLdouble height, int slices, int stacks)
