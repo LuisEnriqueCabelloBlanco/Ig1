@@ -564,16 +564,19 @@ Sphere::Sphere(GLdouble rr) { r = rr; qEnt_ = gluNewQuadric();}
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	glEnable(GL_COLOR_MATERIAL);
-	if (material != nullptr)
+	if (material != nullptr) {
+		glDisable(GL_COLOR_MATERIAL);
 		material->upload();
-	glColor3f(mColor.r, mColor.g, mColor.b);
+	}
+	else {
+		glColor3f(mColor.r, mColor.g, mColor.b);
+	}
 	// Aqu� se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
 	gluSphere(qEnt_, r, 50, 50);
 	// Aqu� se debe recuperar el color :
-	glColor3f (0.0 , 0.0 , 0.0);
-	glDisable(GL_COLOR_MATERIAL);
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(0.0, 0.0, 0.0);
 }
 
 Cylinder::Cylinder(GLdouble baseRadius, GLdouble topRadius, GLdouble height, int slices, int stacks)
@@ -807,7 +810,7 @@ void IndexToroid::render(glm::dmat4 const& modelViewMat) const
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);

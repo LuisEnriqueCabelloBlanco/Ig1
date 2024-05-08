@@ -2,6 +2,10 @@
 #include <glm/gtc/type_ptr.inl>
 void Material::upload()
 {
+	glColorMaterial(face, GL_SPECULAR);
+	glColorMaterial(face, GL_SHININESS);
+	glColorMaterial(face, GL_AMBIENT); 
+	glColorMaterial(face, GL_DIFFUSE);
 	glMaterialfv(face, GL_AMBIENT, glm::value_ptr(ambient));
 	glMaterialfv(face, GL_DIFFUSE, glm::value_ptr(diffuse));
 	glMaterialfv(face, GL_SPECULAR, glm::value_ptr(specular));
@@ -9,10 +13,6 @@ void Material::upload()
 	glShadeModel(sh);
 	// glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE ); // Defecto
 	
-	//glColorMaterial(face, GL_AMBIENT); con estas dos se ve oscuro el material, pense que habia que poner todas las componentes de la luz pero resulta que no? tengo que preguntar sobre como va esto, tengo sueño
-	//glColorMaterial(face, GL_DIFFUSE);
-	glColorMaterial(face, GL_SPECULAR);
-	glColorMaterial(face, GL_SHININESS);
 }
 
 void Material::setCopper()
