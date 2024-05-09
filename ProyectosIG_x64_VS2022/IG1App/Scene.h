@@ -8,6 +8,7 @@
 #include "Entity.h"
 
 #include <vector>
+#include "Light.h"
 
 class Scene
 {
@@ -32,6 +33,8 @@ public:
 
 	void rotate();
 	void orbit();
+
+	void lightOnOff(bool onoff) { habemusLuz = onoff; }
 protected:
 	void free();
 	void setGL();
@@ -54,6 +57,8 @@ protected:
 	double facingAngle = 0;
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	int mId = 0;
+	DirLight* dirLight = nullptr;
+	bool habemusLuz = false;
 };
 
 #endif //_H_Scene_H_

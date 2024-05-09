@@ -9,6 +9,12 @@ using namespace glm;
 void
 Scene::init()
 {
+	dirLight = new DirLight();
+	dirLight->setPosDir({ 1, 1, 1 });
+	dirLight->setAmb({ 0, 0, 0, 1 });
+	dirLight->setDiff({ 1, 1, 1, 1 });
+	dirLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
 	setGL(); // OpenGL settings
 
 	// allocate memory and load resources
@@ -76,6 +82,7 @@ Scene::free()
 		delete el;
 		el = nullptr;
 	}
+	delete dirLight;
 }
 void
 Scene::setGL()
@@ -310,8 +317,10 @@ void Scene::makeScene7()
 void
 Scene::render(Camera const& cam) const
 {
-	sceneDirLight(cam);
-
+	if (habemusLuz) {
+		//sceneDirLight(cam);
+		dirLight->upload(cam.viewMat());
+	}
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {

@@ -297,6 +297,12 @@ IG1App::key(unsigned char key, int x, int y)
 		case'g':
 			mScene->orbit();
 			break;
+		case'q':
+			mScene->lightOnOff(false);
+			break;
+		case'w':
+			mScene->lightOnOff(true);
+			break;
 		default:
 			need_redisplay = false;
 			break;
