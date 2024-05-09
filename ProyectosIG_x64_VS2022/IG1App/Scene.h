@@ -34,7 +34,10 @@ public:
 	void rotate();
 	void orbit();
 
-	void lightOnOff(bool onoff) { habemusLuz = onoff; }
+	void lightOnOff(bool onoff)
+	{
+		habemusLuz = onoff;
+	}
 protected:
 	void free();
 	void setGL();
