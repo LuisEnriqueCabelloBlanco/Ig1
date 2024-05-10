@@ -303,6 +303,12 @@ IG1App::key(unsigned char key, int x, int y)
 		case'w':
 			mScene->lightOnOff(true);
 			break;
+		case'a':
+			mScene->lightOnOff(false);
+			break;
+		case's':
+			mScene->lightOnOff(true);
+			break;
 		default:
 			need_redisplay = false;
 			break;

@@ -317,17 +317,22 @@ void Scene::makeScene7()
 void
 Scene::render(Camera const& cam) const
 {
-    //sceneDirLight(cam)
-	if (habemusLuz)
-	{
-		dirLight->upload(cam.viewMat());
+ //   //sceneDirLight(cam)
+	//if (habemusLuz)
+	//{
+	//	dirLight->upload(cam.viewMat());
+	//	dirLight->enable();
+	//}
+	//else
+	//{
+	//	dirLight->disable();
+	//}
+	//sceneDirLight(cam);
+	dirLight->upload(cam.viewMat());
+	if (habemusLuz) {
 		dirLight->enable();
 	}
-	else
-	{
-		dirLight->disable();
-	}
-    
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
