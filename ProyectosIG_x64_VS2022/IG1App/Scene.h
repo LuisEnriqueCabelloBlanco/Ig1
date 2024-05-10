@@ -46,6 +46,11 @@ public:
 	void spotLightOnOff(bool onoff) {
 		enableSpotLight = onoff;
 	}
+
+	void tieLightOnOff(bool onoff) {
+		if (caza != nullptr)
+			enableTieLight = onoff;
+	}
 protected:
 	void free();
 	void setGL();
@@ -71,9 +76,11 @@ protected:
 	DirLight* dirLight = nullptr;
 	PosLight* posLight = nullptr;
 	SpotLight* spotLight = nullptr;
+	DirLight* panza = nullptr;
 	bool enableDirLight = false;
 	bool enablePosLight = false;
 	bool enableSpotLight = false;
+	bool enableTieLight = false;
 };
 
 #endif //_H_Scene_H_

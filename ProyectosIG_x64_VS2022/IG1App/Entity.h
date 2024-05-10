@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Light.h"
 
 class Abs_Entity // abstract class
 {

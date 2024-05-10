@@ -355,6 +355,10 @@ Scene::render(Camera const& cam) const
 		spotLight->enable();
 	}
 
+	if (panza != nullptr && enableTieLight)
+		panza->enable();
+
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
@@ -364,6 +368,8 @@ Scene::render(Camera const& cam) const
     dirLight->disable();
 	posLight->disable();
 	spotLight->disable();
+	if (panza != nullptr)
+		panza->disable();
 }
 
 void Scene::update()
@@ -468,7 +474,13 @@ Abs_Entity* Scene::buildCaza()
 	caza->addEntity(wing1);
 	caza->addEntity(wing2);
 
-	caza = caza;
+	//caza = caza;
+
+	panza = new DirLight();
+	panza->setPosDir({ 1, 1, 1 });
+	panza->setAmb({ 0, 0, 0, 1 });
+	panza->setDiff({ 1, 1, 1, 1 });
+	panza->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	return caza;
 }
