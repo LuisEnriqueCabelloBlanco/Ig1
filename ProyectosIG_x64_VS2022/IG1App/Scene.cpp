@@ -9,6 +9,7 @@ using namespace glm;
 void
 Scene::init()
 {
+	//los identificadores especificados en el enunciado se setean solos al crear todas estas luces
 	dirLight = new DirLight();
 	dirLight->setPosDir({ 1, 1, 1 });
 	dirLight->setAmb({ 0, 0, 0, 1 });
@@ -20,6 +21,12 @@ Scene::init()
 	posLight->setAmb({ 0, 0, 0, 1 });
 	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
+	spotLight = new SpotLight();
+	spotLight->setPosDir({ 0, 1, 1 });
+	spotLight->setAmb({ 0, 0, 0, 1 });
+	spotLight->setDiff({ 1, 1, 1, 1 });
+	spotLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	setGL(); // OpenGL settings
 
@@ -344,6 +351,9 @@ Scene::render(Camera const& cam) const
 	if (enablePosLight) {
 		posLight->enable();
 	}
+	if (enableSpotLight) {
+		spotLight->enable();
+	}
 
 	cam.upload();
 
@@ -353,6 +363,7 @@ Scene::render(Camera const& cam) const
 
     dirLight->disable();
 	posLight->disable();
+	spotLight->disable();
 }
 
 void Scene::update()

@@ -42,6 +42,10 @@ public:
 	void posLightOnOff(bool onoff) {
 		enablePosLight = onoff;
 	}
+
+	void spotLightOnOff(bool onoff) {
+		enableSpotLight = onoff;
+	}
 protected:
 	void free();
 	void setGL();
@@ -66,8 +70,10 @@ protected:
 	int mId = 0;
 	DirLight* dirLight = nullptr;
 	PosLight* posLight = nullptr;
+	SpotLight* spotLight = nullptr;
 	bool enableDirLight = false;
 	bool enablePosLight = false;
+	bool enableSpotLight = false;
 };
 
 #endif //_H_Scene_H_
