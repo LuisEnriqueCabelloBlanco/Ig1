@@ -48,6 +48,7 @@ void SpotLight::upload(glm::dmat4 const& modelViewMat) const {
 	glLightfv(id, GL_SPOT_DIRECTION, value_ptr(direction));
 	glLightf(id, GL_SPOT_CUTOFF, cutoff);
 	glLightf(id, GL_SPOT_EXPONENT, exp);
+	uploadL();
 }
 
 

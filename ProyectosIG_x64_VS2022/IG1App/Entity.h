@@ -229,8 +229,10 @@ public:
 	~CompoundEntity();
 	void addEntity(Abs_Entity* ae);
 	void render(glm::dmat4 const& modelViewMat) const override;
+	void addLight(SpotLight* l) { light = l; };
 protected:
 	std::vector<Abs_Entity*> gObjects;
+	SpotLight* light;
 };
 
 class WingAdvancedTIE : public Abs_Entity {

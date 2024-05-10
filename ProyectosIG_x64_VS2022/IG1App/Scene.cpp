@@ -22,10 +22,9 @@ Scene::init()
 	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
-	spotLight = new SpotLight();
-	spotLight->setPosDir({ 0, 1, 1 });
+	spotLight = new SpotLight({0,300,300});
 	spotLight->setAmb({ 0, 0, 0, 1 });
-	spotLight->setDiff({ 1, 1, 1, 1 });
+	spotLight->setDiff({ 1.0, 1.0, 0.0, 1 });
 	spotLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	setGL(); // OpenGL settings
@@ -301,9 +300,9 @@ void Scene::makeScene6()
 		glm::scale(dmat4(1), dvec3(0.3)));
 	
 	Sphere* tatoine = new Sphere(250);
-	Material* gold = new Material();
-	gold->setGold();
-	tatoine->setMaterial(gold);
+	//Material* gold = new Material();
+	//gold->setGold();
+	//tatoine->setMaterial(gold);
 	tatoine->setMColor(dvec4(1.0, 0.9137, 0.0,1.0));
 	gObjects.push_back(tatoine);
 
@@ -316,7 +315,7 @@ void Scene::makeScene6()
 
 void Scene::makeScene7()
 {
-	IndexSphere* cubo = new IndexSphere(200,6,12);
+	IndexSphere* cubo = new IndexSphere(200,30,30);
 
 	gObjects.push_back(cubo);
 	gObjects.push_back(new EjesRGB(400));
@@ -344,15 +343,18 @@ Scene::render(Camera const& cam) const
 	//sceneDirLight(cam);
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
+	spotLight->upload(cam.viewMat());
+	if(panza!= nullptr)
+		panza->upload(cam.viewMat());
 
+	if (enableSpotLight) {
+		spotLight->enable();
+	}
 	if (enableDirLight) {
 		dirLight->enable();
 	}
 	if (enablePosLight) {
 		posLight->enable();
-	}
-	if (enableSpotLight) {
-		spotLight->enable();
 	}
 
 	if (panza != nullptr && enableTieLight)
@@ -476,11 +478,13 @@ Abs_Entity* Scene::buildCaza()
 
 	//caza = caza;
 
-	panza = new DirLight();
+	panza = new SpotLight();
 	panza->setPosDir({ 1, 1, 1 });
 	panza->setAmb({ 0, 0, 0, 1 });
 	panza->setDiff({ 1, 1, 1, 1 });
 	panza->setSpec({ 0.5, 0.5, 0.5, 1 });
+
+	caza->addLight(panza);
 
 	return caza;
 }

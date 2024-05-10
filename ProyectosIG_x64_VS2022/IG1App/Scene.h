@@ -76,8 +76,8 @@ protected:
 	DirLight* dirLight = nullptr;
 	PosLight* posLight = nullptr;
 	SpotLight* spotLight = nullptr;
-	DirLight* panza = nullptr;
-	bool enableDirLight = false;
+	SpotLight* panza = nullptr;
+	bool enableDirLight = true;
 	bool enablePosLight = false;
 	bool enableSpotLight = false;
 	bool enableTieLight = false;

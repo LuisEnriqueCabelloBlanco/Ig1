@@ -665,9 +665,14 @@ void CompoundEntity::addEntity(Abs_Entity* ae)
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
+	//light->upload(modelViewMat);
+	//llamar a mover la luz
+	//light->setSpot();
+	//light->enable();
 	for (auto o : gObjects) {
 		o->render(aMat);
 	}
+	//light->disable();
 }
 
 WingAdvancedTIE::WingAdvancedTIE()
