@@ -298,16 +298,16 @@ IG1App::key(unsigned char key, int x, int y)
 			mScene->orbit();
 			break;
 		case'q':
-			mScene->lightOnOff(false);
+			mScene->dirLightOnOff(false);
 			break;
 		case'w':
-			mScene->lightOnOff(true);
+			mScene->dirLightOnOff(true);
 			break;
 		case'a':
-			mScene->lightOnOff(false);
+			//mScene->dirLightOnOff(false);
 			break;
 		case's':
-			mScene->lightOnOff(true);
+			//mScene->dirLightOnOff(true);
 			break;
 		default:
 			need_redisplay = false;

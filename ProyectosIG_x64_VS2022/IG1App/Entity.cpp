@@ -739,16 +739,25 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 }
 
 IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
-	std::vector<glm::dvec3> aux;
+	/*std::vector<glm::dvec3> aux;
 	aux.reserve(p);
 	for (int i = 0; i < p-1; i++) {
 		GLdouble theta =-90 + (180 / (p-1)) * i;
 		GLdouble x = cos(radians(theta))*radio;
 		GLdouble y = sin(radians(theta))*radio;
 		aux.emplace_back(glm::dvec3(x,y,0));
+	}*/
+	std::vector<glm::dvec3> aux;
+	aux.reserve(p + 1);
+	double angle = 180 / (p-1);
+	for (int i = 0; i < p; i++) {
+		GLdouble x = radio * cos(radians(angle*i-90));
+		GLdouble y = radio * sin(radians(angle*i-90));
+		aux.emplace_back(glm::dvec3(x, y, 0));
 	}
+	//aux.emplace_back(aux[0]);
 	//garantizamos que la esfera este cerrada
-	aux.emplace_back(glm::dvec3(0, radio, 0));
+	//aux.emplace_back(glm::dvec3(0, radio, 0));
 	mMesh = MbR::generateIndexMbR(p, m, aux);
 }
 
@@ -771,7 +780,7 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
@@ -780,15 +789,24 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 }
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
 	std::vector<glm::dvec3> aux;
-	aux.reserve(points);
-	for (int i = 0; i < points-1 ; i++) {
-		GLdouble theta = (360 / (points-1)) * i;
+	aux.reserve(points + 1);
+	float angle = 360 / points;
+	for (int i = 0; i < points; i++) {
+		GLdouble x = circleRadio * cos(radians(i * angle)) + toroidRadio;
+		GLdouble y = circleRadio * sin(radians(i * angle));
+		aux.emplace_back(glm::dvec3(x, y, 0));
+	}
+	aux.emplace_back(aux[0]);
+	/*for (int i = 0; i < points; i++) {
+		GLdouble theta = (360 / points) * i;
 		GLdouble x = toroidRadio + cos(radians(theta)) * circleRadio;
 		GLdouble y = sin(radians(theta)) * circleRadio;
 		aux.emplace_back(glm::dvec3(x, y, 0));
-	}
+	}*/
 	//garantizamos que la esfera este cerrada
-	aux.emplace_back(glm::dvec3(toroidRadio+circleRadio, 0, 0));
+	//aux.emplace_back(aux[0]);
+	
+
 	mMesh = MbR::generateIndexMbR(points, muestras, aux);
 }
 IndexToroid::~IndexToroid()

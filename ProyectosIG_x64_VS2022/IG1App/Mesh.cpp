@@ -518,11 +518,11 @@ MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
 
 
 
-			mesh->vIndices.push_back(indice);
-			indiceMayor++;
 			mesh->vIndices.push_back((indice + mm + 1) % (mn * mm));
 			indiceMayor++;
 			mesh->vIndices.push_back(indice +1);
+			indiceMayor++;
+			mesh->vIndices.push_back(indice);
 			indiceMayor++;
 		}
 	}

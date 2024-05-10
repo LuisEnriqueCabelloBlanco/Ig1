@@ -34,7 +34,7 @@ public:
 	void rotate();
 	void orbit();
 
-	void lightOnOff(bool onoff)
+	void dirLightOnOff(bool onoff)
 	{
 		habemusLuz = onoff;
 	}
