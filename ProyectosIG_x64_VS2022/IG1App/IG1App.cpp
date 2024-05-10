@@ -304,10 +304,10 @@ IG1App::key(unsigned char key, int x, int y)
 			mScene->dirLightOnOff(true);
 			break;
 		case'a':
-			//mScene->dirLightOnOff(false);
+			mScene->posLightOnOff(false);
 			break;
 		case's':
-			//mScene->dirLightOnOff(true);
+			mScene->posLightOnOff(true);
 			break;
 		default:
 			need_redisplay = false;

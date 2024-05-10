@@ -15,6 +15,12 @@ Scene::init()
 	dirLight->setDiff({ 1, 1, 1, 1 });
 	dirLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
+	posLight = new PosLight();
+	posLight->setPosDir({ 1, 1, 0 });
+	posLight->setAmb({ 0, 0, 0, 1 });
+	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
+	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
 	setGL(); // OpenGL settings
 
 	// allocate memory and load resources
@@ -83,6 +89,7 @@ Scene::free()
 		el = nullptr;
 	}
 	delete dirLight;
+	delete posLight;
 }
 void
 Scene::setGL()
@@ -329,8 +336,13 @@ Scene::render(Camera const& cam) const
 	//}
 	//sceneDirLight(cam);
 	dirLight->upload(cam.viewMat());
-	if (habemusLuz) {
+	posLight->upload(cam.viewMat());
+
+	if (enableDirLight) {
 		dirLight->enable();
+	}
+	if (enablePosLight) {
+		posLight->enable();
 	}
 
 	cam.upload();
@@ -340,6 +352,7 @@ Scene::render(Camera const& cam) const
 	}
 
     dirLight->disable();
+	posLight->disable();
 }
 
 void Scene::update()

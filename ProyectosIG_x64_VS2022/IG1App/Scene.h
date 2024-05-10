@@ -36,7 +36,11 @@ public:
 
 	void dirLightOnOff(bool onoff)
 	{
-		habemusLuz = onoff;
+		enableDirLight = onoff;
+	}
+
+	void posLightOnOff(bool onoff) {
+		enablePosLight = onoff;
 	}
 protected:
 	void free();
@@ -61,7 +65,9 @@ protected:
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	int mId = 0;
 	DirLight* dirLight = nullptr;
-	bool habemusLuz = false;
+	PosLight* posLight = nullptr;
+	bool enableDirLight = false;
+	bool enablePosLight = false;
 };
 
 #endif //_H_Scene_H_
