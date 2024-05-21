@@ -232,7 +232,7 @@ public:
 	void addLight(SpotLight* l) { light = l; };
 protected:
 	std::vector<Abs_Entity*> gObjects;
-	SpotLight* light;
+	SpotLight* light = nullptr;
 };
 
 class WingAdvancedTIE : public Abs_Entity {

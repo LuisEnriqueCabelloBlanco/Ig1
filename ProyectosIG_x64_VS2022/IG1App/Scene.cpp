@@ -10,27 +10,12 @@ void
 Scene::init()
 {
 	//los identificadores especificados en el enunciado se setean solos al crear todas estas luces
-	dirLight = new DirLight();
-	dirLight->setPosDir({ 1, 1, 1 });
-	dirLight->setAmb({ 0, 0, 0, 1 });
-	dirLight->setDiff({ 1, 1, 1, 1 });
-	dirLight->setSpec({ 0.5, 0.5, 0.5, 1 });
-
-	posLight = new PosLight();
-	posLight->setPosDir({ 1, 1, 0 });
-	posLight->setAmb({ 0, 0, 0, 1 });
-	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
-	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
-
-	spotLight = new SpotLight({0,300,300});
-	spotLight->setAmb({ 0, 0, 0, 1 });
-	spotLight->setDiff({ 1.0, 1.0, 0.0, 1 });
-	spotLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	setGL(); // OpenGL settings
 
 	// allocate memory and load resources
 	// Lights
+	setLights();
 	// Textures
 
 	// Graphics objects (entities) of the scene
@@ -301,11 +286,6 @@ void Scene::makeScene6()
 {
 	//lore accurate Advanced TIE X-1, es decir, la nave de Darth Vader (por eso no es 1:1 con la referencia, intentamos que se pareciera mas al de la peli por las risas)
 
-	auto caza = buildCaza();
-
-	caza->setModelMat(
-		glm::translate(dmat4(1), dvec3(0.0, 800, 0.0)) * 
-		glm::scale(dmat4(1), dvec3(1)));
 	
 	Sphere* tatoine = new Sphere(700);
 	//Material* gold = new Material();
@@ -314,6 +294,10 @@ void Scene::makeScene6()
 	tatoine->setMColor(dvec4(1.0, 0.9137, 0.0,1.0));
 	gObjects.push_back(tatoine);
 
+	auto caza = buildCaza();
+	caza->setModelMat(
+		glm::translate(dmat4(1), dvec3(0.0, 800, 0.0)) * 
+		glm::scale(dmat4(1), dvec3(0.5)));
 	CompoundEntity* center = new CompoundEntity();
 	center->addEntity(caza);
 	gObjects.push_back(center);
@@ -349,37 +333,17 @@ Scene::render(Camera const& cam) const
 	//	dirLight->disable();
 	//}
 	//sceneDirLight(cam);
-	cam.upload();
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
 	spotLight->upload(cam.viewMat());
-	if(panza != nullptr)
-		panza->upload(cam.viewMat());
+	//if(panza != nullptr)
+	//	panza->upload(cam.viewMat());
 
-	if (enableSpotLight) {
-		spotLight->enable();
-	}
-	if (enableDirLight) {
-		dirLight->enable();
-	}
-	if (enablePosLight) {
-		posLight->enable();
-	}
-
-	if (panza != nullptr && enableTieLight)
-		panza->enable();
-
-
+	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
 	}
-	if(!enableDirLight)
-		dirLight->disable();
-	posLight->disable();
-	spotLight->disable();
-	if (panza != nullptr)
-		panza->disable();
 }
 
 void Scene::update()
@@ -437,6 +401,39 @@ void Scene::sceneDirLight(Camera const& cam) const {
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 }
 
+void Scene::setLights()
+{
+	dirLight = new DirLight();
+	dirLight->setPosDir({ 1, 1, 1 });
+	dirLight->setAmb({ 0, 0, 0, 1 });
+	dirLight->setDiff({ 1, 1, 1, 1 });
+	dirLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
+	posLight = new PosLight();
+	posLight->setPosDir({ 1, 1, 0 });
+	posLight->setAmb({ 0, 0, 0, 1 });
+	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
+	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
+	spotLight = new SpotLight({ 0,800,800 });
+	spotLight->setAmb({ 0, 0, 0, 1 });
+	spotLight->setDiff({ 1.0, 1.0, 0.0, 1 });
+	spotLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+
+	panza = new SpotLight();
+	panza->setPosDir({ 0,0,0 });
+	panza->setSpot({ 0,-1,0 }, 90, 5);
+	panza->setAmb({ 0, 0, 0, 1 });
+	panza->setDiff({ 1, 1, 1, 1 });
+	panza->setAtte(1, 0, 0);
+
+	dirLight->disable();
+	posLight->disable();
+	spotLight->disable();
+	panza->disable();
+
+}
+
 Abs_Entity* Scene::buildCaza()
 {
 	glm::dmat4 wingModelMat = glm::translate(dmat4(1), dvec3(50.0, 0.0, 0.0));
@@ -485,12 +482,6 @@ Abs_Entity* Scene::buildCaza()
 	caza->addEntity(wing2);
 
 	//caza = caza;
-
-	panza = new SpotLight();
-	panza->setPosDir({ 0,800, 0});
-	panza->setSpot({ 0,-1,0 },90,0.5);
-	panza->setAmb({ 0, 0, 0, 1 });
-	panza->setDiff({ 1, 1, 1, 1 });
 
 	caza->addLight(panza);
 

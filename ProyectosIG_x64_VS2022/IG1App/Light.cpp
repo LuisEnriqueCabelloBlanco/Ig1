@@ -44,10 +44,9 @@ void PosLight::setPosDir(glm::fvec3 dir) {
 
 void SpotLight::upload(glm::dmat4 const& modelViewMat) const {
 	PosLight::upload(modelViewMat);
-	glLightfv(id, GL_SPOT_DIRECTION, value_ptr(direction));
 	glLightf(id, GL_SPOT_CUTOFF, cutoff);
 	glLightf(id, GL_SPOT_EXPONENT, exp);
-	uploadL();
+	glLightfv(id, GL_SPOT_DIRECTION, value_ptr(direction));
 }
 
 
