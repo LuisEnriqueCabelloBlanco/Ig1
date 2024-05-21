@@ -50,31 +50,10 @@ Scene::init()
 	default:
 			break;
 	}
-	//gObjects.push_back(new EjesRGB(400.0));
-	//RegularPolygon* poli = new RegularPolygon(3, 200);
-	//poli->setMColor(dvec4(0.0, 1.0, 1.0, 1.0));
-	//gObjects.push_back(poli); //n lados, r radio en pixeles
-
-	//RegularPolygon* poli2 = new RegularPolygon(40, 200);
-	//poli2->setMColor(dvec4(1.0, 0.0, 1.0, 1.0));
-	//gObjects.push_back(poli2); //n lados, r radio en pixeles
-
-	//RGBTriangle* poli3 = new RGBTriangle();
-	//gObjects.push_back(poli3);
-
-	//RGBRectangle* poli4 = new RGBRectangle(400, 200);
-	//gObjects.push_back(poli4);
-
-	//Cube* poli5 = new Cube(200);
-	//gObjects.push_back(poli5);
-
-	/*RGBCube* poli6 = new RGBCube(200);
-	gObjects.push_back(poli6);*/
 }
 void
 Scene::free()
 { // release memory and resources
-
 	for (Abs_Entity* el : gObjects) {
 		delete el;
 		el = nullptr;
@@ -427,7 +406,7 @@ void Scene::setLights()
 	panza->setDiff({ 1, 1, 1, 1 });
 	panza->setAtte(1, 0, 0);
 
-	dirLight->disable();
+	dirLight->enable();
 	posLight->disable();
 	spotLight->disable();
 	panza->disable();
