@@ -96,6 +96,8 @@ Scene::free()
 	}
 	delete dirLight;
 	delete posLight;
+	delete spotLight;
+	delete panza;
 }
 void
 Scene::setGL()
