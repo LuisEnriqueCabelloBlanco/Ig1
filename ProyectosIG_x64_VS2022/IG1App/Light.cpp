@@ -16,7 +16,6 @@ void Light::uploadL() const{
 }
 
 void DirLight::upload(glm::dmat4 const& modelViewMat) const {
-	glEnable(GL_LIGHTING);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));
 	glLightfv(id, GL_POSITION, value_ptr(posDir));
