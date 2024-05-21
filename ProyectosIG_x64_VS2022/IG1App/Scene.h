@@ -37,19 +37,44 @@ public:
 	void dirLightOnOff(bool onoff)
 	{
 		enableDirLight = onoff;
+		if (enableDirLight) {
+			dirLight->enable();
+		}
+		else {
+			dirLight->disable();
+		}
 	}
 
 	void posLightOnOff(bool onoff) {
 		enablePosLight = onoff;
+		if (enablePosLight) {
+			posLight->enable();
+		}
+		else {
+			posLight->disable();
+		}
 	}
 
 	void spotLightOnOff(bool onoff) {
 		enableSpotLight = onoff;
+		if (enableSpotLight) {
+			spotLight->enable();
+		}
+		else {
+			spotLight->disable();
+		}
 	}
 
 	void tieLightOnOff(bool onoff) {
-		if (caza != nullptr)
+		if (caza != nullptr) {
 			enableTieLight = onoff;
+			if (enableTieLight) {
+				panza->enable();
+			}
+			else {
+				panza->disable();
+			}
+		}
 	}
 protected:
 	void free();
@@ -64,7 +89,7 @@ protected:
 	void makeScene6();
 	void makeScene7();
 	void sceneDirLight(Camera const& cam) const;
-
+	void setLights();
 
 	Abs_Entity* buildCaza();
 

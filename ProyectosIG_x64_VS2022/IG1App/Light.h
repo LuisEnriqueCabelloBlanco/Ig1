@@ -25,7 +25,7 @@ public:
 	inline void setDiff(glm::fvec4 diff) { diffuse = diff;uploadL(); };
 	inline void setSpec(glm::fvec4 spec) { specular = spec;uploadL(); };
 	inline void setPosDir(glm::fvec4 dir) { posDir = dir;uploadL(); };
-
+	inline glm::fvec4 getPosDir() { return posDir; };
 };
 
 class DirLight : public Light {

@@ -573,7 +573,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	}
 	// Aqu� se puede fijar el modo de dibujar la esfera :
 	gluQuadricDrawStyle(qEnt_, GLU_FILL);
-	gluSphere(qEnt_, r, 50, 50);
+	gluSphere(qEnt_, r, 200, 200);
 	// Aqu� se debe recuperar el color :
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(0.0, 0.0, 0.0);
@@ -665,12 +665,11 @@ void CompoundEntity::addEntity(Abs_Entity* ae)
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
-	//light->upload(modelViewMat);
-	//llamar a mover la luz
-	//light->setSpot();
-	//light->enable();
 	for (auto o : gObjects) {
 		o->render(aMat);
+	}
+	if (light != nullptr) {
+		light->upload(aMat);
 	}
 	//light->disable();
 }
