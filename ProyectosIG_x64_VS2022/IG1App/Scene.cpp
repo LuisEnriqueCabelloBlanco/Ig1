@@ -286,10 +286,10 @@ void Scene::makeScene6()
 
 void Scene::makeScene7()
 {
-	/*IndexSphere* sphere = new IndexSphere(200,8,30);
+	/*IndexSphere* sphere = new IndexSphere(200,4,4);
 	gObjects.push_back(sphere);*/
 
-	IndexToroid* toroid = new IndexToroid(100,200, 5, 5);
+	IndexToroid* toroid = new IndexToroid(100, 200, 200, 50);
 	gObjects.push_back(toroid);
 
 	gObjects.push_back(new EjesRGB(400));
@@ -301,22 +301,10 @@ void Scene::makeScene7()
 void
 Scene::render(Camera const& cam) const
 {
- //   //sceneDirLight(cam)
-	//if (habemusLuz)
-	//{
-	//	dirLight->upload(cam.viewMat());
-	//	dirLight->enable();
-	//}
-	//else
-	//{
-	//	dirLight->disable();
-	//}
-	//sceneDirLight(cam);
+
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
 	spotLight->upload(cam.viewMat());
-	//if(panza != nullptr)
-	//	panza->upload(cam.viewMat());
 
 	cam.upload();
 

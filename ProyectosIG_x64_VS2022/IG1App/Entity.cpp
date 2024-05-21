@@ -792,16 +792,15 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
-	std::vector<glm::dvec3> aux;
-	aux.reserve(points + 1);
-	float angle = 360.0 / points;
+	std::vector<glm::dvec3>aux (points);
+	float angle = 360.0 / (points-1);
 	for (int i = 0; i < points; i++) {
-		GLdouble angle = (360 / points)*i;
-		GLdouble x = circleRadio * cos(radians(angle)) + toroidRadio;
-		GLdouble y = circleRadio * sin(radians(angle));
-		aux.emplace_back(glm::dvec3(x, y, 0));
+		//GLdouble angle = (360.0 / points)*i;
+		GLdouble x = circleRadio * cos(radians(angle*i)) + (toroidRadio+circleRadio);
+		GLdouble y = circleRadio * sin(radians(angle*i));
+		aux[i] = glm::dvec3(x, y, 0);
 	}
-	aux.emplace_back(aux[0]);
+	//aux.emplace_back(aux[0]);
 	/*for (int i = 0; i < points; i++) {
 		GLdouble theta = (360 / points) * i;
 		GLdouble x = toroidRadio + cos(radians(theta)) * circleRadio;

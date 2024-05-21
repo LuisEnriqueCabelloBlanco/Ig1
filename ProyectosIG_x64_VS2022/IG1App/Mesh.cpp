@@ -527,7 +527,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, std::vector<glm::dvec3>& perfil)
 			indiceMayor++;
 		}
 	}
-	mesh->nNumIndices = indiceMayor;
+	mesh->nNumIndices = nn*(mm-1)*6;
 	mesh->buildNormalVectors();
 	return mesh;
 }
