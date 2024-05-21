@@ -289,7 +289,7 @@ void Scene::makeScene7()
 	/*IndexSphere* sphere = new IndexSphere(200,8,30);
 	gObjects.push_back(sphere);*/
 
-	IndexToroid* toroid = new IndexToroid(100,200, 10, 8);
+	IndexToroid* toroid = new IndexToroid(100,200, 5, 5);
 	gObjects.push_back(toroid);
 
 	gObjects.push_back(new EjesRGB(400));
