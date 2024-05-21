@@ -753,7 +753,7 @@ IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
 	}*/
 	std::vector<glm::dvec3> aux;
 	aux.reserve(p + 1);
-	double angle = 180 / (p-1);
+	double angle = 180.0 / (p-1);
 	for (int i = 0; i < p; i++) {
 		GLdouble x = radio * cos(radians(angle*i-90));
 		GLdouble y = radio * sin(radians(angle*i-90));
@@ -794,6 +794,7 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
 	std::vector<glm::dvec3> aux;
 	aux.reserve(points + 1);
+	float angle = 360.0 / points;
 	for (int i = 0; i < points; i++) {
 		GLdouble angle = (360 / points)*i;
 		GLdouble x = circleRadio * cos(radians(angle)) + toroidRadio;
