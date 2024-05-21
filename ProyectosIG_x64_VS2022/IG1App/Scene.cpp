@@ -95,7 +95,13 @@ Scene::free()
 		el = nullptr;
 	}
 	delete dirLight;
+	dirLight = nullptr;
 	delete posLight;
+	posLight = nullptr;
+	delete spotLight;
+	spotLight = nullptr;
+	delete panza;
+	panza = nullptr;
 }
 void
 Scene::setGL()
@@ -347,7 +353,7 @@ Scene::render(Camera const& cam) const
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
 	spotLight->upload(cam.viewMat());
-	if(panza!= nullptr)
+	if(panza != nullptr)
 		panza->upload(cam.viewMat());
 
 	if (enableSpotLight) {
