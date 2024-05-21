@@ -101,9 +101,10 @@ void
 Scene::setGL()
 {
 	// OpenGL basic setting
-	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
+	glClearColor(0.7, 0.8, 0.9, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 }
@@ -113,6 +114,7 @@ Scene::resetGL()
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_NORMALIZE);
 }
@@ -296,10 +298,10 @@ void Scene::makeScene6()
 	auto caza = buildCaza();
 
 	caza->setModelMat(
-		glm::translate(dmat4(1), dvec3(0.0, 300.0, 0.0)) * 
-		glm::scale(dmat4(1), dvec3(0.3)));
+		glm::translate(dmat4(1), dvec3(0.0, 800, 0.0)) * 
+		glm::scale(dmat4(1), dvec3(1)));
 	
-	Sphere* tatoine = new Sphere(250);
+	Sphere* tatoine = new Sphere(700);
 	//Material* gold = new Material();
 	//gold->setGold();
 	//tatoine->setMaterial(gold);
@@ -315,7 +317,7 @@ void Scene::makeScene6()
 
 void Scene::makeScene7()
 {
-	IndexSphere* cubo = new IndexSphere(200,30,30);
+	IndexSphere* cubo = new IndexSphere(200,5,30);
 
 	gObjects.push_back(cubo);
 	gObjects.push_back(new EjesRGB(400));
@@ -341,6 +343,7 @@ Scene::render(Camera const& cam) const
 	//	dirLight->disable();
 	//}
 	//sceneDirLight(cam);
+	cam.upload();
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
 	spotLight->upload(cam.viewMat());
@@ -361,13 +364,12 @@ Scene::render(Camera const& cam) const
 		panza->enable();
 
 
-	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
 	}
-
-    dirLight->disable();
+	if(!enableDirLight)
+		dirLight->disable();
 	posLight->disable();
 	spotLight->disable();
 	if (panza != nullptr)
@@ -479,10 +481,10 @@ Abs_Entity* Scene::buildCaza()
 	//caza = caza;
 
 	panza = new SpotLight();
-	panza->setPosDir({ 1, 1, 1 });
+	panza->setPosDir({ 0,800, 0});
+	panza->setSpot({ 0,-1,0 },90,0.5);
 	panza->setAmb({ 0, 0, 0, 1 });
 	panza->setDiff({ 1, 1, 1, 1 });
-	panza->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	caza->addLight(panza);
 

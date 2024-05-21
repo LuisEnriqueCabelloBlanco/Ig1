@@ -785,7 +785,7 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
 		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
@@ -795,10 +795,10 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
 	std::vector<glm::dvec3> aux;
 	aux.reserve(points + 1);
-	float angle = 360 / points;
 	for (int i = 0; i < points; i++) {
-		GLdouble x = circleRadio * cos(radians(i * angle)) + toroidRadio;
-		GLdouble y = circleRadio * sin(radians(i * angle));
+		GLdouble angle = (360 / points)*i;
+		GLdouble x = circleRadio * cos(radians(angle)) + toroidRadio;
+		GLdouble y = circleRadio * sin(radians(angle));
 		aux.emplace_back(glm::dvec3(x, y, 0));
 	}
 	aux.emplace_back(aux[0]);
