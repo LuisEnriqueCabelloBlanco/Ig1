@@ -73,6 +73,6 @@ public:
 	MbR(int rev, std::vector<glm::dvec3>& perf, int verticesPerfil);
 	~MbR() {};
 
-	static MbR* generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil);
+	static MbR* generateIndexMbR(int mm, int nn, std::vector<glm::dvec3>& perfil);
 };
 #endif //_H_Scene_H_

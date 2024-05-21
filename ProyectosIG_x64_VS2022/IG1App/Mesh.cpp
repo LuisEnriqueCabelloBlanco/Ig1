@@ -478,15 +478,16 @@ MbR::MbR(int rev, std::vector<dvec3>& perf, int verticesPerfil):IndexMesh()
 	m = verticesPerfil;
 }
 
-MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
+MbR* MbR::generateIndexMbR(int mm, int nn, std::vector<glm::dvec3>& perfil)
 {
-	MbR* mesh = new MbR(mm, perfil,mn);
+	MbR* mesh = new MbR(nn, perfil,mm);
 	mesh->mPrimitive = GL_TRIANGLES;
-	mesh->mNumVertices = mm * mn;
+	mesh->mNumVertices = mm * nn;
 	std::vector<glm::dvec3> aux;
 	aux.reserve(mesh->mNumVertices);
-	for (int i = 0; i < mn; i++) {
-		GLdouble theta = i * (360 / mn);
+
+	for (int i = 0; i < nn; i++) {
+		GLdouble theta = i * (360.0 / nn);
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++) {
@@ -499,7 +500,7 @@ MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
 	mesh->vVertices = aux;
 	mesh->mNumVertices = aux.size();
 	int indiceMayor = 0;
-	for (int i = 0; i < mn; i++) {
+	for (int i = 0; i < nn; i++) {
 		// El contador j recorre los vértices del perfil ,
 		// de abajo arriba . Las caras cuadrangulares resultan
 		// al unir la muestra i- ésima con la (i +1)% nn - ésima
@@ -511,14 +512,14 @@ MbR* MbR::generateIndexMbR(int mm, int mn, std::vector<glm::dvec3>& perfil)
 			int indice = i * mm + j;
 			mesh->vIndices.push_back(indice);
 			indiceMayor++;
-			mesh->vIndices.push_back((indice + mm)%(mn*mm));
+			mesh->vIndices.push_back((indice + mm)%(nn*mm));
 			indiceMayor++;
-			mesh->vIndices.push_back((indice + mm+1)%(mn*mm));
+			mesh->vIndices.push_back((indice + mm+1)%(nn*mm));
 			indiceMayor++;
 
 
 
-			mesh->vIndices.push_back((indice + mm + 1) % (mn * mm));
+			mesh->vIndices.push_back((indice + mm + 1) % (nn * mm));
 			indiceMayor++;
 			mesh->vIndices.push_back(indice +1);
 			indiceMayor++;
