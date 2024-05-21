@@ -795,6 +795,7 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
 	std::vector<glm::dvec3> aux;
 	aux.reserve(points + 1);
+	float angle = 360.0 / points;
 	for (int i = 0; i < points; i++) {
 		GLdouble angle = (360 / points)*i;
 		GLdouble x = circleRadio * cos(radians(angle)) + toroidRadio;
