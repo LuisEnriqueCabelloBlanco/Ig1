@@ -754,7 +754,7 @@ IndexSphere::IndexSphere(GLdouble radio, int p, int m) {
 	}*/
 	std::vector<glm::dvec3> aux;
 	aux.reserve(p + 1);
-	double angle = 180 / (p-1);
+	double angle = 180.0 / (p-1);
 	for (int i = 0; i < p; i++) {
 		GLdouble x = radio * cos(radians(angle*i-90));
 		GLdouble y = radio * sin(radians(angle*i-90));

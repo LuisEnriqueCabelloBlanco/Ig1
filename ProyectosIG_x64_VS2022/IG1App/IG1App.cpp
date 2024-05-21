@@ -70,7 +70,7 @@ IG1App::init()
 
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
 
-	mScene->setScene(6);
+	mScene->setScene(7);
 }
 
 void
