@@ -700,7 +700,7 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glLineWidth(2);
-		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
@@ -733,7 +733,7 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glLineWidth(2);
-		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
@@ -783,8 +783,8 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
-		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 		glLineWidth(1);
@@ -792,26 +792,16 @@ void IndexSphere::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 IndexToroid::IndexToroid(GLdouble circleRadio, GLdouble toroidRadio, int muestras, int points) {
-	std::vector<glm::dvec3>aux (points);
-	float angle = 360.0 / (points-1);
-	for (int i = 0; i < points; i++) {
+	std::vector<glm::dvec3>aux (points+1);
+	float angle = 360.0 / (points);
+	for (int i = 0; i < aux.size(); i++) {
 		//GLdouble angle = (360.0 / points)*i;
 		GLdouble x = circleRadio * cos(radians(angle*i)) + (toroidRadio+circleRadio);
 		GLdouble y = circleRadio * sin(radians(angle*i));
 		aux[i] = glm::dvec3(x, y, 0);
 	}
-	//aux.emplace_back(aux[0]);
-	/*for (int i = 0; i < points; i++) {
-		GLdouble theta = (360 / points) * i;
-		GLdouble x = toroidRadio + cos(radians(theta)) * circleRadio;
-		GLdouble y = sin(radians(theta)) * circleRadio;
-		aux.emplace_back(glm::dvec3(x, y, 0));
-	}*/
-	//garantizamos que la esfera este cerrada
-	//aux.emplace_back(aux[0]);
 	
-
-	mMesh = MbR::generateIndexMbR(points, muestras, aux);
+	mMesh = MbR::generateIndexMbR(aux.size(), muestras, aux);
 }
 IndexToroid::~IndexToroid()
 {
@@ -831,7 +821,7 @@ void IndexToroid::render(glm::dmat4 const& modelViewMat) const
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//glEnable(GL_BLEND);
 		glLineWidth(2);
-		glColor4d(1.0, 1.0, 1.0, 1.0);
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mMesh->render();
 		glColor4d(0.0, 0.0, 0.0, 1.0);

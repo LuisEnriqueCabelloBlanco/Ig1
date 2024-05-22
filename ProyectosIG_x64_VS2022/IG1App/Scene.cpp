@@ -264,12 +264,12 @@ void Scene::makeScene5()
 void Scene::makeScene6()
 {
 	//lore accurate Advanced TIE X-1, es decir, la nave de Darth Vader (por eso no es 1:1 con la referencia, intentamos que se pareciera mas al de la peli por las risas)
-
+	glClearColor(0, 0, 0, 1);
 	
 	Sphere* tatoine = new Sphere(700);
-	//Material* gold = new Material();
-	//gold->setGold();
-	//tatoine->setMaterial(gold);
+	Material* gold = new Material();
+	gold->setGold();
+	tatoine->setMaterial(gold);
 	tatoine->setMColor(dvec4(1.0, 0.9137, 0.0,1.0));
 	gObjects.push_back(tatoine);
 
@@ -286,13 +286,16 @@ void Scene::makeScene6()
 
 void Scene::makeScene7()
 {
-	/*IndexSphere* sphere = new IndexSphere(200,4,4);
-	gObjects.push_back(sphere);*/
-
-	IndexToroid* toroid = new IndexToroid(100, 200, 200, 50);
+	//IndexedBox* bos = new IndexedBox(200);
+	//gObjects.push_back(bos);
+	IndexSphere* sphere = new IndexSphere(200,20,30);
+	sphere->setModelMat(glm::translate(dmat4(1.0), dvec3(500, 0, 0)));
+	gObjects.push_back(sphere);
+	IndexToroid* toroid = new IndexToroid(100, 50, 200, 50);
+	toroid->setMColor(dvec4( 0,1,0,1 ));
 	gObjects.push_back(toroid);
-
 	gObjects.push_back(new EjesRGB(400));
+
 }
 
 
@@ -301,12 +304,10 @@ void Scene::makeScene7()
 void
 Scene::render(Camera const& cam) const
 {
-
+	cam.upload();
 	dirLight->upload(cam.viewMat());
 	posLight->upload(cam.viewMat());
 	spotLight->upload(cam.viewMat());
-
-	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
@@ -377,7 +378,7 @@ void Scene::setLights()
 	dirLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 
 	posLight = new PosLight();
-	posLight->setPosDir({ 1, 1, 0 });
+	posLight->setPosDir({ 0, 0, 0 });
 	posLight->setAmb({ 0, 0, 0, 1 });
 	posLight->setDiff({ 1.0, 1.0, 0.0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
