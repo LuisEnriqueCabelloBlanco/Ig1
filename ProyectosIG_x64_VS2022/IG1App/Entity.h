@@ -8,6 +8,7 @@
 #include "Material.h"
 #include "Light.h"
 #include "Transform.h"
+#include <functional>
 
 class Abs_Entity // abstract class
 {
@@ -38,6 +39,8 @@ public:
 
 	Transform& getTransform() { return mTransform; };
 
+	void setUpdateCall(std::function<void()> call) { updateCall = call; };
+
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
@@ -45,6 +48,7 @@ protected:
 	Texture* mTexture; //texure / fonrt texture pointer
 	Texture* mBackTexture; //back culling Texture pointer
 	Transform mTransform;
+	std::function<void()> updateCall;
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;

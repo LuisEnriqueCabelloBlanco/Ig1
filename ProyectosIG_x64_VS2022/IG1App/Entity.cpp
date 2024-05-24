@@ -7,6 +7,8 @@ using namespace glm;
 
 void Abs_Entity::update()
 {
+	if(updateCall)
+		updateCall();
 }
 
 void

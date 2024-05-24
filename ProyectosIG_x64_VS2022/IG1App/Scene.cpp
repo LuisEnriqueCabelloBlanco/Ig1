@@ -254,6 +254,12 @@ void Scene::makeScene5()
 	smile->setModelMat(mSmileMat);
 
 	CompoundEntity* paco = new CompoundEntity();
+
+	paco->setUpdateCall([paco]() {
+		Transform& mTr = paco->getTransform();
+		mTr.setRotation({ 0,mTr.getRotation().y + 15, 0});
+		paco->setModelMat(mTr.getTrasformMatrix());
+		});
 	paco->addEntity(sombrero);
 	paco->addEntity(conoI);
 	paco->addEntity(conoD);
@@ -294,12 +300,17 @@ void Scene::makeScene7()
 	sphere->setModelMat(glm::translate(dmat4(1.0), dvec3(500, 0, 0)));
 	gObjects.push_back(sphere);
 	IndexToroid* toroid = new IndexToroid(100, 50, 200, 50);
-	Transform tr;
+	Transform& tr = toroid->getTransform();
 	tr.setPosition({ 0, 100, 0 });
 	tr.setRotation({ 0,0,0 });
 	tr.setScale({ 1,0.5,1 });
 	toroid->setModelMat(tr.getTrasformMatrix());
 	toroid->setMColor(dvec4( 0,1,0,1 ));
+	toroid->setUpdateCall([toroid]() {
+		Transform& mTr = toroid->getTransform();
+		mTr.setRotation({ 0,mTr.getRotation().y + 5, mTr.getRotation().z + 10});
+		toroid->setModelMat(mTr.getTrasformMatrix());
+		});
 	gObjects.push_back(toroid);
 	gObjects.push_back(new EjesRGB(400));
 
