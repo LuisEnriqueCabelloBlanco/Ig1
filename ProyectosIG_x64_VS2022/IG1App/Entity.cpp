@@ -100,7 +100,9 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	mModelMat = glm::rotate(mModelMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
+	mTransform.setRotation({ 0,0,mTransform.getRotation().z -10});
+	//mModelMat = glm::rotate(mModelMat, glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0));
+	mModelMat = mTransform.getTrasformMatrix();
 	glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
 	mModelMat = circleRot * mModelMat;
 }

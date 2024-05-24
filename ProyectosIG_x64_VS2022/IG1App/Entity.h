@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Light.h"
+#include "Transform.h"
 
 class Abs_Entity // abstract class
 {
@@ -35,12 +36,15 @@ public:
 	Texture* const& getMBackTexture() { return mBackTexture; }
 	void setMBackTexture(Texture* texture) { mBackTexture = texture; }
 
+	Transform& getTransform() { return mTransform; };
+
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor ;  // color vector
 	Texture* mTexture; //texure / fonrt texture pointer
 	Texture* mBackTexture; //back culling Texture pointer
+	Transform mTransform;
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;

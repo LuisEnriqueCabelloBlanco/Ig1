@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Texture.h"
+#include "Transform.h"
 
 using namespace glm;
 
@@ -289,9 +290,15 @@ void Scene::makeScene7()
 	//IndexedBox* bos = new IndexedBox(200);
 	//gObjects.push_back(bos);
 	IndexSphere* sphere = new IndexSphere(200,20,30);
+
 	sphere->setModelMat(glm::translate(dmat4(1.0), dvec3(500, 0, 0)));
 	gObjects.push_back(sphere);
 	IndexToroid* toroid = new IndexToroid(100, 50, 200, 50);
+	Transform tr;
+	tr.setPosition({ 0, 100, 0 });
+	tr.setRotation({ 0,0,0 });
+	tr.setScale({ 1,0.5,1 });
+	toroid->setModelMat(tr.getTrasformMatrix());
 	toroid->setMColor(dvec4( 0,1,0,1 ));
 	gObjects.push_back(toroid);
 	gObjects.push_back(new EjesRGB(400));
@@ -316,13 +323,13 @@ Scene::render(Camera const& cam) const
 
 void Scene::update()
 {
+	if (mId == 0) {
+		centro->setModelMat(glm::rotate(centro->modelMat(), glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0)));
+		glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
+		centro->setModelMat(circleRot * centro->modelMat());
+	}
 	for (auto obj : gObjects) {
-		if (mId == 0) {
-			centro->setModelMat(glm::rotate(centro->modelMat(), glm::radians(-10.0), glm::dvec3(0.0, 0.0, 1.0)));
-			glm::dmat4 circleRot = glm::rotate(glm::dmat4(1.0), glm::radians(5.0), glm::dvec3(0.0, 0.0, 1.0));
-			centro->setModelMat(circleRot * centro->modelMat());
-		}
-		else
+		//else
 			obj->update();
 	}
 }
